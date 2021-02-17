@@ -1,4 +1,4 @@
-package de.reitler.cleaning_plan_android_client.ui.slideshow;
+package de.reitler.cleaning_plan_android_client.ui.todolist;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import de.reitler.cleaning_plan_android_client.R;
 
-public class SlideshowFragment extends Fragment {
+public class ToDoListFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private ToDoListViewModel toDoListViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        toDoListViewModel =
+                new ViewModelProvider(this).get(ToDoListViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_todolist, container, false);
+        final TextView textView = root.findViewById(R.id.text_home);
+        toDoListViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

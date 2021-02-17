@@ -1,4 +1,4 @@
-package de.reitler.cleaning_plan_android_client.ui.gallery;
+package de.reitler.cleaning_plan_android_client.ui.household;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import de.reitler.cleaning_plan_android_client.R;
 
-public class GalleryFragment extends Fragment {
+public class HouseholdFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private HouseholdViewModel householdViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        householdViewModel =
+                new ViewModelProvider(this).get(HouseholdViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_household, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        householdViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
