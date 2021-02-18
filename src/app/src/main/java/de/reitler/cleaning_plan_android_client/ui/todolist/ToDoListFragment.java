@@ -1,5 +1,7 @@
 package de.reitler.cleaning_plan_android_client.ui.todolist;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,7 @@ public class ToDoListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DemoCollectionPagerAdapter demoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getChildFragmentManager());
+        DemoCollectionPagerAdapter demoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getChildFragmentManager(), getContext());
         ViewPager viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(demoCollectionPagerAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
@@ -50,8 +52,11 @@ public class ToDoListFragment extends Fragment {
 }
 class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
-    public DemoCollectionPagerAdapter(FragmentManager fm) {
+    private Context context;
+
+    public DemoCollectionPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.context = context;
     }
 
     @Override
@@ -61,7 +66,11 @@ class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "OBJECT " + (position + 1);
+        switch(position){
+            case 0: return context.getString(R.string.tab_daily_todolist);
+            case 1: return context.getString(R.string.tab_weekly_todolist);
+            default: return "OBJECT " + (position + 1);
+        }
     }
 
     @NonNull

@@ -12,4 +12,8 @@
     <string name="menu_profile">Profil</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_about">Über die App</string>
+
+    <string name="tab_daily_todolist">Heute</string>
+    <string name="tab_weekly_todolist">Diese Woche </string>
+
 </resources>
