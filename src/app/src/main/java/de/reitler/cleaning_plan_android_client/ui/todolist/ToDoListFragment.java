@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import de.reitler.cleaning_plan_android_client.R;
 import de.reitler.cleaning_plan_android_client.ui.todolist.daily.DailyToDoListFragment;
+import de.reitler.cleaning_plan_android_client.ui.todolist.weekly.WeeklyToDoListFragment;
 
 public class ToDoListFragment extends Fragment {
 
@@ -76,7 +77,11 @@ class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return new DailyToDoListFragment();
+        switch(position){
+            case 0: return new DailyToDoListFragment();
+            case 1: return new WeeklyToDoListFragment();
+            default: return null;
+        }
     }
 
 }
