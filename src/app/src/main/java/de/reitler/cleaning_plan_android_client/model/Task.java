@@ -1,10 +1,10 @@
 package de.reitler.cleaning_plan_android_client.model;
 
 import java.util.Date;
+import java.util.List;
 
-public class Task {
+public abstract class Task {
     private String title;
     private boolean isDone;
-    private Date duedate;
-    private Roommate roommate;
+    private List<Roommate> roommates;
 }
