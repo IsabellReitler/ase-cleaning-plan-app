@@ -3,13 +3,16 @@ package de.reitler.cleaning_plan_android_client.ui.todolist.daily;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.reitler.cleaning_plan_android_client.ui.todolist.RecyclerViewHolder;
 
 public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
-    
+    ViewModel viewModel;
+
+    public DailyToDoListAdapter(ViewModel viewModel){}
 
     @NonNull
     @Override
