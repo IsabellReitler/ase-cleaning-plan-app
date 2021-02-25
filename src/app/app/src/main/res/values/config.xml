@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CLIENT_ID">372822531377-7jde2anqj86tsm78eraok0puo354js3q.apps.googleusercontent.com</string>
+    <string name="API_URL">http://192.168.120.111:8080</string>
+    <string name="LOGIN_ENDPOINT">/login</string>
+</resources>
