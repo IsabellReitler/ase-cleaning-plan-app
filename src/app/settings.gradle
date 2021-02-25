@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "cleaning-plan-android-client"
+rootProject.name = "cleaning-plan-android.app"

@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "de.reitler.cleaning_plan_android_client"
+        applicationId "de.reitler.cleaning_plan_android.app"
         minSdkVersion 27
         targetSdkVersion 30
         versionCode 1

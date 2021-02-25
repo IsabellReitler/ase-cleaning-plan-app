@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/nav_todolist"
-        android:name="de.reitler.cleaning_plan_android_client.ui.todolist.ToDoListFragment"
+        android:name="de.reitler.app.ui.todolist.ToDoListFragment"
         android:label="@string/menu_todolist"
         tools:layout="@layout/fragment_todolist" />
 
     <fragment
         android:id="@+id/nav_household"
-        android:name="de.reitler.cleaning_plan_android_client.ui.household.HouseholdFragment"
+        android:name="de.reitler.app.ui.household.HouseholdFragment"
         android:label="@string/menu_household"
         tools:layout="@layout/fragment_household" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="de.reitler.cleaning_plan_android_client.ui.profile.ProfileFragment"
+        android:name="de.reitler.app.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="de.reitler.cleaning_plan_android_client.ui.settings.SettingsFragment"
+        android:name="de.reitler.app.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings"/>
 
     <fragment
         android:id="@+id/nav_about"
-        android:name="de.reitler.cleaning_plan_android_client.ui.about.AboutFragment"
+        android:name="de.reitler.app.ui.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about"/>
 
