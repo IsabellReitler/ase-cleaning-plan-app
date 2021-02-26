@@ -89,10 +89,8 @@ public class LoginActivity extends AppCompatActivity {
             String jsonString = new JSONObject()
                     .put("idToken", idToken)
                     .toString();
-
+            sendTokenToBackend(jsonString);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("ERROR","signInResult:failed code=" + e.getStatusCode());
             redirectToApp(null);
         } catch (JSONException e) {
