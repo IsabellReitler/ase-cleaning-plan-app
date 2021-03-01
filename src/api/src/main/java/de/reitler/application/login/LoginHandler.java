@@ -28,7 +28,10 @@ public class LoginHandler {
     public UserDataInput signIn(String token){
         try {
             input = validationService.validateToken(token);
-            roommateRepo.create(new Roommate(input.getFirstName(), Optional.of(input.getLastName()), input.getEmail(), Optional.of(input.getPicture())));
+            System.out.println("Validate token output: "+input);
+            if(input != null){
+                roommateRepo.create(new Roommate(input.getFirstName(), input.getLastName(), input.getEmail(), input.getPicture()));
+            }
         } catch (IOException| InterruptedException e) {
             input = null;
         }
