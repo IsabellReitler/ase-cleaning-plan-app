@@ -4,26 +4,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.reitler.application.login.UserDataInput;
 
 public class Account implements UserDataInput {
+
+    @JsonProperty("id")
+    private String id;
+
+    @JsonProperty("display_name")
+    private String displayName;
+
     @JsonProperty("email")
-    public String email;
-
-    @JsonProperty("given_name")
-    public String givenName;
-
-    @JsonProperty("family_name")
-    public String familyName;
+    private String email;
 
     @JsonProperty ("picture")
-    public String picture;
+    private String picture;
+
 
     @Override
-    public String getFirstName() {
-        return givenName;
+    public String getId() {
+        return id;
     }
 
     @Override
-    public String getLastName() {
-        return familyName;
+    public String getDisplayName() {
+        return displayName;
     }
 
     @Override

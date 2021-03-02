@@ -6,17 +6,15 @@ import java.util.UUID;
 
 public class Roommate {
 
-    private UUID id;  //e.g. h1r1 --> household #1, roommate #1
-    private String firstname;
-    private String lastname;
+    private String id;  
+    private String displayname;
     private String email;
     private String picture;
     private List<Task> tasks;
 
-    public Roommate(String firstname, String lastname, String email, String picture){
-        this.id = UUID.randomUUID();
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Roommate(String id, String displayname, String email, String picture){
+        this.id = id;
+        this.displayname = displayname;
         this.email = email;
         this.picture = picture;
     }

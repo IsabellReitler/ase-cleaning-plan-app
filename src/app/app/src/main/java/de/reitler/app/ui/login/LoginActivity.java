@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this,gso);
 
-        SignInButton signInButton = findViewById(R.id.google_sign_in_button);
         findViewById(R.id.google_sign_in_button).setOnClickListener(v -> signIn());
     }
 
@@ -151,6 +150,13 @@ public class LoginActivity extends AppCompatActivity {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
         RequestBody body = RequestBody.create(JSON, bodyJSON );
+        Request request = new Request.Builder().url(url).method("POST", body).build();
+
+        try {
+            Response response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

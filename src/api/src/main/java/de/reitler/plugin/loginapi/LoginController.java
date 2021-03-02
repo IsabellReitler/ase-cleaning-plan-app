@@ -20,8 +20,9 @@ public class LoginController {
     @PostMapping(value="/signin")
     public ResponseEntity SignIn(@RequestBody String idTokenString) throws GeneralSecurityException, IOException, InterruptedException {
 
-        LoginHandler handler = new LoginHandler(new RoommateRepoImpl(), new GoogleValidationService(), new HouseholdRepoIml());
+        LoginHandler handler = new LoginHandler(new RoommateRepoImpl(), new HouseholdRepoIml(), new JsonUserInputMapper());
         UserDataInput account = handler.signIn(idTokenString);
+        System.out.println(account.getDisplayName());
 
         if(account != null){
             return new ResponseEntity<UserDataInput>(account, HttpStatus.OK);
