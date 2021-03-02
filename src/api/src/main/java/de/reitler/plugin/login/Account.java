@@ -1,4 +1,4 @@
-package de.reitler.plugin.loginapi;
+package de.reitler.plugin.login;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.reitler.application.login.UserDataInput;

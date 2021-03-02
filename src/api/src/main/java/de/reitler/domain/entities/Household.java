@@ -1,4 +1,4 @@
-package de.reitler.domain;
+package de.reitler.domain.entities;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,15 +17,27 @@ public class Household {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Roommate getRoommate(String id){
+        return roommates
+                .stream()
+                .filter(roommate -> roommate.getId() ==id)
+                .findFirst()
+                .get();
+    }
+
+    public void addRoommate(Roommate roommate){
+        roommates.add(roommate);
+    }
+
+    public void removeRoommate(Roommate roommate){
+        roommates.remove(roommate);
     }
 }

@@ -1,9 +1,9 @@
 package de.reitler.application.login;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import de.reitler.domain.HouseholdRepository;
-import de.reitler.domain.Roommate;
-import de.reitler.domain.RoommateRepository;
+import de.reitler.domain.repositories.HouseholdRepository;
+import de.reitler.domain.entities.Roommate;
+import de.reitler.domain.repositories.RoommateRepository;
 
 
 

@@ -1,9 +1,9 @@
 package de.reitler.application;
 
-import de.reitler.domain.Household;
-import de.reitler.domain.HouseholdRepository;
+import de.reitler.domain.entities.Household;
+import de.reitler.domain.repositories.HouseholdRepository;
 
-public class HouseholdRepoIml implements HouseholdRepository {
+public class HouseholdService implements HouseholdRepository {
     @Override
     public void create(Household household) {
 

@@ -1,7 +1,7 @@
-package de.reitler.plugin.loginapi;
+package de.reitler.plugin.login;
 
-import de.reitler.application.HouseholdRepoIml;
-import de.reitler.application.RoommateRepoImpl;
+import de.reitler.application.HouseholdService;
+import de.reitler.application.RoommateService;
 import de.reitler.application.login.LoginHandler;
 import de.reitler.application.login.UserDataInput;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class LoginController {
     @PostMapping(value="/signin")
     public ResponseEntity SignIn(@RequestBody String idTokenString) throws GeneralSecurityException, IOException, InterruptedException {
 
-        LoginHandler handler = new LoginHandler(new RoommateRepoImpl(), new HouseholdRepoIml(), new JsonUserInputMapper());
+        LoginHandler handler = new LoginHandler(new RoommateService(), new HouseholdService(), new JsonUserInputMapper());
         UserDataInput account = handler.signIn(idTokenString);
         System.out.println(account.getDisplayName());
 

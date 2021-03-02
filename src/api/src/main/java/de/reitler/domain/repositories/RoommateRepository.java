@@ -1,4 +1,6 @@
-package de.reitler.domain;
+package de.reitler.domain.repositories;
+
+import de.reitler.domain.entities.Roommate;
 
 public interface RoommateRepository {
 

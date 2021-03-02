@@ -1,4 +1,4 @@
-package de.reitler.plugin.loginapi;
+package de.reitler.plugin.login;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.reitler.application.login.UserDataInput;
