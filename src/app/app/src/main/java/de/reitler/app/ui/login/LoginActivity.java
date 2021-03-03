@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +52,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //your codes here
+
+        }
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

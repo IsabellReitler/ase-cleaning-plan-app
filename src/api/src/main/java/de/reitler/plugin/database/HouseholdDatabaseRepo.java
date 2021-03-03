@@ -1,0 +1,8 @@
+package de.reitler.plugin.database;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface HouseholdDatabaseRepo extends JpaRepository<HouseholdEntity, String> {
+}
