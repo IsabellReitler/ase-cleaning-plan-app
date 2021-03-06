@@ -2,20 +2,41 @@ package de.reitler.domain.entities;
 
 import de.reitler.core.DateCalculator;
 
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
+@Table(name="task")
 public class Task {
 
+    @Id
     private UUID id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name="description")
     private String description;
+
+    @Column(name="starts_at")
     private Calendar startsAt;
+
+    @Column(name="deadline")
     private Calendar deadline;
+
+    @Column(name="done_at")
     private Calendar doneAt;
+
+    @Column(name="time_intervall")
     private Calendar timeIntervall; //null or 0 if task isn't repetitve
+
+    @Column(name= "switch_roommate")
     private boolean switchRoommate; //null or 0 if task isn't repetitve
+
+    @ManyToOne
+    private Roommate roommate;
 
     /**
      * Constructor for creating repetitive tasks

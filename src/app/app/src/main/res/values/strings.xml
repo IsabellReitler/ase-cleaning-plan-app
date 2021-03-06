@@ -16,4 +16,5 @@
     <string name="tab_daily_todolist">Heute</string>
     <string name="tab_weekly_todolist">Diese Woche </string>
 
+    <string name="holyday_mode">Ferienmodus</string>
 </resources>

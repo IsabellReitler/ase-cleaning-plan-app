@@ -1,16 +1,25 @@
 package de.reitler.domain.entities;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "household")
 public class Household {
+    @Id
     private UUID id;
+    @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "household",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Roommate> roommates;
 
     public Household(String name){
         this.id = UUID.randomUUID();
         this.name = name;
+    }
+    public Household(){
+
     }
 
     public UUID getId() {

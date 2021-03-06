@@ -4,19 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import de.reitler.domain.repositories.HouseholdRepository;
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.repositories.RoommateRepository;
-
+import de.reitler.domain.services.HouseholdService;
+import de.reitler.domain.services.RoommateService;
 
 
 public class LoginHandler {
-    private RoommateRepository roommateRepo;
-    private HouseholdRepository householdRepo;
+    private RoommateService roommate;
+    private HouseholdService household;
     private UserInputMapper mapper;
 
     UserDataInput input;
 
-    public LoginHandler(RoommateRepository roommateRepo, HouseholdRepository householdRepo, UserInputMapper mapper){
-        this.roommateRepo = roommateRepo;
-        this.householdRepo = householdRepo;
+    public LoginHandler(RoommateService roommateService, HouseholdService householdService, UserInputMapper mapper){
+        this.roommate = roommateService;
+        this.household = householdService;
         this.mapper = mapper;
     }
 
@@ -29,7 +30,7 @@ public class LoginHandler {
         try {
             input = mapper.mapToUserDataInput(userData);
         if(input != null){
-                roommateRepo.create(new Roommate(input.getId(), input.getDisplayName(), input.getEmail(), input.getPicture()));
+                roommate.create(new Roommate(input.getId(), input.getDisplayName(), input.getEmail(), input.getPicture()));
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

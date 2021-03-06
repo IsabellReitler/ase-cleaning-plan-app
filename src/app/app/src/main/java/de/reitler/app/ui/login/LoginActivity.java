@@ -3,44 +3,26 @@ package de.reitler.app.ui.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.renderscript.ScriptGroup;
 import android.util.Log;
-import android.view.View;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.SignInAccount;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
@@ -94,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void redirectToApp(FirebaseUser user){
         if(user != null){
-            sendUserToBackend(user);
+            //LoginAdapter.sendUserToBackend(user);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
@@ -142,33 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void sendUserToBackend(FirebaseUser user){
-        String bodyJSON = null;
-        try {
-            bodyJSON = new JSONObject()
-                    .put("id", user.getUid())
-                    .put("display_name", user.getDisplayName())
-                    .put("email", user.getEmail())
-                    .put("picture", user.getPhotoUrl())
-                    .toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        OkHttpClient client = new OkHttpClient();
-        String url = getString(R.string.API_URL)+getString(R.string.LOGIN_ENDPOINT);
 
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-        RequestBody body = RequestBody.create(JSON, bodyJSON );
-        Request request = new Request.Builder().url(url).method("POST", body).build();
-
-        try {
-            Response response = client.newCall(request).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 }
 

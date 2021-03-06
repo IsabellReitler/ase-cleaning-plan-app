@@ -1,14 +1,29 @@
 package de.reitler.domain.entities;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name="roommate")
 public class Roommate {
 
-    private String id;  
+    @Id
+    private String id;
+
+    @Column(name = "display_name")
     private String displayname;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name="picture")
     private String picture;
+
+    @ManyToOne
+    private Household household;
+
+    @OneToMany(mappedBy = "roommate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Task> tasks;
 
     public Roommate(String id, String displayname, String email, String picture){
@@ -16,6 +31,10 @@ public class Roommate {
         this.displayname = displayname;
         this.email = email;
         this.picture = picture;
+    }
+
+    public Roommate(){
+
     }
 
 
