@@ -1,9 +1,12 @@
 package de.reitler.domain.services;
 
 import de.reitler.domain.entities.Household;
+import de.reitler.domain.entities.Roommate;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
+//@Service
 public interface HouseholdService {
 
     public void create(Household household);
@@ -15,4 +18,6 @@ public interface HouseholdService {
     public void delete(String id);
 
     public Household getById(String id);
+
+    public List<Roommate> getAllRoommates(String id);
 }

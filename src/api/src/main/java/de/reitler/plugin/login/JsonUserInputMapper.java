@@ -3,7 +3,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.reitler.application.login.UserDataInput;
 import de.reitler.application.login.UserInputMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JsonUserInputMapper implements UserInputMapper {
 
     ObjectMapper mapper = new ObjectMapper();

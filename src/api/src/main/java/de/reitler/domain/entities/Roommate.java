@@ -82,4 +82,8 @@ public class Roommate {
         tasks.remove(task);
     }
 
+    public List<Task> getTasks(){
+        return tasks;
+    }
+
 }

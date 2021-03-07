@@ -7,11 +7,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "household")
 public class Household {
-    @Id
+
     private UUID id;
-    @Column(name = "name")
+
     private String name;
-    @OneToMany(mappedBy = "household",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
     private List<Roommate> roommates;
 
     public Household(String name){
@@ -22,10 +22,15 @@ public class Household {
 
     }
 
+    @Id
     public UUID getId() {
         return id;
     }
+    public void setId(UUID id){
+        this.id = id;
+    }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -40,6 +45,15 @@ public class Household {
                 .filter(roommate -> roommate.getId() ==id)
                 .findFirst()
                 .get();
+    }
+
+    @OneToMany(mappedBy = "household",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public List<Roommate> getRoommates(){
+        return roommates;
+    }
+
+    public void setRoommates(List<Roommate> roommates){
+        this.roommates = roommates;
     }
 
     public void addRoommate(Roommate roommate){

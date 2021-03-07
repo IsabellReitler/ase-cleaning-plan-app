@@ -1,23 +1,27 @@
 package de.reitler.application.login;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import de.reitler.domain.repositories.HouseholdRepository;
+import de.reitler.application.services.RoommateServiceImpl;
 import de.reitler.domain.entities.Roommate;
-import de.reitler.domain.repositories.RoommateRepository;
 import de.reitler.domain.services.HouseholdService;
-import de.reitler.domain.services.RoommateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class LoginHandler {
-    private RoommateService roommate;
+    //@Autowired
+    //RoommateRepository roommate;
+    @Autowired
+    RoommateServiceImpl roommateService;
+
     private HouseholdService household;
     private UserInputMapper mapper;
 
     UserDataInput input;
 
-    public LoginHandler(RoommateService roommateService, HouseholdService householdService, UserInputMapper mapper){
-        this.roommate = roommateService;
-        this.household = householdService;
+    public LoginHandler(UserInputMapper mapper){
+        //this.roommate = roommateRepository;
+        //this.household = householdService;
         this.mapper = mapper;
     }
 
@@ -29,8 +33,11 @@ public class LoginHandler {
     public UserDataInput signIn(String userData){
         try {
             input = mapper.mapToUserDataInput(userData);
+            System.out.println("UserInput-Name: "+input.getDisplayName());
         if(input != null){
-                roommate.create(new Roommate(input.getId(), input.getDisplayName(), input.getEmail(), input.getPicture()));
+                Roommate roommate1 = new Roommate(input.getId(), input.getDisplayName(), input.getEmail(), input.getPicture());
+                System.out.println("Roommate-Objekt: "+roommate1.toString()+"; Roommate-Name: "+roommate1.getDisplayname());
+                roommateService.create(roommate1);
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

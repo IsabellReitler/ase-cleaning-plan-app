@@ -1,7 +1,9 @@
 package de.reitler.domain.services;
 
 import de.reitler.domain.entities.Task;
+import org.springframework.stereotype.Service;
 
+//@Service
 public interface TaskService {
 
     public void create(Task task);

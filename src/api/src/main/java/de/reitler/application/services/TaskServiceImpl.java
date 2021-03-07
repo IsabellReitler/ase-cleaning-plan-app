@@ -1,38 +1,40 @@
-package de.reitler.application;
+package de.reitler.application.services;
 
 import de.reitler.domain.entities.Task;
 import de.reitler.domain.repositories.TaskRepository;
 import de.reitler.domain.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-public class TaskServiceImpl implements TaskService {
+@Service
+public class TaskServiceImpl{
 
     @Autowired
     TaskRepository repo;
 
-    @Override
+    //@Override
     public void create(Task task) {
         repo.save(task);
     }
 
-    @Override
+   // @Override
     public void update(Task task) {
         repo.save(task);
     }
 
-    @Override
+    //@Override
     public void delete(Task task) {
         repo.delete(task);
     }
 
-    @Override
+    //Override
     public void delete(String id) {
         repo.deleteById(UUID.fromString(id));
     }
 
-    @Override
+    //@Override
     public Task getById(String id) {
         return repo.getOne(UUID.fromString(id));
     }

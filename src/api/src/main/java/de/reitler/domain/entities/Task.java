@@ -35,8 +35,20 @@ public class Task {
     @Column(name= "switch_roommate")
     private boolean switchRoommate; //null or 0 if task isn't repetitve
 
+    public Roommate getRoommate() {
+        return roommate;
+    }
+
+    public void setRoommate(Roommate roommate) {
+        this.roommate = roommate;
+    }
+
     @ManyToOne
     private Roommate roommate;
+
+    public Task(){
+
+    }
 
     /**
      * Constructor for creating repetitive tasks
@@ -79,6 +91,10 @@ public class Task {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id){
+        this.id = id;
     }
 
     public String getTitle() {

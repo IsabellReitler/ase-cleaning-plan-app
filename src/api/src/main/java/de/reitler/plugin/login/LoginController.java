@@ -2,33 +2,31 @@ package de.reitler.plugin.login;
 
 import de.reitler.application.login.LoginHandler;
 import de.reitler.application.login.UserDataInput;
-import de.reitler.domain.entities.Roommate;
-import de.reitler.domain.services.HouseholdService;
-import de.reitler.domain.services.RoommateService;
+import de.reitler.application.login.UserInputMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 
 @RestController
+@RequestMapping("/signin")
 public class LoginController {
-    Account account;
-    @Autowired
-    RoommateService roommate;
 
+   // @Autowired
+   // RoommateRepository repository;
     @Autowired
-    HouseholdService household;
+    UserInputMapper mapper;
+    @Autowired
+    LoginHandler handler;
 
-    @PostMapping(value="/signin")
+    @PostMapping
     public ResponseEntity SignIn(@RequestBody String userData) throws GeneralSecurityException, IOException, InterruptedException {
 
-        LoginHandler handler = new LoginHandler(roommate, household, new JsonUserInputMapper());
+        System.out.println("Handler-Objekt: "+handler.toString());
         UserDataInput account = handler.signIn(userData);
         System.out.println(account.getDisplayName());
         if(account != null){

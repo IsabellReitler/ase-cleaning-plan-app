@@ -1,13 +1,14 @@
-package de.reitler.application;
+package de.reitler.application.services;
 
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.repositories.RoommateRepository;
 import de.reitler.domain.services.RoommateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoommateServiceImpl implements RoommateService {
+public class RoommateServiceImpl {
     @Autowired
     RoommateRepository repository;
 
