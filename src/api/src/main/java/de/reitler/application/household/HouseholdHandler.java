@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.services.HouseholdService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HouseholdHandler {
     @Autowired
     HouseholdService service;

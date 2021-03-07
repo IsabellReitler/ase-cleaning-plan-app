@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class TaskServiceImpl{
+public class TaskServiceImpl implements TaskService{
 
     @Autowired
     TaskRepository repo;

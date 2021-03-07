@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoommateServiceImpl {
+public class RoommateServiceImpl implements RoommateService {
     @Autowired
     RoommateRepository repository;
 

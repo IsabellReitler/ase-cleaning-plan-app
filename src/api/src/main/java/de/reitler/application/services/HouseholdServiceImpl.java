@@ -5,10 +5,12 @@ import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.repositories.HouseholdRepository;
 import de.reitler.domain.services.HouseholdService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class HouseholdServiceImpl implements HouseholdService {
 
     @Autowired
