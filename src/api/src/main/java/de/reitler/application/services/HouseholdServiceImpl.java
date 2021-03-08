@@ -19,23 +19,27 @@ public class HouseholdServiceImpl implements HouseholdService {
     public HouseholdServiceImpl(){
     }
 
-
+    @Override
     public void create(Household household){
         householdRepository.save(household);
     }
 
+    @Override
     public void update(Household household){
         householdRepository.save(household);
     }
 
+    @Override
     public void delete(Household household){
         householdRepository.delete(household);
     }
 
+    @Override
     public void delete(String id){
         householdRepository.deleteById((UUID.fromString(id)));
     }
 
+    @Override
     public Household getById(String id){
         return householdRepository.getOne(UUID.fromString(id));
     }

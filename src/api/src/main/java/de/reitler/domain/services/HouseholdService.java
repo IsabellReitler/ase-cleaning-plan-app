@@ -2,7 +2,6 @@ package de.reitler.domain.services;
 
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.entities.Roommate;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

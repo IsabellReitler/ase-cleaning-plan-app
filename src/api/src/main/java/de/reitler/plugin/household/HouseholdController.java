@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/household")
@@ -37,4 +34,28 @@ public class HouseholdController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
+
+    @PutMapping("/{id}")
+    public HttpEntity updateHousehold(@PathVariable(name="id") String householdId, @RequestBody String household){
+        //TODO
+        return null;
+    }
+
+    @GetMapping("/{id}")
+    public HttpEntity getHouseholdById(@PathVariable(name = "id") String id){
+        //TODO
+        return null;
+    }
+
+    @DeleteMapping("/{id}")
+    public HttpEntity deleteHousehold(@PathVariable(name = "id") String id){
+        //TODO
+        return null;
+    }
+
+    @GetMapping("/{id}/roommates")
+    public HttpEntity getAllRoommates(@PathVariable(name = "id") String id){
+        return null;
+    }
+
 }
