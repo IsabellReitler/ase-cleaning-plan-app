@@ -86,4 +86,12 @@ public class Roommate {
         return tasks;
     }
 
+    public Household getHousehold() {
+        return household;
+    }
+
+    public void setHousehold(Household household) {
+        this.household = household;
+    }
+
 }

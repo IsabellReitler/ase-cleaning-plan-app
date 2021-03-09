@@ -19,10 +19,11 @@ import okhttp3.Response;
 public class HttpAdapter {
     
 
-    private static String url = Resources.getSystem().getString(R.string.API_URL)+Resources.getSystem().getString(R.string.LOGIN_ENDPOINT);
-    private static String bodyJSON = "";
 
-    public static void sendUserToBackend(FirebaseUser user){
+    public void sendUserToBackend(FirebaseUser user){
+       // String url = Resources.getSystem().getString(R.string.API_URL)+Resources.getSystem().getString(R.string.LOGIN_ENDPOINT);
+        String url = "http://192.168.120.111:8080/signin";
+        String bodyJSON = "";
 
         try {
             bodyJSON = new JSONObject()
@@ -46,6 +47,7 @@ public class HttpAdapter {
             Response response = client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Some IO-Exception");
         }
 
     }

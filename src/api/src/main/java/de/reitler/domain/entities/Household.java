@@ -8,14 +8,14 @@ import java.util.UUID;
 @Table(name = "household")
 public class Household {
 
-    private UUID id;
+    private String id;
 
     private String name;
 
     private List<Roommate> roommates;
 
     public Household(String name){
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.name = name;
     }
     public Household(){
@@ -23,10 +23,11 @@ public class Household {
     }
 
     @Id
-    public UUID getId() {
+    @Column(name = "id", length = 64)
+    public String getId() {
         return id;
     }
-    public void setId(UUID id){
+    public void setId(String id){
         this.id = id;
     }
 

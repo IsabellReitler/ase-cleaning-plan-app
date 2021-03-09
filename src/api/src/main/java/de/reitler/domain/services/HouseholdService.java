@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface HouseholdService {
 
-    public void create(Household household);
+    public Household create(Household household);
 
-    public void update(Household household);
+    public Household update(Household household);
 
     public void delete(Household household);
 
@@ -18,4 +18,8 @@ public interface HouseholdService {
     public Household getById(String id);
 
     public List<Roommate> getAllRoommates(String id);
+
+    public Household addRoommate(String householdId, String roommateId);
+
+    public Household removeRoommate(String householdId, String roommateId);
 }

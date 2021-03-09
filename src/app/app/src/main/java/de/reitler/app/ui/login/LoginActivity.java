@@ -23,6 +23,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
+import de.reitler.app.adapter.HttpAdapter;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
@@ -76,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void redirectToApp(FirebaseUser user){
         if(user != null){
-            //LoginAdapter.sendUserToBackend(user);
+            HttpAdapter http = new HttpAdapter();
+            http.sendUserToBackend(user);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
