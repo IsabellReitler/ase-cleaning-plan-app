@@ -34,21 +34,22 @@ public class HouseholdController {
     }
 
     @PutMapping("/{id}")
-    public HttpEntity updateHousehold(@PathVariable(name="id") String householdId, @RequestBody String household){
-        //TODO
-        return null;
+    public HttpEntity updateHousehold(@PathVariable(name="id") String householdId, @RequestBody HouseholdDTO household){
+        HouseholdDTO result = handler.update(household);
+        result.add(linkTo(methodOn(HouseholdController.class).getHouseholdById(result.getId())).withSelfRel());
+        return new ResponseEntity<HouseholdDTO>(result, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public HttpEntity getHouseholdById(@PathVariable(name = "id") String id){
-        //TODO
-        return null;
+        HouseholdDTO household = handler.getHousehold(id);
+        return new ResponseEntity<HouseholdDTO>(household, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public HttpEntity deleteHousehold(@PathVariable(name = "id") String id){
-        //TODO
-        return null;
+        handler.deleteHousehold(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}/roommates")
@@ -65,9 +66,17 @@ public class HouseholdController {
         String roommateId = obj.get("roommate_id").toString();
         handler.addRoommate(householdId,roommateId);
         List<RoommateDTO> roommates =handler.getAllRoommates(householdId);
-        roommates.forEach(roommateDTO -> roommateDTO.add(linkTo(methodOn(HouseholdController.class).getHouseholdById(roommateDTO.getId())).withSelfRel()));
+        roommates.forEach(roommateDTO -> roommateDTO.add(linkTo(methodOn(HouseholdController.class).getHouseholdById(householdId)).withSelfRel()));
 
         return new ResponseEntity<List<RoommateDTO>>(roommates,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{householdId}/removeRoommate/{roommateId}")
+    public HttpEntity removeRoommate(@PathVariable("householdId") String householdId, @PathVariable("roommateId") String roommateId){
+        handler.removeRoommate(householdId, roommateId);
+        HouseholdDTO dto = handler.getHousehold(householdId);
+        dto.add(linkTo(methodOn(HouseholdController.class).getHouseholdById(householdId)).withSelfRel());
+        return new ResponseEntity<HouseholdDTO>(dto, HttpStatus.OK);
     }
 
 }

@@ -1,6 +1,5 @@
 package de.reitler.application.household;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.services.HouseholdService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,8 +31,15 @@ public class HouseholdHandler {
     }
 
     public HouseholdDTO update(HouseholdDTO household){
-        Household old = service.update(service.getById(household.getId().toString()));
-        return household;
+        Household newHousehold = new Household();
+        newHousehold.setId(household.getId());
+        newHousehold.setName(household.getName());
+        Household result = service.update(newHousehold);
+        return new HouseholdDTO(result.getId(), result.getName());
+    }
+
+    public void deleteHousehold(String householdId){
+        service.delete(householdId);
     }
 
     public List<RoommateDTO> getAllRoommates(String id){
@@ -48,5 +53,9 @@ public class HouseholdHandler {
     public List<RoommateDTO> addRoommate(String householdId, String roommateId){
         service.addRoommate(householdId, roommateId);
         return getAllRoommates(householdId);
+    }
+
+    public void removeRoommate(String householdId, String roommateId){
+        service.removeRoommate(householdId,roommateId);
     }
 }

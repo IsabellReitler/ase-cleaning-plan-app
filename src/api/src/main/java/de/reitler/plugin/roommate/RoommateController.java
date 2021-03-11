@@ -2,11 +2,14 @@ package de.reitler.plugin.roommate;
 
 import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.application.roommate.RoommateHandler;
+import de.reitler.application.tasks.TaskDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -30,13 +33,13 @@ public class RoommateController {
 
     @GetMapping("/{id}/tasks")
     public HttpEntity getAllTasks(@PathVariable(name = "id") String roommateId) {
-        //TODO
-        return null;
+        List<TaskDTO> tasks = handler.getAllTasks(roommateId);
+        return new ResponseEntity<List<TaskDTO>>(tasks, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/tasks/daily")
     public HttpEntity getAllDailyTasks(@PathVariable(name = "id") String roommateId){
-        //TODO
+        List<TaskDTO> dailyTasks = handler.getAllDailyTasks(roommateId);
         return null;
     }
 
@@ -49,6 +52,7 @@ public class RoommateController {
     @PostMapping
     public HttpEntity createRoommate(@RequestBody RoommateDTO body){
         RoommateDTO account = handler.create(body);
+        account.add(linkTo(methodOn(RoommateController.class).getRoommate(account.getId())).withSelfRel());
         if(account != null){
             return new ResponseEntity<RoommateDTO>(account, HttpStatus.OK);
         }
@@ -56,7 +60,7 @@ public class RoommateController {
     }
 
     @DeleteMapping("/{id}")
-    public HttpEntity removeRoommate(@PathVariable(name = "id") String id){
+    public HttpEntity deleteRoommate(@PathVariable(name = "id") String id){
         //TODO
         return null;
     }

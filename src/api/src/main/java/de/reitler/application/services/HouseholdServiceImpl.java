@@ -1,5 +1,6 @@
 package de.reitler.application.services;
 
+import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.repositories.HouseholdRepository;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class HouseholdServiceImpl implements HouseholdService {
@@ -32,9 +32,9 @@ public class HouseholdServiceImpl implements HouseholdService {
 
     @Override
     public Household update(Household household){
-        Household old = householdRepository.getOne(household.getId());
+        Household old = householdRepository.findById(household.getId()).get();
         old.setName(household.getName());
-        old.setRoommates(household.getRoommates());
+        //old.setRoommates(household.getRoommates());
         householdRepository.save(old);
         return old;
     }
@@ -46,17 +46,19 @@ public class HouseholdServiceImpl implements HouseholdService {
 
     @Override
     public void delete(String id){
+        householdRepository.findById(id).get().getRoommates()
+                .forEach(roommate -> roommate.setHousehold(null));
         householdRepository.deleteById(id);
     }
 
     @Override
     public Household getById(String id){
-        return householdRepository.getOne(id);
+        return householdRepository.findById(id).get();
     }
 
     @Override
     public List<Roommate> getAllRoommates(String id) {
-        return householdRepository.getOne(id).getRoommates();
+        return householdRepository.findById(id).get().getRoommates();
     }
 
     @Override
@@ -73,9 +75,12 @@ public class HouseholdServiceImpl implements HouseholdService {
 
     @Override
     public Household removeRoommate(String householdId, String roommateId) {
-        Household household = householdRepository.getOne(householdId);
-        household.removeRoommate(roommateRepository.getOne(roommateId));
+        Household household = householdRepository.findById(householdId).get();
+        household.removeRoommate(roommateRepository.findById(roommateId).get());
         householdRepository.save(household);
+        Roommate roommate = roommateRepository.findById(roommateId).get();
+        roommate.setHousehold(null);
+        roommateRepository.save(roommate);
         return household;
     }
 

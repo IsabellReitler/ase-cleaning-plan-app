@@ -48,7 +48,7 @@ public class Household {
                 .get();
     }
 
-    @OneToMany(mappedBy = "household",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "household",fetch = FetchType.LAZY/*cascade = CascadeType.ALL*/)
     public List<Roommate> getRoommates(){
         return roommates;
     }
