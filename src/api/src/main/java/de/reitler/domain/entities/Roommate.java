@@ -1,6 +1,7 @@
 package de.reitler.domain.entities;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,9 @@ public class Roommate {
 
     @Column(name="picture")
     private String picture;
+
+    @Column(name="holiday_mode")
+    private Calendar holidayMode;
 
     @ManyToOne
     private Household household;
@@ -92,6 +96,14 @@ public class Roommate {
 
     public void setHousehold(Household household) {
         this.household = household;
+    }
+
+    public Calendar getHolidayMode() {
+        return holidayMode;
+    }
+
+    public void setHolidayMode(Calendar holidayMode) {
+        this.holidayMode = holidayMode;
     }
 
 }

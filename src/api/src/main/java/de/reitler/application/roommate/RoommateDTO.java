@@ -1,8 +1,11 @@
 package de.reitler.application.roommate;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
+
+import java.util.Calendar;
 
 public class RoommateDTO extends RepresentationModel<RoommateDTO> {
 
@@ -18,12 +21,25 @@ public class RoommateDTO extends RepresentationModel<RoommateDTO> {
     @JsonProperty("picture")
     private String picture;
 
+    @JsonProperty("holiday_mode")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Calendar holidayMode;
+
     @JsonCreator
     public RoommateDTO(String id, String displayName, String email, String picture){
         this.id = id;
         this.displayName = displayName;
         this.email = email;
         this.picture = picture;
+    }
+
+    @JsonCreator
+    public RoommateDTO(String id, String displayName, String email, String picture, Calendar holidayMode){
+        this.id = id;
+        this.displayName = displayName;
+        this.email = email;
+        this.picture = picture;
+        this.holidayMode = holidayMode;
     }
 
 
@@ -41,5 +57,13 @@ public class RoommateDTO extends RepresentationModel<RoommateDTO> {
 
     public String getPicture() {
         return picture;
+    }
+
+    public Calendar getHolidayMode(){
+        return holidayMode;
+    }
+
+    public void setHolydayMode(){
+        this.holidayMode = holidayMode;
     }
 }

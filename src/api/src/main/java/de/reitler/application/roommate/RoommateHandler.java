@@ -94,4 +94,11 @@ public class RoommateHandler {
                 .map(x -> new TaskDTO(x.getId().toString(),x.getTitle(),x.getDescription(),x.getStartsAt(),x.getDeadline(),x.getTimeIntervall(),x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
     }
+
+    public RoommateDTO setHolidayMode(String id, Calendar endDate){
+        Roommate roommate = roommateService.getById(id);
+        roommate.setHolidayMode(endDate);
+        roommateService.update(roommate);
+        return new RoommateDTO(roommate.getId(), roommate.getDisplayname(), roommate.getEmail(), roommate.getPicture(), roommate.getHolidayMode());
+    }
 }

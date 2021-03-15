@@ -25,6 +25,7 @@ public class RoommateServiceImpl implements RoommateService {
         old.setDisplayname(roommate.getDisplayname());
         old.setEmail(roommate.getEmail());
         old.setPicture(roommate.getPicture());
+        old.setHolidayMode(roommate.getHolidayMode());
         return repository.save(old);
     }
 
