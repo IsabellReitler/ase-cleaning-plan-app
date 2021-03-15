@@ -40,13 +40,13 @@ public class RoommateController {
     @GetMapping("/{id}/tasks/daily")
     public HttpEntity getAllDailyTasks(@PathVariable(name = "id") String roommateId){
         List<TaskDTO> dailyTasks = handler.getAllDailyTasks(roommateId);
-        return null;
+        return new ResponseEntity(dailyTasks, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/tasks/weekly")
     public HttpEntity getAllWeeklyTasks(@PathVariable(name = "id") String roommateId){
-        //TODO
-        return null;
+        List<TaskDTO> weeklyTasks = handler.getAllWeeklyTasks(roommateId);
+        return new ResponseEntity(weeklyTasks, HttpStatus.OK);
     }
 
     @PostMapping

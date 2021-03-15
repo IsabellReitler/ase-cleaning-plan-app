@@ -2,6 +2,7 @@ package de.reitler.application.roommate;
 
 
 import de.reitler.application.tasks.TaskDTO;
+import de.reitler.core.DateCalculator;
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.entities.Task;
 import de.reitler.domain.services.RoommateService;
@@ -66,6 +67,30 @@ public class RoommateHandler {
         return dailyTasks
                 .stream()
                 .filter(x -> x.getDeadline().compareTo(endOfDay)<0)
+                .map(x -> new TaskDTO(x.getId().toString(),x.getTitle(),x.getDescription(),x.getStartsAt(),x.getDeadline(),x.getTimeIntervall(),x.isSwitchRoommate(), x.getRoommate().getId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<TaskDTO> getAllWeeklyTasks(String id) {
+        List<Task> weeklyTasks = roommateService.getAllTasks(id);
+        Calendar startOfToday = Calendar.getInstance();
+        Calendar timeIntervall = Calendar.getInstance();
+        timeIntervall.set(Calendar.YEAR, 0);
+        timeIntervall.set(Calendar.MONTH, -1);
+        timeIntervall.set(Calendar.DAY_OF_MONTH, 6);
+        timeIntervall.set(Calendar.HOUR_OF_DAY,0);
+        timeIntervall.set(Calendar.MINUTE, 0);
+        timeIntervall.set(Calendar.SECOND, 0);
+        timeIntervall.set(Calendar.MILLISECOND, 0);
+        DateCalculator calculator = new DateCalculator();
+        Calendar endOfWeek = calculator.add(startOfToday,startOfToday);
+        endOfWeek.set(Calendar.HOUR_OF_DAY,0);
+        endOfWeek.set(Calendar.MINUTE, 0);
+        endOfWeek.set(Calendar.SECOND, 0);
+        endOfWeek.set(Calendar.MILLISECOND, 0);
+        return weeklyTasks
+                .stream()
+                .filter(x -> x.getDeadline().compareTo(endOfWeek)<0)
                 .map(x -> new TaskDTO(x.getId().toString(),x.getTitle(),x.getDescription(),x.getStartsAt(),x.getDeadline(),x.getTimeIntervall(),x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
     }

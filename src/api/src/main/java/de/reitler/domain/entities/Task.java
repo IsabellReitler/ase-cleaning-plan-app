@@ -50,6 +50,18 @@ public class Task {
 
     }
 
+    public Task(UUID id, String title, String description, Calendar startsAt, Calendar deadline, Calendar doneAt, Calendar timeIntervall, boolean switchRoommate, Roommate roommate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.startsAt = startsAt;
+        this.deadline = deadline;
+        this.doneAt = doneAt;
+        this.timeIntervall = timeIntervall;
+        this.switchRoommate = switchRoommate;
+        this.roommate = roommate;
+    }
+
     /**
      * Constructor for creating repetitive tasks
      * @param title
@@ -57,7 +69,7 @@ public class Task {
      * @param timeIntervall
      * @param switchRoommate
      */
-    public Task(String title, String description, Date timeIntervall, boolean switchRoommate){
+    public Task(String title, String description, Calendar timeIntervall, boolean switchRoommate, Roommate roommate){
         this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
@@ -65,9 +77,9 @@ public class Task {
         this.doneAt = null;
         this.startsAt = Calendar.getInstance();
         this.startsAt.setTime(new Date());
-        this.timeIntervall = Calendar.getInstance();
-        this.timeIntervall.setTime(timeIntervall);
+        this.timeIntervall = timeIntervall;
         this.deadline = DateCalculator.add(startsAt, this.timeIntervall);
+        this.roommate = roommate;
     }
 
     /**
@@ -76,17 +88,17 @@ public class Task {
      * @param description
      * @param deadline
      */
-    public Task(String title, String description, Date deadline){
+    public Task(String title, String description, Calendar deadline, Roommate roommate){
         this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
         this.startsAt = Calendar.getInstance();
         this.startsAt.setTime(new Date());
-        this.deadline = Calendar.getInstance();
-        this.deadline.setTime(deadline);
+        this.deadline = deadline;
         this.doneAt = null;
         this.switchRoommate = false;
         this.timeIntervall = null;
+        this.roommate =roommate;
     }
 
     public UUID getId() {

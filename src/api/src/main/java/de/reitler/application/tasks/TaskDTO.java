@@ -1,11 +1,13 @@
 package de.reitler.application.tasks;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.reitler.domain.entities.Roommate;
+import com.sun.istack.Nullable;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Calendar;
 
-public class TaskDTO {
+public class TaskDTO extends RepresentationModel<TaskDTO> {
 
     @JsonProperty("id")
     private String id;
@@ -17,15 +19,22 @@ public class TaskDTO {
     private String description;
 
     @JsonProperty("starts_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar startsAt;
 
+    @Nullable
     @JsonProperty("deadline")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar deadline;
 
+    @Nullable
     @JsonProperty("done_at")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar doneAt;
 
+    @Nullable
     @JsonProperty("time_interval")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar timeInterval; //null or 0 if task isn't repetitve
 
     @JsonProperty("switch_roommate")
@@ -45,6 +54,7 @@ public class TaskDTO {
         this.startsAt = startsAt;
         this.deadline = deadline;
         this.roommate = roommateId;
+        this.switchRoommate = false;
     }
 
     public TaskDTO(String id, String title, String description, Calendar startsAt, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {

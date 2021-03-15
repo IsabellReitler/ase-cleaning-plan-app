@@ -41,6 +41,8 @@ public class HouseholdServiceImpl implements HouseholdService {
 
     @Override
     public void delete(Household household){
+        householdRepository.findById(household.getId()).get().getRoommates()
+                .forEach(roommate -> roommate.setHousehold(null));
         householdRepository.delete(household);
     }
 
