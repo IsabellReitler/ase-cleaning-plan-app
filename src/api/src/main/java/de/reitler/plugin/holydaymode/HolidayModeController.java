@@ -1,10 +1,11 @@
 package de.reitler.plugin.holydaymode;
 
+import de.reitler.application.exceptions.HolidayModeException;
 import de.reitler.application.holidaymode.HolidayModeDTO;
+import de.reitler.application.holidaymode.HolidayModeHandler;
 import de.reitler.application.household.HouseholdHandler;
 import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.application.roommate.RoommateHandler;
-import de.reitler.domain.entities.Roommate;
 import de.reitler.plugin.roommate.RoommateController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -23,7 +24,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class HolidayModeController {
 
     @Autowired
-    RoommateHandler handler;
+    HolidayModeHandler holidayModeHandler;
+
+    @Autowired
+    RoommateHandler roommateHandler;
 
     @Autowired
     HouseholdHandler householdHandler;
@@ -35,9 +39,14 @@ public class HolidayModeController {
      */
     @PostMapping
     public HttpEntity setHolidayMode(@RequestBody HolidayModeDTO body){
-        RoommateDTO dto = handler.setHolidayMode(body.getRoommateId(), body.getEndDate());
-        dto.add(linkTo(methodOn(RoommateController.class).getRoommate(dto.getId())).withSelfRel());
-        return new ResponseEntity(dto, HttpStatus.OK);
+        try {
+            RoommateDTO dto = holidayModeHandler.setHolidayMode(body.getRoommateId(), body.getEndDate());
+            dto.add(linkTo(methodOn(RoommateController.class).getRoommate(dto.getId())).withSelfRel());
+            return new ResponseEntity(dto, HttpStatus.OK);
+        } catch (HolidayModeException ex){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     /**
@@ -46,6 +55,7 @@ public class HolidayModeController {
      */
     @GetMapping("/{id}")
     public HttpEntity getAllHolidayModes(@PathVariable(name="id") String householdId){
+        holidayModeHandler.updateHolidayMode();
         List<RoommateDTO> roommates = householdHandler.getAllRoommates(householdId);
         List<HolidayModeDTO> dtos = roommates
                                         .stream()
@@ -58,11 +68,12 @@ public class HolidayModeController {
     /**
      *
      * @param roommateId Id of the Roommate
-     * @return  the HolydayModeObject of the given Roommate, can be null
+     * @return  the HolidayModeObject of the given Roommate, can be null
      */
     @GetMapping("/roommate/{id}")
     public HttpEntity getHolidayMode(@PathVariable(name="id") String roommateId){
-        HolidayModeDTO dto = new HolidayModeDTO(roommateId,handler.getById(roommateId).getHolidayMode() );
+            holidayModeHandler.updateHolidayMode();
+        HolidayModeDTO dto = new HolidayModeDTO(roommateId, roommateHandler.getById(roommateId).getHolidayMode() );
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
@@ -73,7 +84,11 @@ public class HolidayModeController {
      */
     @DeleteMapping("/{id}")
     public HttpEntity removeHolidayMode(@PathVariable(name="id") String roommateId){
-        handler.setHolidayMode(roommateId, null);
+        try {
+            holidayModeHandler.setHolidayMode(roommateId, null);
+        } catch (HolidayModeException ex){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 }

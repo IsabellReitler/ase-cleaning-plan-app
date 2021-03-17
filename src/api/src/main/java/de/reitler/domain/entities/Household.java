@@ -1,5 +1,7 @@
 package de.reitler.domain.entities;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -64,4 +66,5 @@ public class Household {
     public void removeRoommate(Roommate roommate){
         roommates.remove(roommate);
     }
+
 }

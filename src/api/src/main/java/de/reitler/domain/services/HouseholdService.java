@@ -22,4 +22,6 @@ public interface HouseholdService {
     public Household addRoommate(String householdId, String roommateId);
 
     public Household removeRoommate(String householdId, String roommateId);
+
+    public List<Household> getAllHouseholds();
 }

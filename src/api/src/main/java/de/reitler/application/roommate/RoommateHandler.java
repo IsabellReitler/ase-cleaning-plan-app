@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,37 +21,38 @@ public class RoommateHandler {
 
     private RoommateDTO input;
 
-    public RoommateHandler(){
+    public RoommateHandler() {
     }
 
     /**
      * Validates the Token and creates a new Roommate if the token is valid
+     *
      * @param userData
      * @return the UserData or null (if the Token isn't valid or something went wrong)
      */
-    public RoommateDTO create(RoommateDTO userData){
+    public RoommateDTO create(RoommateDTO userData) {
         input = userData;
-        if(input != null){
-                roommateService.create(new Roommate(input.getId(), input.getDisplayName(), input.getEmail(), input.getPicture()));
-            }
+        if (input != null) {
+            roommateService.create(new Roommate(input.getId(), input.getDisplayName(), input.getEmail(), input.getPicture()));
+        }
         return input;
     }
 
-    public RoommateDTO update(RoommateDTO newRoommate){
+    public RoommateDTO update(RoommateDTO newRoommate) {
         Roommate result = roommateService.update(roommateService.getById(newRoommate.getId()));
         return new RoommateDTO(result.getId(), result.getDisplayname(), result.getEmail(), result.getPicture());
     }
 
-    public RoommateDTO getById(String id){
-        Roommate roommate =  roommateService.getById(id);
+    public RoommateDTO getById(String id) {
+        Roommate roommate = roommateService.getById(id);
         return new RoommateDTO(roommate.getId(), roommate.getDisplayname(), roommate.getEmail(), roommate.getPicture());
     }
 
-    public List<TaskDTO> getAllTasks(String id){
+    public List<TaskDTO> getAllTasks(String id) {
         List<Task> tasks = roommateService.getAllTasks(id);
         return tasks
                 .stream()
-                .map(x -> new TaskDTO(x.getId().toString(),x.getTitle(),x.getDescription(),x.getStartsAt(),x.getDeadline(),x.getTimeIntervall(),x.isSwitchRoommate(), x.getRoommate().getId()))
+                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
 
     }
@@ -60,14 +60,14 @@ public class RoommateHandler {
     public List<TaskDTO> getAllDailyTasks(String id) {
         List<Task> dailyTasks = roommateService.getAllTasks(id);
         Calendar endOfDay = Calendar.getInstance();
-        endOfDay.set(Calendar.HOUR_OF_DAY,0);
+        endOfDay.set(Calendar.HOUR_OF_DAY, 0);
         endOfDay.set(Calendar.MINUTE, 0);
         endOfDay.set(Calendar.SECOND, 0);
         endOfDay.set(Calendar.MILLISECOND, 0);
         return dailyTasks
                 .stream()
-                .filter(x -> x.getDeadline().compareTo(endOfDay)<0)
-                .map(x -> new TaskDTO(x.getId().toString(),x.getTitle(),x.getDescription(),x.getStartsAt(),x.getDeadline(),x.getTimeIntervall(),x.isSwitchRoommate(), x.getRoommate().getId()))
+                .filter(x -> x.getDeadline().compareTo(endOfDay) < 0)
+                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
     }
 
@@ -78,27 +78,20 @@ public class RoommateHandler {
         timeIntervall.set(Calendar.YEAR, 0);
         timeIntervall.set(Calendar.MONTH, -1);
         timeIntervall.set(Calendar.DAY_OF_MONTH, 6);
-        timeIntervall.set(Calendar.HOUR_OF_DAY,0);
+        timeIntervall.set(Calendar.HOUR_OF_DAY, 0);
         timeIntervall.set(Calendar.MINUTE, 0);
         timeIntervall.set(Calendar.SECOND, 0);
         timeIntervall.set(Calendar.MILLISECOND, 0);
         DateCalculator calculator = new DateCalculator();
-        Calendar endOfWeek = calculator.add(startOfToday,startOfToday);
-        endOfWeek.set(Calendar.HOUR_OF_DAY,0);
+        Calendar endOfWeek = calculator.add(startOfToday, startOfToday);
+        endOfWeek.set(Calendar.HOUR_OF_DAY, 0);
         endOfWeek.set(Calendar.MINUTE, 0);
         endOfWeek.set(Calendar.SECOND, 0);
         endOfWeek.set(Calendar.MILLISECOND, 0);
         return weeklyTasks
                 .stream()
-                .filter(x -> x.getDeadline().compareTo(endOfWeek)<0)
-                .map(x -> new TaskDTO(x.getId().toString(),x.getTitle(),x.getDescription(),x.getStartsAt(),x.getDeadline(),x.getTimeIntervall(),x.isSwitchRoommate(), x.getRoommate().getId()))
+                .filter(x -> x.getDeadline().compareTo(endOfWeek) < 0)
+                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
-    }
-
-    public RoommateDTO setHolidayMode(String id, Calendar endDate){
-        Roommate roommate = roommateService.getById(id);
-        roommate.setHolidayMode(endDate);
-        roommateService.update(roommate);
-        return new RoommateDTO(roommate.getId(), roommate.getDisplayname(), roommate.getEmail(), roommate.getPicture(), roommate.getHolidayMode());
     }
 }

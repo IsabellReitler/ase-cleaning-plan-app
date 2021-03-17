@@ -1,6 +1,5 @@
 package de.reitler.application.services;
 
-import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.repositories.HouseholdRepository;
@@ -86,6 +85,10 @@ public class HouseholdServiceImpl implements HouseholdService {
         return household;
     }
 
+    @Override
+    public List<Household> getAllHouseholds(){
+        return householdRepository.findAll();
+    }
 
 }
 
