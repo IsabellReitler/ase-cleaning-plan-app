@@ -17,4 +17,9 @@
     <string name="tab_weekly_todolist">Diese Woche </string>
 
     <string name="holyday_mode">Ferienmodus</string>
+    <string name="add_or_create_household">Haushalt beitreten oder erstellen</string>
+    <string name="household_id_hint">123e4567-e89b-12d3-a456-556642440000</string>
+    <string name="add_household">Einem Haushalt beitreten</string>
+    <string name="join_household">Haushalt beitreten</string>
+    <string name="create_household">Haushalt erstellen</string>
 </resources>

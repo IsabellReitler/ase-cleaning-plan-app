@@ -17,12 +17,13 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HttpAdapter {
-    
+
+    OkHttpClient client = new OkHttpClient();
 
 
     public void sendUserToBackend(FirebaseUser user){
        // String url = Resources.getSystem().getString(R.string.API_URL)+Resources.getSystem().getString(R.string.LOGIN_ENDPOINT);
-        String url = "http://192.168.120.111:8080/signin";
+        String url = "http://192.168.120.111:8080/roommate";
         String bodyJSON = "";
 
         try {
@@ -35,8 +36,6 @@ public class HttpAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        OkHttpClient client = new OkHttpClient();
-
 
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -45,10 +44,75 @@ public class HttpAdapter {
 
         try {
             Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode: "+response.code());
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Some IO-Exception");
+            System.out.println(e.getMessage());
         }
 
+    }
+
+    public String createHousehold(String name){
+        String url = "http://192.168.120.111:8080/household";
+        String bodyJSON = "";
+
+        try {
+            bodyJSON = new JSONObject()
+                    .put("name", name)
+                    .toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(JSON, bodyJSON );
+        Request request = new Request.Builder().url(url).method("POST", body).build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode: "+response.code());
+            }
+            System.out.println(response.body().string());
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    public String addUserToHousehold(String userId, String householdId){
+        String url = "http://192.168.120.111:8080/household/"+householdId+"/addRoommate";
+        String bodyJSON = "";
+
+        try {
+            bodyJSON = new JSONObject()
+                    .put("roommate_id", userId)
+                    .toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(JSON, bodyJSON );
+        Request request = new Request.Builder().url(url).method("PUT", body).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode: "+response.code());
+            }
+            System.out.println(response.body().string());
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

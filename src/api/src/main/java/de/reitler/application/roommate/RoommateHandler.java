@@ -8,7 +8,12 @@ import de.reitler.domain.entities.Task;
 import de.reitler.domain.services.RoommateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,14 +43,14 @@ public class RoommateHandler {
         return input;
     }
 
-    public RoommateDTO update(RoommateDTO newRoommate) {
+    public RoommateDTO update(RoommateDTO newRoommate) throws URISyntaxException {
         Roommate result = roommateService.update(roommateService.getById(newRoommate.getId()));
-        return new RoommateDTO(result.getId(), result.getDisplayname(), result.getEmail(), result.getPicture());
+        return new RoommateDTO(result.getId(), result.getDisplayname(), result.getEmail(), new URI(result.getPicture()));
     }
 
-    public RoommateDTO getById(String id) {
+    public RoommateDTO getById(String id) throws  URISyntaxException {
         Roommate roommate = roommateService.getById(id);
-        return new RoommateDTO(roommate.getId(), roommate.getDisplayname(), roommate.getEmail(), roommate.getPicture());
+        return new RoommateDTO(roommate.getId(), roommate.getDisplayname(), roommate.getEmail(), new URI(roommate.getPicture()));
     }
 
     public List<TaskDTO> getAllTasks(String id) {

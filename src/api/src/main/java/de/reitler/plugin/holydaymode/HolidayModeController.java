@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,7 +75,12 @@ public class HolidayModeController {
     @GetMapping("/roommate/{id}")
     public HttpEntity getHolidayMode(@PathVariable(name="id") String roommateId){
             holidayModeHandler.updateHolidayMode();
-        HolidayModeDTO dto = new HolidayModeDTO(roommateId, roommateHandler.getById(roommateId).getHolidayMode() );
+        HolidayModeDTO dto = null;
+        try {
+            dto = new HolidayModeDTO(roommateId, roommateHandler.getById(roommateId).getHolidayMode() );
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 

@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -23,7 +26,12 @@ public class RoommateController {
 
     @GetMapping("/{id}")
     public HttpEntity getRoommate(@PathVariable(name = "id") String id){
-        RoommateDTO roommate = handler.getById(id);
+        RoommateDTO roommate = null;
+        try {
+            roommate = handler.getById(id);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         if(roommate != null) {
             return new ResponseEntity<RoommateDTO>(roommate, HttpStatus.OK);
         } else {
@@ -67,7 +75,12 @@ public class RoommateController {
 
     @PutMapping("/{id}")
     public HttpEntity updateRoommate(@PathVariable(name = "id") String id, @RequestBody RoommateDTO body){
-        RoommateDTO roommate = handler.update(body);
+        RoommateDTO roommate = null;
+        try {
+            roommate = handler.update(body);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         if(roommate!= null){
            roommate.add(linkTo(methodOn(RoommateController.class).getRoommate(roommate.getId())).withSelfRel());
            return new ResponseEntity<RoommateDTO>(roommate, HttpStatus.OK);

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.Calendar;
 
 public class RoommateDTO extends RepresentationModel<RoommateDTO> {
@@ -26,14 +28,13 @@ public class RoommateDTO extends RepresentationModel<RoommateDTO> {
     private Calendar holidayMode;
 
     @JsonCreator
-    public RoommateDTO(String id, String displayName, String email, String picture){
+    public RoommateDTO(String id, String displayName, String email, URI picture){
         this.id = id;
         this.displayName = displayName;
         this.email = email;
-        this.picture = picture;
+        this.picture = picture.toString();
     }
 
-    @JsonCreator
     public RoommateDTO(String id, String displayName, String email, String picture, Calendar holidayMode){
         this.id = id;
         this.displayName = displayName;

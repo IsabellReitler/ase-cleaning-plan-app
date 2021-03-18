@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import de.reitler.app.AddHousehold;
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
 import de.reitler.app.adapter.HttpAdapter;
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "FIREBASE";
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth mAuth;
+    public static final String USER_ID = "USER_ID";
+
 
 
     @Override
@@ -84,6 +87,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void redirectToCreateHousehold(FirebaseUser user) {
+        HttpAdapter http = new HttpAdapter();
+        http.sendUserToBackend(user);
+        Intent intent = new Intent(this, AddHousehold.class);
+        intent.putExtra(USER_ID, user.getUid());
+        startActivity(intent);
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -115,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            redirectToApp(user);
+                            redirectToCreateHousehold(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

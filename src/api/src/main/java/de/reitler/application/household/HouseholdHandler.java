@@ -7,6 +7,10 @@ import de.reitler.domain.services.HouseholdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +50,14 @@ public class HouseholdHandler {
         return service
                 .getAllRoommates(id)
                 .stream()
-                .map(x -> new RoommateDTO(x.getId(), x.getDisplayname(),x.getEmail(), x.getPicture()))
+                .map(x -> {
+                    try {
+                        return new RoommateDTO(x.getId(), x.getDisplayname(),x.getEmail(),new URI(x.getPicture()));
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                return null;
+                })
                 .collect(Collectors.toList());
     }
 
