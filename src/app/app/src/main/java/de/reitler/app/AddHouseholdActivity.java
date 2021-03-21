@@ -14,6 +14,8 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 import de.reitler.app.adapter.HttpAdapter;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
@@ -65,10 +67,9 @@ public class AddHouseholdActivity extends AppCompatActivity implements CreateHou
     @Override
     public void onDialogPositiveClick(String input) {
         householdName = input;
-
         if(householdName != null){
              Household household = adapter.createHousehold(householdName);
-             adapter.addUserToHousehold(userId, household.getId());
+             List<Roommate> roommates = adapter.addUserToHousehold(userId, household.getId());
              redirectToApp(userId);
         }
     }

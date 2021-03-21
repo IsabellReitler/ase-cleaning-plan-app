@@ -5,6 +5,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import de.reitler.application.household.HouseholdDTO;
 import de.reitler.application.household.HouseholdHandler;
 import de.reitler.application.roommate.RoommateDTO;
+import de.reitler.plugin.roommate.RoommateController;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class HouseholdController {
     @GetMapping("/{id}/roommates")
     public HttpEntity getAllRoommates(@PathVariable(name = "id") String id){
         List<RoommateDTO> roommates = handler.getAllRoommates(id);
-        roommates.forEach(roommateDTO -> roommateDTO.add(linkTo(methodOn(HouseholdController.class).getHouseholdById(roommateDTO.getId())).withSelfRel()));
+        roommates.forEach(roommateDTO -> roommateDTO.add(linkTo(methodOn(RoommateController.class).getRoommate(roommateDTO.getId())).withSelfRel()));
 
         return new ResponseEntity<List<RoommateDTO>>(roommates,HttpStatus.OK);
     }
@@ -66,7 +67,7 @@ public class HouseholdController {
         String roommateId = obj.get("roommate_id").toString();
         handler.addRoommate(householdId,roommateId);
         List<RoommateDTO> roommates =handler.getAllRoommates(householdId);
-        roommates.forEach(roommateDTO -> roommateDTO.add(linkTo(methodOn(HouseholdController.class).getHouseholdById(householdId)).withSelfRel()));
+        roommates.forEach(roommateDTO -> roommateDTO.add(linkTo(methodOn(RoommateController.class).getRoommate(roommateDTO.getId())).withSelfRel()));
 
         return new ResponseEntity<List<RoommateDTO>>(roommates,HttpStatus.OK);
     }

@@ -2,6 +2,7 @@ package de.reitler.app.adapter;
 
 import android.content.res.Resources;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -9,9 +10,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import de.reitler.app.R;
 import de.reitler.app.model.Household;
+import de.reitler.app.model.Roommate;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -92,7 +95,7 @@ public class HttpAdapter {
         return null;
     }
 
-    public String addUserToHousehold(String userId, String householdId){
+    public List<Roommate> addUserToHousehold(String userId, String householdId){
         String url = "http://192.168.120.3:8080/household/"+householdId+"/addRoommate";
         String bodyJSON = "";
 
@@ -113,9 +116,11 @@ public class HttpAdapter {
             if(response.code() != 200){
                 throw new IOException("Request was not successful! Statuscode: "+response.code());
             }
-            String responseBpdy =response.body().string();
-            System.out.println(responseBpdy);
-            return responseBpdy;
+            String responseBody =response.body().string();
+            mapper = new ObjectMapper();
+            List<Roommate> roommates = mapper.readValue(responseBody, new TypeReference<List<Roommate>>(){});
+            System.out.println(responseBody);
+            return roommates;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

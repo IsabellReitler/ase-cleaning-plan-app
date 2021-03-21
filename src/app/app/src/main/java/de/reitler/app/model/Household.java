@@ -41,3 +41,14 @@ public class Household {
     }
 }
 
+
+class SelfLinks{
+    @JsonProperty("self")
+    HRef self;
+}
+
+class HRef{
+    @JsonProperty("href")
+    URI href;
+}
+
