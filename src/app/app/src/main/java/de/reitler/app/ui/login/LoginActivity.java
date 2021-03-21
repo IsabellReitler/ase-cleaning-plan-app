@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import de.reitler.app.AddHousehold;
+import de.reitler.app.AddHouseholdActivity;
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
 import de.reitler.app.adapter.HttpAdapter;
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     private void redirectToCreateHousehold(FirebaseUser user) {
         HttpAdapter http = new HttpAdapter();
         http.sendUserToBackend(user);
-        Intent intent = new Intent(this, AddHousehold.class);
+        Intent intent = new Intent(this, AddHouseholdActivity.class);
         intent.putExtra(USER_ID, user.getUid());
         startActivity(intent);
     }

@@ -2,6 +2,7 @@ package de.reitler.app.adapter;
 
 import android.content.res.Resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import de.reitler.app.R;
+import de.reitler.app.model.Household;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,11 +21,12 @@ import okhttp3.Response;
 public class HttpAdapter {
 
     OkHttpClient client = new OkHttpClient();
+    ObjectMapper mapper;
 
 
     public void sendUserToBackend(FirebaseUser user){
        // String url = Resources.getSystem().getString(R.string.API_URL)+Resources.getSystem().getString(R.string.LOGIN_ENDPOINT);
-        String url = "http://192.168.120.111:8080/roommate";
+        String url = "http://192.168.120.3:8080/roommate";
         String bodyJSON = "";
 
         try {
@@ -54,8 +57,8 @@ public class HttpAdapter {
 
     }
 
-    public String createHousehold(String name){
-        String url = "http://192.168.120.111:8080/household";
+    public Household createHousehold(String name){
+        String url = "http://192.168.120.3:8080/household";
         String bodyJSON = "";
 
         try {
@@ -76,8 +79,11 @@ public class HttpAdapter {
             if(response.code() != 200){
                 throw new IOException("Request was not successful! Statuscode: "+response.code());
             }
-            System.out.println(response.body().string());
-            return response.body().string();
+            String responseBody = response.body().string();
+            System.out.println(responseBody);
+            mapper = new ObjectMapper();
+            Household household = mapper.readValue(responseBody, Household.class);
+            return household;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -87,7 +93,7 @@ public class HttpAdapter {
     }
 
     public String addUserToHousehold(String userId, String householdId){
-        String url = "http://192.168.120.111:8080/household/"+householdId+"/addRoommate";
+        String url = "http://192.168.120.3:8080/household/"+householdId+"/addRoommate";
         String bodyJSON = "";
 
         try {
@@ -107,8 +113,9 @@ public class HttpAdapter {
             if(response.code() != 200){
                 throw new IOException("Request was not successful! Statuscode: "+response.code());
             }
-            System.out.println(response.body().string());
-            return response.body().string();
+            String responseBpdy =response.body().string();
+            System.out.println(responseBpdy);
+            return responseBpdy;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

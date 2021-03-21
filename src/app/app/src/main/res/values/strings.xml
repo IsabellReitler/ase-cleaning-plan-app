@@ -22,4 +22,9 @@
     <string name="add_household">Einem Haushalt beitreten</string>
     <string name="join_household">Haushalt beitreten</string>
     <string name="create_household">Haushalt erstellen</string>
+    <string name="insert_household_name">"Bitte geben Sie einen Namen für ihren Haushalt ein: "</string>
+    <string name="household_nme_hint">Mein Haushalt</string>
+    <string name="OK">ok</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
 </resources>
