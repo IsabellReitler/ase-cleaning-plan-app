@@ -2,17 +2,13 @@ package de.reitler.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -21,12 +17,14 @@ import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.ui.dialog.CreateHouseholdDialogFragment;
 import de.reitler.app.ui.login.LoginActivity;
+import de.reitler.app.viewmodel.OverallViewModel;
 
 public class AddHouseholdActivity extends AppCompatActivity implements CreateHouseholdDialogFragment.CreateHouseholdDialogListener {
 
     HttpAdapter adapter = new HttpAdapter();
     String userId;
     String householdName;
+    OverallViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +40,7 @@ public class AddHouseholdActivity extends AppCompatActivity implements CreateHou
             @Override
             public void onClick(View v) {
                 if(adapter.addUserToHousehold(userId,input.getText().toString())!= null){
-                  redirectToApp(userId);
+                   redirectToApp(userId);
                 }
             }
         });
@@ -58,6 +56,7 @@ public class AddHouseholdActivity extends AppCompatActivity implements CreateHou
     }
 
     private void redirectToApp(String userId) {
+        viewModel = OverallViewModel.init(userId);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("USER_ID", userId);
         startActivity(intent);

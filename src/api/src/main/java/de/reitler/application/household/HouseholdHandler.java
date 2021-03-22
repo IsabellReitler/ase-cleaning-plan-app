@@ -52,7 +52,7 @@ public class HouseholdHandler {
                 .stream()
                 .map(x -> {
                     try {
-                        return new RoommateDTO(x.getId(), x.getDisplayname(),x.getEmail(),new URI(x.getPicture()));
+                        return new RoommateDTO(x.getId(), x.getDisplayname(),x.getEmail(),new URI(x.getPicture()), new HouseholdDTO(x.getHousehold().getId(), x.getHousehold().getName()),x.getHolidayMode());
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }

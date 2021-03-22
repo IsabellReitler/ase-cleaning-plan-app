@@ -45,7 +45,7 @@ public class HolidayModeController {
             RoommateDTO dto = holidayModeHandler.setHolidayMode(body.getRoommateId(), body.getEndDate());
             dto.add(linkTo(methodOn(RoommateController.class).getRoommate(dto.getId())).withSelfRel());
             return new ResponseEntity(dto, HttpStatus.OK);
-        } catch (HolidayModeException ex){
+        } catch (HolidayModeException | URISyntaxException ex){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
@@ -93,7 +93,7 @@ public class HolidayModeController {
     public HttpEntity removeHolidayMode(@PathVariable(name="id") String roommateId){
         try {
             holidayModeHandler.setHolidayMode(roommateId, null);
-        } catch (HolidayModeException ex){
+        } catch (HolidayModeException | URISyntaxException ex){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.OK);

@@ -10,11 +10,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.reitler.app.R;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
+import de.reitler.app.model.Task;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -124,6 +126,48 @@ public class HttpAdapter {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Roommate getUser(String userId) {
+        String url = "http://192.168.120.3:8080/roommate/"+userId;
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper =new ObjectMapper();
+            return mapper.readValue(response.body().string(), Roommate.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Task> getAllTasksFromHousehold(String id) {
+        String url = "http://192.168.120.3:8080/household/"+id+"/roommates";
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper = new ObjectMapper();
+            List<Roommate> roommates = mapper.readValue(response.body().string(), new TypeReference<List<Roommate>>(){});
+            Household household = roommates.get(0).getHousehold();
+            List<Task> tasks;
+            for(Roommate r: roommates){
+                url = "http://192.168.120.3:8080/roommate/"+r.getId()+"/tasks/";
+                request = new Request.Builder().url(url).build();
+                response = client.newCall(request).execute();
+                tasks = mapper.readValue(response.body().string(),new TypeReference<List<Task>>(){});
+                household.getTasks().addAll(tasks);
+            }
+            return household.getTasks();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

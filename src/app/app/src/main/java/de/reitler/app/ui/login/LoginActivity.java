@@ -2,6 +2,7 @@ package de.reitler.app.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import de.reitler.app.AddHouseholdActivity;
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
 import de.reitler.app.adapter.HttpAdapter;
+import de.reitler.app.viewmodel.OverallViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth mAuth;
     public static final String USER_ID = "USER_ID";
+    OverallViewModel viewModel;
 
 
 
@@ -82,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         if(user != null){
             HttpAdapter http = new HttpAdapter();
             http.sendUserToBackend(user);
+            viewModel = OverallViewModel.init(user.getUid());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

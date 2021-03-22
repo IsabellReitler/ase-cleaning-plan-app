@@ -1,5 +1,6 @@
 package de.reitler.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.net.URI;
@@ -12,6 +13,9 @@ public class Household {
 
     @JsonProperty("name")
     private String name;
+
+    @JsonIgnore
+    private List<Task> tasks;
 
     @JsonProperty("_links")
     private SelfLinks links;
@@ -38,6 +42,14 @@ public class Household {
 
     public void setLinks(SelfLinks links) {
         this.links = links;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }
 
