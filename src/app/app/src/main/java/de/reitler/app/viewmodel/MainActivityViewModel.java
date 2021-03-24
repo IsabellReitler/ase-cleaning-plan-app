@@ -6,15 +6,16 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import de.reitler.app.adapter.HttpAdapter;
+import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 
 public class OverallViewModel extends ViewModel {
     HttpAdapter adapter;
 
-    private MutableLiveData<Roommate> mutableLiveData;
+    private MutableLiveData<Roommate> roommate;
+    private MutableLiveData<Household> household;
     private static OverallViewModel myViewModel;
-    private static String id;
 
     private OverallViewModel(String userId) {
         adapter = new HttpAdapter();
@@ -26,8 +27,8 @@ public class OverallViewModel extends ViewModel {
 
     private void RequestInformation(String userId) {
         Roommate roommate = adapter.getUser(userId);
-        List<Task> tasks = adapter.getAllTasksFromHousehold(roommate.getHousehold().getId());
-        roommate.getHousehold().setTasks(tasks);
+       // List<Task> tasks = adapter.getAllTasksFromHousehold(roommate.getHousehold().getId());
+        //roommate.getHousehold().setTasks(tasks);
         mutableLiveData.setValue(roommate);
     }
 
