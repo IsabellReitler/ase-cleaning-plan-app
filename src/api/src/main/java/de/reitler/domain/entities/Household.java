@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Entity
@@ -42,12 +43,18 @@ public class Household {
         this.name = name;
     }
 
-    public Roommate getRoommate(String id){
-        return roommates
-                .stream()
-                .filter(roommate -> roommate.getId() ==id)
-                .findFirst()
-                .get();
+    public Roommate getRoommate(String id) {
+        Roommate r;
+        try {
+            r = roommates
+                    .stream()
+                    .filter(roommate -> roommate.getId().equals(id))
+                    .findFirst()
+                    .get();
+        } catch (NoSuchElementException ex){
+            r = null;
+        }
+        return r;
     }
 
     @OneToMany(mappedBy = "household",fetch = FetchType.LAZY/*cascade = CascadeType.ALL*/)

@@ -4,6 +4,7 @@ import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.services.HouseholdService;
 
+import de.reitler.domain.services.RoommateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,10 @@ public class HouseholdHandler {
     @Autowired
     HouseholdService service;
 
+    @Autowired
+    RoommateService roommateService;
 
-    public HouseholdHandler(){
+    public HouseholdHandler() {
     }
 
     public HouseholdDTO createHousehold(HouseholdDTO body) {
@@ -29,12 +32,12 @@ public class HouseholdHandler {
         return new HouseholdDTO(output.getId().toString(), output.getName());
     }
 
-    public HouseholdDTO getHousehold(String id){
+    public HouseholdDTO getHousehold(String id) {
         Household household = service.getById(id);
         return new HouseholdDTO(household.getId().toString(), household.getName());
     }
 
-    public HouseholdDTO update(HouseholdDTO household){
+    public HouseholdDTO update(HouseholdDTO household) {
         Household newHousehold = new Household();
         newHousehold.setId(household.getId());
         newHousehold.setName(household.getName());
@@ -42,31 +45,42 @@ public class HouseholdHandler {
         return new HouseholdDTO(result.getId(), result.getName());
     }
 
-    public void deleteHousehold(String householdId){
+    public void deleteHousehold(String householdId) {
         service.delete(householdId);
     }
 
-    public List<RoommateDTO> getAllRoommates(String id){
+    public List<RoommateDTO> getAllRoommates(String id) {
         return service
                 .getAllRoommates(id)
                 .stream()
                 .map(x -> {
                     try {
-                        return new RoommateDTO(x.getId(), x.getDisplayname(),x.getEmail(),new URI(x.getPicture()), new HouseholdDTO(x.getHousehold().getId(), x.getHousehold().getName()),x.getHolidayMode());
+                        return new RoommateDTO(x.getId(), x.getDisplayname(), x.getEmail(), new URI(x.getPicture()), x.getHolidayMode());
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-                return null;
+                    return null;
                 })
                 .collect(Collectors.toList());
     }
 
-    public List<RoommateDTO> addRoommate(String householdId, String roommateId){
+    public List<RoommateDTO> addRoommate(String householdId, String roommateId) {
         service.addRoommate(householdId, roommateId);
         return getAllRoommates(householdId);
     }
 
-    public void removeRoommate(String householdId, String roommateId){
-        service.removeRoommate(householdId,roommateId);
+    public void removeRoommate(String householdId, String roommateId) {
+        service.removeRoommate(householdId, roommateId);
+    }
+
+    public HouseholdDTO findHouseholdFromRoommate(String roommateId) {
+        List<Household> households = service.getAllHouseholds();
+        for (Household household : households) {
+            if (household.getRoommate(roommateId) != null) {
+                return new HouseholdDTO(household.getId(), household.getName());
+            }
+
+        }
+        return null;
     }
 }

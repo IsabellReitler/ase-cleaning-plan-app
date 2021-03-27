@@ -2,10 +2,13 @@ package de.reitler.app.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -22,11 +25,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import de.reitler.app.AddHouseholdActivity;
+import de.reitler.app.ui.add_household.AddHouseholdActivity;
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
-import de.reitler.app.adapter.HttpAdapter;
-import de.reitler.app.viewmodel.OverallViewModel;
+import de.reitler.app.model.Household;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
@@ -34,13 +36,16 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     private FirebaseAuth mAuth;
     public static final String USER_ID = "USER_ID";
-    OverallViewModel viewModel;
+    LoginViewModel loginViewModel;
+    SignInViewModel signInViewModel;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        signInViewModel = ViewModelProviders.of(this).get(SignInViewModel.class);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
         {
@@ -83,17 +88,36 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void redirectToApp(FirebaseUser user){
         if(user != null){
-            HttpAdapter http = new HttpAdapter();
-            http.sendUserToBackend(user);
-            viewModel = OverallViewModel.init(user.getUid());
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+
+            loginViewModel.init();
+            loginViewModel.getHousehold().observe(this, new Observer<Household>() {
+                @Override
+                public void onChanged(Household household) {
+                    startMainActivity(household.getId(), user.getUid());
+                    loginViewModel.getHousehold().removeObserver(this);
+                }
+            });
+            loginViewModel.findHouseholdFromRoommate(user.getUid());
+
         }
     }
 
+    private void startMainActivity(String household, String user) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("USER_ID", user);
+                intent.putExtra("HOUSEHOLD_ID", household);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void redirectToCreateHousehold(FirebaseUser user) {
-        HttpAdapter http = new HttpAdapter();
-        http.sendUserToBackend(user);
+        signInViewModel.init();
+        signInViewModel.createRoommate(user.getUid(), user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString());
         Intent intent = new Intent(this, AddHouseholdActivity.class);
         intent.putExtra(USER_ID, user.getUid());
         startActivity(intent);

@@ -60,7 +60,6 @@ public class RoommateController {
     @PostMapping
     public HttpEntity createRoommate(@RequestBody RoommateDTO body){
         RoommateDTO account = handler.create(body);
-        account.add(linkTo(methodOn(RoommateController.class).getRoommate(account.getId())).withSelfRel());
         if(account != null){
             return new ResponseEntity<RoommateDTO>(account, HttpStatus.OK);
         }
@@ -69,7 +68,7 @@ public class RoommateController {
 
     @DeleteMapping("/{id}")
     public HttpEntity deleteRoommate(@PathVariable(name = "id") String id){
-        //TODO
+        //ToDo
         return null;
     }
 
@@ -82,7 +81,6 @@ public class RoommateController {
             e.printStackTrace();
         }
         if(roommate!= null){
-           roommate.add(linkTo(methodOn(RoommateController.class).getRoommate(roommate.getId())).withSelfRel());
            return new ResponseEntity<RoommateDTO>(roommate, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

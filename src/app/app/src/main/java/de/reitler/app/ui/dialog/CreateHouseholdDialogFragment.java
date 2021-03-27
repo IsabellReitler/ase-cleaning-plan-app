@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import de.reitler.app.AddHouseholdActivity;
+import de.reitler.app.ui.add_household.AddHouseholdActivity;
 import de.reitler.app.R;
 
 public class CreateHouseholdDialogFragment extends DialogFragment implements TextView.OnEditorActionListener {

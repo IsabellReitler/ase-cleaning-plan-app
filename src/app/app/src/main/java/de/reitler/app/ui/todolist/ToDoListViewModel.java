@@ -4,16 +4,24 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ToDoListViewModel extends ViewModel {
+import java.util.List;
 
-    private MutableLiveData<String> mText;
+import de.reitler.app.model.Task;
+
+public class ToDoListViewModel extends ViewModel {
+    
+
+    private LiveData<String> roommateId;
 
     public ToDoListViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        roommateId = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getRoommateId() {
+        return roommateId;
+    }
+
+    public void setRoommateId(String roommateId) {
+
     }
 }

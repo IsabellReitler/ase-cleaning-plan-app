@@ -12,7 +12,9 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
 
     ViewModel viewModel;
 
-    public DailyToDoListAdapter(ViewModel viewModel){}
+    public DailyToDoListAdapter(ViewModel viewModel){
+        viewModel = viewModel;
+    }
 
     @NonNull
     @Override

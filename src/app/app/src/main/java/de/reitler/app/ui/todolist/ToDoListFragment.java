@@ -11,31 +11,37 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import de.reitler.app.MainActivity;
 import de.reitler.app.R;
+import de.reitler.app.apiservice.HttpAdapter;
 import de.reitler.app.ui.todolist.daily.DailyToDoListFragment;
 import de.reitler.app.ui.todolist.weekly.WeeklyToDoListFragment;
+import de.reitler.app.viewmodel.MainActivityViewModel;
 
 public class ToDoListFragment extends Fragment {
 
-    private ToDoListViewModel toDoListViewModel;
+    private MainActivityViewModel mainActivityViewModel;
     private View view;
+    private String roommateId;
+    private HttpAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        toDoListViewModel =
-                new ViewModelProvider(this).get(ToDoListViewModel.class);
+
+        MainActivity activity = (MainActivity) this.getActivity();
+        roommateId = activity.userId;
+        //toDoListViewModel.setRoommateId(activity.viewModel.getUser().getValue().getId());
         view = inflater.inflate(R.layout.fragment_todolist, container, false);
-        toDoListViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        /*toDoListViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
             }
-        });
+        });*/
         return view;
     }
 

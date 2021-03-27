@@ -4,42 +4,53 @@ import androidx.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Calendar;
 
 public class Task {
-    @JsonProperty("id")
+    @SerializedName("id")
+    @Expose
     private String id;
 
-    @JsonProperty("title")
+    @SerializedName("title")
+    @Expose
     private String title;
 
-    @JsonProperty("description")
+    @SerializedName("description")
+    @Expose
     private String description;
 
-    @JsonProperty("starts_at")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @SerializedName("starts_at")
+    @Expose
+   // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar startsAt;
 
     @Nullable
-    @JsonProperty("deadline")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @SerializedName("deadline")
+    @Expose
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar deadline;
 
     @Nullable
-    @JsonProperty("done_at")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @SerializedName("done_at")
+    @Expose
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar doneAt;
 
     @Nullable
-    @JsonProperty("time_interval")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @SerializedName("time_interval")
+    @Expose
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar timeInterval; //null or 0 if task isn't repetitve
 
-    @JsonProperty("switch_roommate")
+    @SerializedName("switch_roommate")
+    @Expose
     private boolean switchRoommate; //null or 0 if task isn't repetitve
 
-    @JsonProperty("roommate")
+    @SerializedName("roommate")
+    @Expose
     private String roommate;
 
     public Task(){

@@ -25,7 +25,6 @@ public class TaskController {
     @PostMapping
     public HttpEntity createTask(@RequestBody TaskDTO task){
         TaskDTO dto = handler.create(task);
-        dto.add(linkTo(methodOn(TaskController.class).getTaskById(task.getId())).withSelfRel());
         return new ResponseEntity(dto, HttpStatus.OK);
     }
     
@@ -39,7 +38,6 @@ public class TaskController {
     public HttpEntity updateTask(@PathVariable("id") int taskId , @RequestBody TaskDTO task ) {
         TaskDTO dto = handler.update(task);
         if(dto != null){
-            dto.add(linkTo(methodOn(TaskController.class).getTaskById(dto.getId())).withSelfRel());
             return new ResponseEntity<TaskDTO>(dto, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

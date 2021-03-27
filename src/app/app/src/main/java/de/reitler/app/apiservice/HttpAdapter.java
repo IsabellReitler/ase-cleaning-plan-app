@@ -1,6 +1,4 @@
-package de.reitler.app.adapter;
-
-import android.content.res.Resources;
+package de.reitler.app.apiservice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.reitler.app.R;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
@@ -146,6 +143,22 @@ public class HttpAdapter {
         return null;
     }
 
+    public Household getHousehold(String householdId) {
+        String url = "http://192.168.120.3:8080/household/"+householdId;
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper =new ObjectMapper();
+            return mapper.readValue(response.body().string(), Household.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Task> getAllTasksFromHousehold(String id) {
         String url = "http://192.168.120.3:8080/household/"+id+"/roommates";
         Request request = new Request.Builder().url(url).build();
@@ -156,16 +169,84 @@ public class HttpAdapter {
             }
             mapper = new ObjectMapper();
             List<Roommate> roommates = mapper.readValue(response.body().string(), new TypeReference<List<Roommate>>(){});
-            Household household = roommates.get(0).getHousehold();
-            List<Task> tasks;
+            List<Task> tasks = new ArrayList<>();
             for(Roommate r: roommates){
                 url = "http://192.168.120.3:8080/roommate/"+r.getId()+"/tasks/";
                 request = new Request.Builder().url(url).build();
                 response = client.newCall(request).execute();
-                tasks = mapper.readValue(response.body().string(),new TypeReference<List<Task>>(){});
-                household.getTasks().addAll(tasks);
+                tasks.addAll(mapper.readValue(response.body().string(),new TypeReference<List<Task>>(){}));
             }
-            return household.getTasks();
+            return tasks;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Task> getAllDailyTasksFromRoommate(String roommateId){
+        String url = "http://192.168.120.3:8080/roommate/"+roommateId+"/tasks/daily";
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper = new ObjectMapper();
+            List<Task> tasks = mapper.readValue(response.body().string(), new TypeReference<List<Task>>(){});
+            return tasks;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Task> getAllWeeklyTasksFromRoommate(String roommateId){
+        String url = "http://192.168.120.3:8080/roommate/"+roommateId+"/tasks/weekly";
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper = new ObjectMapper();
+            List<Task> tasks = mapper.readValue(response.body().string(), new TypeReference<List<Task>>(){});
+            return tasks;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Task> getAllTasksFromRoommate(String roommateId){
+        String url = "http://192.168.120.3:8080/roommate/"+roommateId+"/tasks";
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper = new ObjectMapper();
+            List<Task> tasks = mapper.readValue(response.body().string(), new TypeReference<List<Task>>(){});
+            return tasks;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Household findHouseholdFromRoommate(String roommateId){
+        String url = "http://192.168.120.3:8080/household/withRoommate/"+roommateId;
+        Request request = new Request.Builder().url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() != 200){
+                throw new IOException("Request was not successful! Statuscode"+response.code());
+            }
+            mapper = new ObjectMapper();
+            String responseBody = response.body().string();
+            System.out.println("ResponseBody: "+responseBody);
+            Household household = mapper.readValue(responseBody, new TypeReference<Household>(){});
+            return household;
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,7 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Calendar;
 
-public class HolidayModeDTO extends RepresentationModel<HolidayModeDTO> {
+public class HolidayModeDTO {
     @JsonProperty("roommate_id")
     private String roommateId;
 

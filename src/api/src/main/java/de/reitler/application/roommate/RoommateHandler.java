@@ -65,10 +65,10 @@ public class RoommateHandler {
     public List<TaskDTO> getAllDailyTasks(String id) {
         List<Task> dailyTasks = roommateService.getAllTasks(id);
         Calendar endOfDay = Calendar.getInstance();
-        endOfDay.set(Calendar.HOUR_OF_DAY, 0);
-        endOfDay.set(Calendar.MINUTE, 0);
-        endOfDay.set(Calendar.SECOND, 0);
-        endOfDay.set(Calendar.MILLISECOND, 0);
+        endOfDay.set(Calendar.HOUR_OF_DAY, 23);
+        endOfDay.set(Calendar.MINUTE, 59);
+        endOfDay.set(Calendar.SECOND, 59);
+        endOfDay.set(Calendar.MILLISECOND, 999);
         return dailyTasks
                 .stream()
                 .filter(x -> x.getDeadline().compareTo(endOfDay) < 0)

@@ -1,55 +1,74 @@
 package de.reitler.app.viewmodel;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import de.reitler.app.adapter.HttpAdapter;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
+import de.reitler.app.repositories.HouseholdRepository;
+import de.reitler.app.repositories.RoommateRepository;
+import de.reitler.app.repositories.TaskRepository;
 
-public class OverallViewModel extends ViewModel {
-    HttpAdapter adapter;
+public class MainActivityViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Roommate> roommate;
-    private MutableLiveData<Household> household;
-    private static OverallViewModel myViewModel;
+    LiveData<Roommate> user;
+    LiveData<Household> household;
+    LiveData<List<Task>> dailyTask;
+    LiveData<List<Task>> weeklyTask;
 
-    private OverallViewModel(String userId) {
-        adapter = new HttpAdapter();
-        if(mutableLiveData == null){
-            mutableLiveData =new MutableLiveData<>();
-        }
-        RequestInformation(userId);
+    RoommateRepository roommateRepository;
+    HouseholdRepository householdRepository;
+    TaskRepository taskRepository;
+
+    public MainActivityViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    private void RequestInformation(String userId) {
-        Roommate roommate = adapter.getUser(userId);
-       // List<Task> tasks = adapter.getAllTasksFromHousehold(roommate.getHousehold().getId());
-        //roommate.getHousehold().setTasks(tasks);
-        mutableLiveData.setValue(roommate);
+    public void init(){
+        roommateRepository = new RoommateRepository();
+        householdRepository = new HouseholdRepository();
+        taskRepository = new TaskRepository();
+        user = roommateRepository.getRoommateMutableLiveData();
+        household = householdRepository.getHouseholdMutableLiveData();
+        dailyTask = roommateRepository.getDailyTasksMutableLiveData();
+        weeklyTask = roommateRepository.getWeeklyTasksMutableLiveData();
     }
 
-    public static synchronized OverallViewModel getInstance() {
-        if (myViewModel == null) {
-            throw new AssertionError("You have to call init first");
-        }
-
-        return myViewModel;
+    public void getRoommateInfo(String roommate){
+        roommateRepository.getRoommate(roommate);
     }
 
-    public static synchronized OverallViewModel init(String userId) {
-        if(id != null) {
-            throw new AssertionError("You already initialized me");
-        }
-        myViewModel = new OverallViewModel(userId);
-        return myViewModel;
+    public void getHouseholdInfo(String household){
+        householdRepository.getHouseholdById(household);
     }
 
-    public MutableLiveData<Roommate> getData(){
-        return mutableLiveData;
+    public void getDailyTasksInfo(String roommateId){
+        roommateRepository.getTasksFromRoommate(roommateId);
     }
 
+    public void getWeeklyTaskInfo(String roommateId){
+        roommateRepository.getWeeklyTasksFromRoommate(roommateId);
+    }
+
+    public LiveData<Roommate> getUser() {
+        return user;
+    }
+
+    public LiveData<Household> getHousehold() {
+        return household;
+    }
+
+    public LiveData<List<Task>> getDailyTask() {
+        return dailyTask;
+    }
+
+    public LiveData<List<Task>> getWeeklyTask() {
+        return weeklyTask;
+    }
 }

@@ -43,7 +43,6 @@ public class HolidayModeController {
     public HttpEntity setHolidayMode(@RequestBody HolidayModeDTO body){
         try {
             RoommateDTO dto = holidayModeHandler.setHolidayMode(body.getRoommateId(), body.getEndDate());
-            dto.add(linkTo(methodOn(RoommateController.class).getRoommate(dto.getId())).withSelfRel());
             return new ResponseEntity(dto, HttpStatus.OK);
         } catch (HolidayModeException | URISyntaxException ex){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

@@ -7,7 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Calendar;
 
-public class TaskDTO extends RepresentationModel<TaskDTO> {
+public class TaskDTO {
 
     @JsonProperty("id")
     private String id;

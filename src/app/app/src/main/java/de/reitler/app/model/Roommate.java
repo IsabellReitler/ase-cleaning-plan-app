@@ -2,26 +2,41 @@ package de.reitler.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.net.URI;
+import java.util.Calendar;
 import java.util.List;
 
 public class Roommate {
 
-    @JsonProperty("id")
+    @SerializedName("id")
+    @Expose
     private String id;
-    @JsonProperty("display_name")
+
+    @SerializedName("display_name")
+    @Expose
     private String name;
-    @JsonProperty("email")
+
+    @SerializedName("email")
+    @Expose
     private String email;
-    @JsonProperty("picture")
+
+    @SerializedName("picture")
+    @Expose
     private URI picture;
-    @JsonIgnore
-    private Household household;
-    @JsonProperty("holiday_mode")
+
+    @SerializedName("holiday_mode")
+    @Expose
     private boolean holidaymode;
-    @JsonProperty("links")
-    private List<Link> links;
+
+    public Roommate(String id, String displayName, String email, String picture) {
+        this.id = id;
+        this.name = displayName;
+        this.email = email;
+        this.picture = URI.create(picture);
+    }
 
     public String getId() {
         return id;
@@ -55,14 +70,6 @@ public class Roommate {
         this.picture = picture;
     }
 
-    public Household getHousehold() {
-        return household;
-    }
-
-    public void setHousehold(Household household) {
-        this.household = household;
-    }
-
     public boolean isHolidaymode() {
         return holidaymode;
     }
@@ -71,19 +78,5 @@ public class Roommate {
         this.holidaymode = holidaymode;
     }
 
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
 }
 
-class Link{
-    @JsonProperty("rel")
-    String relation;
-
-    @JsonProperty("href")
-    URI href;
-}

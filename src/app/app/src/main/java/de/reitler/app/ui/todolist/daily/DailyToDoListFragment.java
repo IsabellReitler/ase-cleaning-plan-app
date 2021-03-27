@@ -12,7 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import de.reitler.app.MainActivity;
 import de.reitler.app.R;
+import de.reitler.app.apiservice.HttpAdapter;
+import de.reitler.app.model.Task;
 
 public class DailyToDoListFragment extends Fragment {
 
@@ -31,7 +36,11 @@ public class DailyToDoListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        MainActivity activity = (MainActivity) this.getActivity();
+        HttpAdapter httpAdapter = new HttpAdapter();
+       // List<Task> tasks = httpAdapter.getAllDailyTasksFromRoommate(activity.viewModel.getUser().getValue().getId());
         mViewModel = new ViewModelProvider(this).get(DailyToDoListViewModel.class);
+       // mViewModel.setTasks(tasks);
         // TODO: Use the ViewModel
     }
 

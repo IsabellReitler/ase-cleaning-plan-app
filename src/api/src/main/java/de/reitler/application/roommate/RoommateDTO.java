@@ -10,7 +10,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Calendar;
 
-public class RoommateDTO extends RepresentationModel<RoommateDTO> {
+public class RoommateDTO {
 
     @JsonProperty("id")
     private String id;
@@ -24,9 +24,6 @@ public class RoommateDTO extends RepresentationModel<RoommateDTO> {
     @JsonProperty("picture")
     private String picture;
 
-    @JsonProperty("household")
-    private HouseholdDTO household;
-
     @JsonProperty("holiday_mode")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Calendar holidayMode;
@@ -39,13 +36,12 @@ public class RoommateDTO extends RepresentationModel<RoommateDTO> {
         this.picture = picture.toString();
     }
 
-    public RoommateDTO(String id, String displayName, String email, URI picture, HouseholdDTO household, Calendar holidayMode){
+    public RoommateDTO(String id, String displayName, String email, URI picture, Calendar holidayMode){
         this.id = id;
         this.displayName = displayName;
         this.email = email;
         this.picture = picture.toString();
         this.holidayMode = holidayMode;
-        this.household = household;
     }
 
 
