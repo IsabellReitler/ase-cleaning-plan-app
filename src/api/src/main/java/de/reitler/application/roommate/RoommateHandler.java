@@ -57,7 +57,7 @@ public class RoommateHandler {
         List<Task> tasks = roommateService.getAllTasks(id);
         return tasks
                 .stream()
-                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
+                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(),x.getDoneAt(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
 
     }

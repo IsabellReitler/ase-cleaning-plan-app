@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +23,9 @@ import de.reitler.app.ui.todolist.RecyclerViewHolder;
 public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
     List<Task> tasks = new ArrayList<>();
+    public static final String TIMESTAMP_PATTERN
+            = "dd.MM. HH:mm";
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_PATTERN);
 
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
@@ -47,7 +52,8 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
         boolean done = tasks.get(position).getDoneAt()==null?false:true;
         holder.getChecked().setChecked(done);
         holder.getTitle().setText(tasks.get(position).getTitle());
-        //holder.getDeadline().setText(tasks.get(position).getDeadline().toString());
+        if (tasks.get(position).getDeadline() != null)
+            holder.getDeadline().setText(dateFormat.format(tasks.get(position).getDeadline()));
 
     }
 
