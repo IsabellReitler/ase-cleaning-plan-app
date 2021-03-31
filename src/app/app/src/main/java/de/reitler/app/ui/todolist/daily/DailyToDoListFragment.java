@@ -1,12 +1,14 @@
 package de.reitler.app.ui.todolist.daily;
 
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,32 +18,56 @@ import java.util.List;
 
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
-import de.reitler.app.apiservice.HttpAdapter;
 import de.reitler.app.model.Task;
+import de.reitler.app.viewmodel.MainActivityViewModel;
 
 public class DailyToDoListFragment extends Fragment {
 
-    private DailyToDoListViewModel mViewModel;
+    private MainActivityViewModel mViewModel;
+    private DailyToDoListAdapter adapter;
+    private View view;
+    MainActivity activity;
 
     public static DailyToDoListFragment newInstance() {
         return new DailyToDoListFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_daily_todolist, container, false);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new DailyToDoListAdapter();
+        activity = (MainActivity) getActivity();
+        mViewModel = MainActivityViewModel.getInstance(activity.application);
+
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        MainActivity activity = (MainActivity) this.getActivity();
-        HttpAdapter httpAdapter = new HttpAdapter();
-       // List<Task> tasks = httpAdapter.getAllDailyTasksFromRoommate(activity.viewModel.getUser().getValue().getId());
-        mViewModel = new ViewModelProvider(this).get(DailyToDoListViewModel.class);
-       // mViewModel.setTasks(tasks);
-        // TODO: Use the ViewModel
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_daily_todolist, container, false);
+        RecyclerView tasksView = view.findViewById(R.id.daily_recyclerview);
+        tasksView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mViewModel.getDailyTask().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                adapter.setTasks(tasks);
+                System.out.println("Tasks "+tasks);
+            }
+        });
+        mViewModel.getDailyTasksInfo(activity.userId);
+        tasksView.setAdapter(adapter);
+        return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mViewModel.getDailyTasksInfo(activity.userId);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.getDailyTasksInfo(activity.userId);
+    }
 }

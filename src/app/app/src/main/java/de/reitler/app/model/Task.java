@@ -2,12 +2,13 @@ package de.reitler.app.model;
 
 import androidx.annotation.Nullable;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.OptionalDataException;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Task {
     @SerializedName("id")
@@ -24,32 +25,28 @@ public class Task {
 
     @SerializedName("starts_at")
     @Expose
-   // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar startsAt;
+    private Date startsAt;
 
     @Nullable
     @SerializedName("deadline")
     @Expose
-    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar deadline;
+    private Date deadline;
 
     @Nullable
     @SerializedName("done_at")
     @Expose
-    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar doneAt;
+    private Date doneAt;
 
     @Nullable
     @SerializedName("time_interval")
     @Expose
-    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar timeInterval; //null or 0 if task isn't repetitve
+    private Date timeInterval; //null or 0 if task isn't repetitve
 
     @SerializedName("switch_roommate")
     @Expose
     private boolean switchRoommate; //null or 0 if task isn't repetitve
 
-    @SerializedName("roommate")
+    @SerializedName("roommateID")
     @Expose
     private String roommate;
 
@@ -57,7 +54,7 @@ public class Task {
 
     }
 
-    public Task(String id, String title, String description, Calendar startsAt, Calendar deadline, String roommateId){
+    public Task(String id, String title, String description, Date startsAt, Date deadline, String roommateId){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -67,7 +64,7 @@ public class Task {
         this.switchRoommate = false;
     }
 
-    public Task(String id, String title, String description, Calendar startsAt, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {
+    public Task(String id, String title, String description, Date startsAt, Date doneAt, Date timeInterval, boolean switchRoommate, String roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -78,7 +75,7 @@ public class Task {
         this.roommate = roommate;
     }
 
-    public Task(String id, String title, String description, Calendar startsAt, Calendar deadline, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {
+    public Task(String id, String title, String description, Date startsAt, Date deadline, Date doneAt, Date timeInterval, boolean switchRoommate, String roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -114,35 +111,35 @@ public class Task {
         this.description = description;
     }
 
-    public Calendar getStartsAt() {
+    public Date getStartsAt() {
         return startsAt;
     }
 
-    public void setStartsAt(Calendar startsAt) {
+    public void setStartsAt(Date startsAt) {
         this.startsAt = startsAt;
     }
 
-    public Calendar getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Calendar deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
-    public Calendar getDoneAt() {
+    public Date getDoneAt() {
         return doneAt;
     }
 
-    public void setDoneAt(Calendar doneAt) {
+    public void setDoneAt(Date doneAt) {
         this.doneAt = doneAt;
     }
 
-    public Calendar getTimeInterval() {
+    public Date getTimeInterval() {
         return timeInterval;
     }
 
-    public void setTimeInterval(Calendar timeInterval) {
+    public void setTimeInterval(Date timeInterval) {
         this.timeInterval = timeInterval;
     }
 

@@ -40,7 +40,7 @@ public class TaskDTO {
     @JsonProperty("switch_roommate")
     private boolean switchRoommate; //null or 0 if task isn't repetitve
 
-    @JsonProperty("roommate")
+    @JsonProperty("roommateID")
     private String roommate;
 
     public TaskDTO(){

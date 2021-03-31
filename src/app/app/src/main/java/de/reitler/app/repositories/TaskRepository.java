@@ -2,6 +2,9 @@ package de.reitler.app.repositories;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import de.reitler.app.apiservice.HouseholdService;
 import de.reitler.app.apiservice.TaskService;
 import de.reitler.app.model.Task;
@@ -23,11 +26,14 @@ public class TaskRepository {
         taskMutableLiveData = new MutableLiveData<>();
 
         OkHttpClient client = new OkHttpClient.Builder().build();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
 
         taskService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(TaskService.class);
 

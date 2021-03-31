@@ -1,5 +1,6 @@
 package de.reitler.app;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public String userId;
     public String householdId;
     public MainActivityViewModel viewModel;
+    public Application application;
 
     TextView navHeaderEmail;
     TextView navHeaderTitle;
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+        application = getApplication();
+        viewModel = MainActivityViewModel.getInstance(application);
         Intent intent = getIntent();
         userId = intent.getStringExtra("USER_ID");
         householdId = intent.getStringExtra("HOUSEHOLD_ID");

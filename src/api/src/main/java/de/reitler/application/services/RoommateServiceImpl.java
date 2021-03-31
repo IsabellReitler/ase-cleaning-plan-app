@@ -38,7 +38,7 @@ public class RoommateServiceImpl implements RoommateService {
     }
 
     public Roommate getById(String id){
-        return repository.getOne(id);
+        return repository.findById(id).get();
     }
 
     @Override

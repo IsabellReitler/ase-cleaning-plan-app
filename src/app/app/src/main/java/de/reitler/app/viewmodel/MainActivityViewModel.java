@@ -17,6 +17,8 @@ import de.reitler.app.repositories.TaskRepository;
 
 public class MainActivityViewModel extends AndroidViewModel {
 
+    private static MainActivityViewModel viewModel;
+
     LiveData<Roommate> user;
     LiveData<Household> household;
     LiveData<List<Task>> dailyTask;
@@ -26,9 +28,10 @@ public class MainActivityViewModel extends AndroidViewModel {
     HouseholdRepository householdRepository;
     TaskRepository taskRepository;
 
-    public MainActivityViewModel(@NonNull Application application) {
+    private MainActivityViewModel(@NonNull Application application) {
         super(application);
     }
+
 
     public void init(){
         roommateRepository = new RoommateRepository();
@@ -40,6 +43,13 @@ public class MainActivityViewModel extends AndroidViewModel {
         weeklyTask = roommateRepository.getWeeklyTasksMutableLiveData();
     }
 
+    public static MainActivityViewModel getInstance(Application application){
+        if(viewModel == null){
+            viewModel = new MainActivityViewModel(application);
+        }
+        return viewModel;
+    }
+
     public void getRoommateInfo(String roommate){
         roommateRepository.getRoommate(roommate);
     }
@@ -49,7 +59,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void getDailyTasksInfo(String roommateId){
-        roommateRepository.getTasksFromRoommate(roommateId);
+        roommateRepository.getDailyTasksFromRoommate(roommateId);
     }
 
     public void getWeeklyTaskInfo(String roommateId){

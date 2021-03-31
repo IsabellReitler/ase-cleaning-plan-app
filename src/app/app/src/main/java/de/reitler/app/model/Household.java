@@ -1,12 +1,8 @@
 package de.reitler.app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.net.URI;
-import java.util.List;
 
 public class Household {
 

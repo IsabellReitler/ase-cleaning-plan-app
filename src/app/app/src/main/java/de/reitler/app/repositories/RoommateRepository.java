@@ -2,13 +2,15 @@ package de.reitler.app.repositories;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.Calendar;
 import java.util.List;
 
 import de.reitler.app.apiservice.HolidayService;
 import de.reitler.app.apiservice.RoommateRequestBody;
 import de.reitler.app.apiservice.RoommateService;
-import de.reitler.app.model.HolidayMode;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 import okhttp3.OkHttpClient;
@@ -37,17 +39,22 @@ public class RoommateRepository {
         weeklyTasksMutableLiveData = new MutableLiveData<>();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.level(HttpLoggingInterceptor.Level.BODY);
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
         holidayService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(HolidayService.class);
         roommateService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(RoommateService.class);
     }
