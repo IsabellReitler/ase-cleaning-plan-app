@@ -24,7 +24,7 @@ public class HolidayModeHandler {
     HouseholdService householdService;
 
     public RoommateDTO setHolidayMode(String id, Calendar endDate) throws HolidayModeException, URISyntaxException {
-        if(isHolidayModeExpired(endDate)){
+        if(endDate != null && isHolidayModeExpired(endDate)){
           throw new HolidayModeException("The date can't be in the past");
         }
         Roommate roommate = roommateService.getById(id);

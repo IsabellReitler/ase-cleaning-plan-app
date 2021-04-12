@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
+import de.reitler.app.model.Task;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -37,5 +38,8 @@ public interface HouseholdService {
 
     @GET("/household/withRoommate/{roommateId}")
     Call<Household> getHouseholdFromRoommate(@Path("roommateId") String roommateId);
+
+    @GET("/household/{id}/allTasks")
+    Call<List<Task>> getAllTasksFromHousehold(@Path("id") String id);
 }
 

@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                System.out.println(roommate);
                 navHeaderTitle.setText(roommate.getName());
                 navHeaderEmail.setText(roommate.getEmail());
             }

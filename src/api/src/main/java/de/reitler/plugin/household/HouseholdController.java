@@ -4,7 +4,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import de.reitler.application.household.HouseholdDTO;
 import de.reitler.application.household.HouseholdHandler;
+import de.reitler.application.roommate.RoommateHandler;
 import de.reitler.application.roommate.RoommateDTO;
+import de.reitler.application.tasks.TaskDTO;
 import de.reitler.plugin.roommate.RoommateController;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,9 @@ public class HouseholdController {
 
     @Autowired
     HouseholdHandler handler;
+
+    @Autowired
+    RoommateHandler roommateHandler;
 
     @PostMapping
     public HttpEntity createHousehold(@RequestBody HouseholdDTO household){
@@ -43,6 +49,16 @@ public class HouseholdController {
     public HttpEntity getHouseholdById(@PathVariable(name = "id") String id){
         HouseholdDTO household = handler.getHousehold(id);
         return new ResponseEntity<HouseholdDTO>(household, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/allTasks")
+    public HttpEntity getAllTasks(@PathVariable(name = "id") String id){
+        List<TaskDTO> tasks = new ArrayList<>();
+        List<RoommateDTO> roommates = handler.getAllRoommates(id);
+        for(RoommateDTO r : roommates){
+            tasks.addAll(roommateHandler.getAllTasks(r.getId()));
+        }
+        return new ResponseEntity<List<TaskDTO>>(tasks, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

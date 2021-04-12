@@ -1,23 +1,35 @@
 package de.reitler.app.ui.household;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
-
-public class HouseholdViewModel extends ViewModel {
-
-    private MutableLiveData<String> mHousehold = new MutableLiveData<>();
-    private MutableLiveData<List<Roommate>> mRoommates= new MutableLiveData<>();
-    private MutableLiveData<List<Task>> mTasks= new MutableLiveData<>();
+import de.reitler.app.repositories.HouseholdRepository;
 
 
-    public MutableLiveData<String> getmHousehold() {
+public class HouseholdViewModel extends AndroidViewModel {
 
-        return mHousehold;
+    private LiveData<List<Task>> allTasksFromHousehold;
+    private HouseholdRepository householdRepository;
+
+    public HouseholdViewModel(@NonNull Application application) {
+        super(application);
+        householdRepository = new HouseholdRepository();
+        allTasksFromHousehold = householdRepository.getAllTasksFromHousehold();
+    }
+
+    public void getAllTasksFromHouseholdLiveData(String householdId){
+        householdRepository.getAllTasksFromHousehold(householdId);
+        System.out.println("All Tasks From Household: "+allTasksFromHousehold.getValue());
+    }
+
+    public LiveData<List<Task>> getAllTasksFromHousehold() {
+        return allTasksFromHousehold;
     }
 }

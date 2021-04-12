@@ -1,6 +1,7 @@
 package de.reitler.app.ui.household;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,28 @@ import com.google.android.material.circularreveal.cardview.CircularRevealCardVie
 
 public class RoommateViewHolder extends RecyclerView.ViewHolder {
 
-    private CircularRevealCardView picture;
+  //  private ImageView picture;
     private TextView name;
 
-    public RoommateViewHolder(CircularRevealCardView picture,TextView name, View view) {
+    public RoommateViewHolder(TextView name, View view) {
         super(view);
-        this.picture = picture;
+       // this.picture = picture;
+        this.name = name;
+    }
+
+    //public ImageView getPicture() {
+    //    return picture;
+    //}
+
+    //public void setPicture(ImageView picture) {
+    //    this.picture = picture;
+    //}
+
+    public TextView getName() {
+        return name;
+    }
+
+    public void setName(TextView name) {
         this.name = name;
     }
 }

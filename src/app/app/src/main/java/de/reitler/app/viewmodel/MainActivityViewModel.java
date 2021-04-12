@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     LiveData<Household> household;
     LiveData<List<Task>> dailyTask;
     LiveData<List<Task>> weeklyTask;
+    LiveData<List<Roommate>> roommates;
 
     RoommateRepository roommateRepository;
     HouseholdRepository householdRepository;
@@ -41,6 +43,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         household = householdRepository.getHouseholdMutableLiveData();
         dailyTask = roommateRepository.getDailyTasksMutableLiveData();
         weeklyTask = roommateRepository.getWeeklyTasksMutableLiveData();
+        roommates = householdRepository.getRoommatesMutableLiveData();
     }
 
     public static MainActivityViewModel getInstance(Application application){
@@ -54,7 +57,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         roommateRepository.getRoommate(roommate);
     }
 
-    public void getHouseholdInfo(String household){
+    public synchronized void getHouseholdInfo(String household){
         householdRepository.getHouseholdById(household);
     }
 
@@ -64,6 +67,11 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void getWeeklyTaskInfo(String roommateId){
         roommateRepository.getWeeklyTasksFromRoommate(roommateId);
+    }
+
+    public synchronized void getRoommatesInfo(){
+        householdRepository.getRoommates(getHousehold().getValue().getId());
+        System.out.println("Roommates: "+roommates.getValue());
     }
 
     public LiveData<Roommate> getUser() {
@@ -81,4 +89,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     public LiveData<List<Task>> getWeeklyTask() {
         return weeklyTask;
     }
+
+    public LiveData<List<Roommate>> getRoommates() {
+        return roommates;
+    }
+
 }

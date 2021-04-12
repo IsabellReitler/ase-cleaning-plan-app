@@ -2,6 +2,9 @@ package de.reitler.app.repositories;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,25 +44,29 @@ public class HouseholdRepository {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.level(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .create();
+
 
         holidayService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(HolidayService.class);
 
         roommateService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(RoommateService.class);
 
         householdService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(HouseholdService.class);
     }
@@ -136,7 +143,7 @@ public class HouseholdRepository {
         householdService.deleteHousehold(id);
     }
 
-    public void getRoommates(String id){
+    public synchronized void getRoommates(String id){
         householdService.getAllRoommatesFromHousehold(id)
                 .enqueue(new Callback<List<Roommate>>() {
                     @Override
@@ -217,30 +224,30 @@ public class HouseholdRepository {
         });
     }
 
-    public void getAllTasksFromHousehold(String id){
-        List<Task> tasks = new ArrayList<>();
-        for(Roommate r:roommatesMutableLiveData.getValue()){
-            roommateService.getAllTasksFromRoommate(r.getId())
-                    .enqueue(new Callback<List<Task>>() {
-                @Override
-                public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
-                    tasks.addAll(response.body());
+    public void getAllTasksFromHousehold(String householdId){
+        householdService.getAllTasksFromHousehold(householdId).enqueue(new Callback<List<Task>>() {
+            @Override
+            public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
+                if(response.body() != null) {
+                    allTasksFromHousehold.postValue(response.body());
                 }
-
-                @Override
-                public void onFailure(Call<List<Task>> call, Throwable t) {
-
+                else{
+                    System.out.println("response body null");
                 }
-            });
-        }
-        allTasksFromHousehold.postValue(tasks);
+            }
+
+            @Override
+            public void onFailure(Call<List<Task>> call, Throwable t) {
+
+            }
+        });
     }
 
     public MutableLiveData<Household> getHouseholdMutableLiveData() {
         return householdMutableLiveData;
     }
 
-    public MutableLiveData<List<Roommate>> getRoommatesMutableLiveData() {
+    public synchronized MutableLiveData<List<Roommate>> getRoommatesMutableLiveData() {
         return roommatesMutableLiveData;
     }
 
