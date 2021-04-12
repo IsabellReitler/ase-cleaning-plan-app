@@ -25,7 +25,7 @@ import de.reitler.app.viewmodel.MainActivityViewModel;
 
 public class WeeklyToDoListFragment extends Fragment {
 
-    private MainActivityViewModel mViewModel;
+    private WeeklyToDoListViewModel weeklyToDoListViewModel;
     private WeeklyToDoListAdapter adapter;
     private View view;
     MainActivity activity;
@@ -39,7 +39,7 @@ public class WeeklyToDoListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         adapter = new WeeklyToDoListAdapter();
         activity = (MainActivity) getActivity();
-        mViewModel = MainActivityViewModel.getInstance(activity.application);
+        weeklyToDoListViewModel = new WeeklyToDoListViewModel(activity.getApplication());
 
     }
 
@@ -49,28 +49,21 @@ public class WeeklyToDoListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_weekly_todolist, container, false);
         RecyclerView tasksView = view.findViewById(R.id.weekly_recyclerview);
         tasksView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mViewModel.getWeeklyTask().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+        weeklyToDoListViewModel.getWeeklyTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
                 adapter.setTasks(tasks);
                 System.out.println("Tasks "+tasks);
             }
         });
-        mViewModel.getWeeklyTaskInfo(activity.userId);
         tasksView.setAdapter(adapter);
         return view;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mViewModel.getWeeklyTaskInfo(activity.userId);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        mViewModel.getWeeklyTaskInfo(activity.userId);
+        weeklyToDoListViewModel.updateWeeklyTasks(activity.userId);
     }
 
 }

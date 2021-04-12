@@ -12,24 +12,34 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import de.reitler.app.MainActivity;
 import de.reitler.app.R;
+import de.reitler.app.model.Roommate;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
+    private MainActivity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
                 new ViewModelProvider(this).get(ProfileViewModel.class);
+        activity = (MainActivity) getActivity();
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
-        profileViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        profileViewModel.getRoommate().observe(getViewLifecycleOwner(), new Observer<Roommate>() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onChanged(@Nullable Roommate roommate) {
+                textView.setText(roommate.getName());
             }
         });
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        profileViewModel.updateRoommate(activity.userId);
     }
 }

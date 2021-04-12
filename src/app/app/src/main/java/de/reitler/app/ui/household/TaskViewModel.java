@@ -13,23 +13,23 @@ import de.reitler.app.model.Task;
 import de.reitler.app.repositories.HouseholdRepository;
 
 
-public class HouseholdViewModel extends AndroidViewModel {
+public class TaskViewModel extends AndroidViewModel {
 
     private LiveData<List<Task>> allTasksFromHousehold;
     private HouseholdRepository householdRepository;
 
-    public HouseholdViewModel(@NonNull Application application) {
+    public TaskViewModel(@NonNull Application application) {
         super(application);
         householdRepository = new HouseholdRepository();
         allTasksFromHousehold = householdRepository.getAllTasksFromHousehold();
     }
 
-    public void getAllTasksFromHouseholdLiveData(String householdId){
+    public void updateAllTasksFromHousehold(String householdId){
         householdRepository.getAllTasksFromHousehold(householdId);
-        System.out.println("All Tasks From Household: "+allTasksFromHousehold.getValue());
     }
 
     public LiveData<List<Task>> getAllTasksFromHousehold() {
         return allTasksFromHousehold;
     }
 }
+

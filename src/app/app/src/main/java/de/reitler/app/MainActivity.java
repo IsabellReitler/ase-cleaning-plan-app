@@ -14,7 +14,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,7 +26,6 @@ import java.util.List;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
-import de.reitler.app.ui.add_household.AddHouseholdActivity;
 import de.reitler.app.viewmodel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,36 +48,12 @@ public class MainActivity extends AppCompatActivity {
         userId = intent.getStringExtra("USER_ID");
         householdId = intent.getStringExtra("HOUSEHOLD_ID");
         viewModel.init();
-        viewModel.getUser().observe(this, new Observer<Roommate>() {
+        viewModel.getRoommate().observe(this, new Observer<Roommate>() {
             @Override
             public void onChanged(Roommate roommate) {
                 updateUI(roommate);
             }
-
         });
-        viewModel.getHousehold().observe(this, new Observer<Household>() {
-            @Override
-            public void onChanged(Household household) {
-                updateUI(household);
-            }
-        });
-
-        viewModel.getDailyTask().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
-                updateDailyTasks(tasks);
-            }
-        });
-        viewModel.getWeeklyTask().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
-                updateWeeklyTasks(tasks);
-            }
-        });
-        viewModel.getRoommateInfo(userId);
-        viewModel.getHouseholdInfo(householdId);
-        viewModel.getDailyTasksInfo(userId);
-        viewModel.getWeeklyTaskInfo(userId);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,33 +80,17 @@ public class MainActivity extends AppCompatActivity {
         navHeaderEmail = hView.findViewById(R.id.nav_header_email);
     }
 
-    private void updateRoommates(List<Roommate> roommates) {
-    }
-
-    private void updateDailyTasks(List<Task> tasks) {
-    }
-
-    private void updateUI(List<Task> tasks) {
-    }
-
-    private void updateUI(Household household) {
-    }
 
     private void updateUI(Roommate roommate) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
-                System.out.println(roommate);
                 navHeaderTitle.setText(roommate.getName());
                 navHeaderEmail.setText(roommate.getEmail());
             }
         });
 
-    }
-
-
-    private void updateWeeklyTasks(List<Task> tasks) {
     }
 
 
