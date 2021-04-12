@@ -1,48 +1,96 @@
 package de.reitler.app.ui.household;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
+import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
-import de.reitler.app.viewmodel.MainActivityViewModel;
+import de.reitler.app.repositories.RoommateRepository;
+import de.reitler.app.repositories.TaskRepository;
 
 public class HouseholdFragment extends Fragment {
 
     private RoommateRecyclerViewAdapter roommateAdapter;
     private TaskRecyclerViewAdapter taskAdapter;
+
     private MainActivity activity;
+    private View view;
+
+    private HouseholdFragmentViewModel householdFragmentViewModel;
     private RoommatesViewModel roommatesViewModel;
     private TaskViewModel taskViewModel;
-    private View view;
+
+    private Button addRoommateButton;
+    private Button addTaskButton;
+    private Button setHolidayMode;
+
+
+
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        roommateAdapter = new RoommateRecyclerViewAdapter();
+        roommateAdapter = new RoommateRecyclerViewAdapter(getContext());
         taskAdapter = new TaskRecyclerViewAdapter();
         activity = (MainActivity) getActivity();
         roommatesViewModel = new RoommatesViewModel(activity.getApplication());
         taskViewModel = new TaskViewModel(activity.getApplication());
+        householdFragmentViewModel = new HouseholdFragmentViewModel(activity.getApplication());
     }
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_household, container, false);
+
+        addRoommateButton = view.findViewById(R.id.add_roommate_button);
+        addRoommateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openInfoDialog();
+            }
+        });
+
+        addTaskButton = view.findViewById(R.id.add_task_button);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateTaskDialog();
+            }
+        });
+
+        setHolidayMode = view.findViewById(R.id.holiday_mode);
+        setHolidayMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateHolidayModeDialog();
+            }
+        });
+
         RecyclerView roommateView = view.findViewById(R.id.roommates_list);
         roommateView.setLayoutManager(new LinearLayoutManager(getContext()));
         roommatesViewModel.getRoommates().observe(getViewLifecycleOwner(), new Observer<List<Roommate>>() {
@@ -61,9 +109,38 @@ public class HouseholdFragment extends Fragment {
             }
         });
 
+        householdFragmentViewModel.getHousehold().observe(getViewLifecycleOwner(), new Observer<Household>() {
+            @Override
+            public void onChanged(Household household) {
+                activity.getSupportActionBar().setTitle(household.getName());
+            }
+        });
+       // getActivity().setTitle(householdFragmentViewModel.getHousehold().getValue().getName());
         roommateView.setAdapter(roommateAdapter);
         taskView.setAdapter(taskAdapter);
+        householdFragmentViewModel.updateHousehold(activity.householdId);
         return view;
+    }
+
+    private void openCreateHolidayModeDialog() {
+        de.reitler.app.ui.dialog.DatePicker datePicker = new de.reitler.app.ui.dialog.DatePicker();
+        datePicker.show(activity.getSupportFragmentManager(), "DATE PICK");
+    }
+
+    private void openCreateTaskDialog() {
+    }
+
+    private void openInfoDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("Invite code");
+        alertDialog.setMessage(activity.householdId);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     @Override
@@ -71,5 +148,7 @@ public class HouseholdFragment extends Fragment {
         super.onResume();
         roommatesViewModel.updateRoommates(activity.householdId);
         taskViewModel.updateAllTasksFromHousehold(activity.householdId);
+        householdFragmentViewModel.updateHousehold(activity.householdId);
     }
+
 }

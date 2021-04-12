@@ -6,11 +6,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.reitler.app.apiservice.HolidayService;
 import de.reitler.app.apiservice.RoommateRequestBody;
 import de.reitler.app.apiservice.RoommateService;
+import de.reitler.app.model.HolidayMode;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 import okhttp3.OkHttpClient;
@@ -162,7 +164,8 @@ public class RoommateRepository {
     }
 
     public void setHolidayMode(String roommateId, Calendar endDate){
-        holidayService.createHolidayMode(roommateId, endDate).enqueue(new Callback<Roommate>() {
+        HolidayMode mode = new HolidayMode(roommateId, endDate.getTime());
+        holidayService.createHolidayMode(mode).enqueue(new Callback<Roommate>() {
             @Override
             public void onResponse(Call<Roommate> call, Response<Roommate> response) {
                 if (response.body() != null){

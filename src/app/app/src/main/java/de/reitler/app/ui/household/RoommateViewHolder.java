@@ -7,27 +7,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.circularreveal.cardview.CircularRevealCardView;
+import de.reitler.app.R;
 
 
 public class RoommateViewHolder extends RecyclerView.ViewHolder {
 
-  //  private ImageView picture;
+    private ImageView picture;
     private TextView name;
 
     public RoommateViewHolder(TextView name, View view) {
         super(view);
-       // this.picture = picture;
         this.name = name;
+        this.picture = view.findViewById(R.id.roommate_picture);
     }
 
-    //public ImageView getPicture() {
-    //    return picture;
-    //}
+    public ImageView getPicture() {
+        return picture;
+    }
 
-    //public void setPicture(ImageView picture) {
-    //    this.picture = picture;
-    //}
+    public void setPicture(ImageView picture) {
+        this.picture = picture;
+    }
 
     public TextView getName() {
         return name;

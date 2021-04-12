@@ -27,4 +27,6 @@
     <string name="OK">ok</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
+    <string name="roommates">Mitbewohner</string>
+    <string name="tasks">Aufgaben</string>
 </resources>

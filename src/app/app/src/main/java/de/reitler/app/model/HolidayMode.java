@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class HolidayMode{
 
@@ -13,10 +14,10 @@ public class HolidayMode{
 
     @SerializedName("end_date")
     @Expose
-    private Calendar endDate;
+    private Date endDate;
 
 
-    public HolidayMode(String id, Calendar endDate) {
+    public HolidayMode(String id, Date endDate) {
         this.id = id;
         this.endDate = endDate;
     }
@@ -29,11 +30,11 @@ public class HolidayMode{
         this.id = id;
     }
 
-    public Calendar getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }

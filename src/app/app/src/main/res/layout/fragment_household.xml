@@ -21,8 +21,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
                 android:id="@+id/household_name"
+                android:text="@string/roommates"
                 android:textSize="@dimen/subtitle_size"/>
             <Button
+                android:id="@+id/add_roommate_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,7 +39,7 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/holyday_mode"
+            android:id="@+id/holiday_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/button_margin"
@@ -51,9 +53,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:id="@+id/household_task_list_title"
+            android:text="@string/tasks"
             android:textSize="@dimen/subtitle_size"/>
         android:textSize="@dimen/subtitle_size"/>
         <Button
+            android:id="@+id/add_task_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -9,6 +9,7 @@ import de.reitler.app.apiservice.HouseholdService;
 import de.reitler.app.apiservice.TaskService;
 import de.reitler.app.model.Task;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,8 +25,10 @@ public class TaskRepository {
 
     public TaskRepository(){
         taskMutableLiveData = new MutableLiveData<>();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.level(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
