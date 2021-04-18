@@ -1,4 +1,4 @@
-package de.reitler.application.household;
+package de.reitler.application.handlers;
 
 import de.reitler.application.household.HouseholdDTO;
 import de.reitler.application.roommate.RoommateDTO;

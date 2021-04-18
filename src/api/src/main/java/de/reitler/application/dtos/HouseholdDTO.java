@@ -1,4 +1,4 @@
-package de.reitler.application.household;
+package de.reitler.application.dtos;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

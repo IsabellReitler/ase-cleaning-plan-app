@@ -1,4 +1,4 @@
-package de.reitler.application.holidaymode;
+package de.reitler.application.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

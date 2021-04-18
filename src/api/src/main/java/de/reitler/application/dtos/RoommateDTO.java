@@ -1,10 +1,9 @@
-package de.reitler.application.roommate;
+package de.reitler.application.dtos;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.reitler.application.household.HouseholdDTO;
-import org.springframework.hateoas.RepresentationModel;
+
 
 import java.net.URI;
 import java.net.URL;

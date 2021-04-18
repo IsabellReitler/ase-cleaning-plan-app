@@ -1,6 +1,7 @@
-package de.reitler.application.roommate;
+package de.reitler.application.handlers;
 
 
+import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.application.tasks.TaskDTO;
 import de.reitler.core.DateCalculator;
 import de.reitler.domain.entities.Roommate;

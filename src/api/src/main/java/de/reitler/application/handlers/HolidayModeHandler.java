@@ -1,4 +1,4 @@
-package de.reitler.application.holidaymode;
+package de.reitler.application.handlers;
 
 
 import de.reitler.application.exceptions.HolidayModeException;
