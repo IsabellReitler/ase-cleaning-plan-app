@@ -29,4 +29,9 @@
     <string name="cancel">Abbrechen</string>
     <string name="roommates">Mitbewohner</string>
     <string name="tasks">Aufgaben</string>
+    <string name="task_title_hint">Titel</string>
+    <string name="task_description_hint">Fügen Sie eine Beschreibung hinzu ...</string>
+    <string name="is_tasks_repetitive">Wiederkehrende Aufgabe</string>
+    <string name="switch_roommate">Mitbewohner durchwechseln</string>
+    <string name="time_interval_days">Zeitintervall in Tagen</string>
 </resources>

@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import de.reitler.app.apiservice.HouseholdService;
+import de.reitler.app.apiservice.RepetitiveTaskCreateBody;
+import de.reitler.app.apiservice.SimpleTaskCreateBody;
 import de.reitler.app.apiservice.TaskService;
 import de.reitler.app.model.Task;
 import okhttp3.OkHttpClient;
@@ -42,7 +44,24 @@ public class TaskRepository {
 
     }
 
-    public void createTask(Task task){
+    public void createTask(RepetitiveTaskCreateBody task){
+        taskService.createTask(task)
+                .enqueue(new Callback<Task>() {
+                    @Override
+                    public void onResponse(Call<Task> call, Response<Task> response) {
+                        if(response.body() != null){
+                            taskMutableLiveData.postValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Task> call, Throwable t) {
+                        taskMutableLiveData.postValue(null);
+                    }
+                });
+    }
+
+    public void createTask(SimpleTaskCreateBody task){
         taskService.createTask(task)
                 .enqueue(new Callback<Task>() {
                     @Override

@@ -19,7 +19,7 @@ public class TaskHandler {
 
     public TaskDTO create(TaskDTO body){
         Task task;
-        if(body.getTimeInterval() == null){
+        if(body.getTimeInterval() == 0){
             task = new Task(body.getTitle(), body.getDescription(), body.getDeadline(), roommateService.getById(body.getRoommateID()));
         } else {
             task = new Task(body.getTitle(), body.getDescription(),body.getTimeInterval(), body.isSwitchRoommate(),roommateService.getById(body.getRoommateID()));

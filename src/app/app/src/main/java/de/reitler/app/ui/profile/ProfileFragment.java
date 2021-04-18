@@ -27,13 +27,7 @@ public class ProfileFragment extends Fragment {
                 new ViewModelProvider(this).get(ProfileViewModel.class);
         activity = (MainActivity) getActivity();
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        profileViewModel.getRoommate().observe(getViewLifecycleOwner(), new Observer<Roommate>() {
-            @Override
-            public void onChanged(@Nullable Roommate roommate) {
-                textView.setText(roommate.getName());
-            }
-        });
+
         return root;
     }
 

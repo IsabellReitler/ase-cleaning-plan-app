@@ -1,36 +1,34 @@
 package de.reitler.app.ui.household;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
+import de.reitler.app.apiservice.RepetitiveTaskCreateBody;
+import de.reitler.app.apiservice.SimpleTaskCreateBody;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
-import de.reitler.app.repositories.RoommateRepository;
 import de.reitler.app.repositories.TaskRepository;
+import de.reitler.app.ui.dialog.CreateTaskDialog;
+import de.reitler.app.ui.dialog.MyDatePickerDialog;
 
-public class HouseholdFragment extends Fragment {
+public class HouseholdFragment extends Fragment implements CreateTaskDialog.CreateTaskDialogListener {
 
     private RoommateRecyclerViewAdapter roommateAdapter;
     private TaskRecyclerViewAdapter taskAdapter;
@@ -46,16 +44,14 @@ public class HouseholdFragment extends Fragment {
     private Button addTaskButton;
     private Button setHolidayMode;
 
-
-
-
-
+    private TaskRepository taskRepository;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         roommateAdapter = new RoommateRecyclerViewAdapter(getContext());
         taskAdapter = new TaskRecyclerViewAdapter();
+        taskRepository = new TaskRepository();
         activity = (MainActivity) getActivity();
         roommatesViewModel = new RoommatesViewModel(activity.getApplication());
         taskViewModel = new TaskViewModel(activity.getApplication());
@@ -115,7 +111,6 @@ public class HouseholdFragment extends Fragment {
                 activity.getSupportActionBar().setTitle(household.getName());
             }
         });
-       // getActivity().setTitle(householdFragmentViewModel.getHousehold().getValue().getName());
         roommateView.setAdapter(roommateAdapter);
         taskView.setAdapter(taskAdapter);
         householdFragmentViewModel.updateHousehold(activity.householdId);
@@ -123,11 +118,14 @@ public class HouseholdFragment extends Fragment {
     }
 
     private void openCreateHolidayModeDialog() {
-        de.reitler.app.ui.dialog.DatePicker datePicker = new de.reitler.app.ui.dialog.DatePicker();
+        MyDatePickerDialog datePicker = new MyDatePickerDialog();
         datePicker.show(activity.getSupportFragmentManager(), "DATE PICK");
     }
 
     private void openCreateTaskDialog() {
+        CreateTaskDialog createTaskDialog = new CreateTaskDialog();
+        createTaskDialog.setNewListDialogListener(this);
+        createTaskDialog.show(activity.getSupportFragmentManager(), "CREATE TASK");
     }
 
     private void openInfoDialog() {
@@ -151,4 +149,15 @@ public class HouseholdFragment extends Fragment {
         householdFragmentViewModel.updateHousehold(activity.householdId);
     }
 
+    @Override
+    public void onDialogPositiveClick(SimpleTaskCreateBody body) {
+        taskRepository.createTask(body);
+        taskViewModel.updateAllTasksFromHousehold(activity.householdId);
+    }
+
+    @Override
+    public void onDialogPositiveClick(RepetitiveTaskCreateBody body) {
+        taskRepository.createTask(body);
+        taskViewModel.updateAllTasksFromHousehold(activity.householdId);
+    }
 }

@@ -12,7 +12,10 @@ import retrofit2.http.Path;
 public interface TaskService {
 
     @POST("/task")
-    Call<Task> createTask(@Body Task task);
+    Call<Task> createTask(@Body SimpleTaskCreateBody task);
+
+    @POST("/task")
+    Call<Task> createTask(@Body RepetitiveTaskCreateBody task);
 
     @GET("/task/{id}")
     Call<Task> getTaskById(@Path("id") String id);

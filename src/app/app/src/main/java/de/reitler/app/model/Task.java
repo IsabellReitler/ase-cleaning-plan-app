@@ -40,7 +40,7 @@ public class Task {
     @Nullable
     @SerializedName("time_interval")
     @Expose
-    private Date timeInterval; //null or 0 if task isn't repetitve
+    private int timeInterval; //null or 0 if task isn't repetitve
 
     @SerializedName("switch_roommate")
     @Expose
@@ -64,7 +64,7 @@ public class Task {
         this.switchRoommate = false;
     }
 
-    public Task(String id, String title, String description, Date startsAt, Date doneAt, Date timeInterval, boolean switchRoommate, String roommate) {
+    public Task(String id, String title, String description, Date startsAt, Date doneAt, int timeInterval, boolean switchRoommate, String roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -75,7 +75,7 @@ public class Task {
         this.roommate = roommate;
     }
 
-    public Task(String id, String title, String description, Date startsAt, Date deadline, Date doneAt, Date timeInterval, boolean switchRoommate, String roommate) {
+    public Task(String id, String title, String description, Date startsAt, Date deadline, Date doneAt, int timeInterval, boolean switchRoommate, String roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -135,11 +135,11 @@ public class Task {
         this.doneAt = doneAt;
     }
 
-    public Date getTimeInterval() {
+    public int getTimeInterval() {
         return timeInterval;
     }
 
-    public void setTimeInterval(Date timeInterval) {
+    public void setTimeInterval(int timeInterval) {
         this.timeInterval = timeInterval;
     }
 

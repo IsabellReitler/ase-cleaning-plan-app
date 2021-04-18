@@ -3,9 +3,9 @@ package de.reitler.application.tasks;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.Nullable;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class TaskDTO {
 
@@ -20,22 +20,21 @@ public class TaskDTO {
 
     @JsonProperty("starts_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar startsAt;
+    private Date startsAt;
 
     @Nullable
     @JsonProperty("deadline")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar deadline;
+    private Date deadline;
 
     @Nullable
     @JsonProperty("done_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar doneAt;
+    private Date doneAt;
 
     @Nullable
     @JsonProperty("time_interval")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Calendar timeInterval; //null or 0 if task isn't repetitve
+    private int timeInterval; //null or 0 if task isn't repetitve
 
     @JsonProperty("switch_roommate")
     private boolean switchRoommate; //null or 0 if task isn't repetitve
@@ -47,7 +46,7 @@ public class TaskDTO {
 
     }
 
-    public TaskDTO(String id, String title, String description, Calendar startsAt, Calendar deadline, String roommateId){
+    public TaskDTO(String id, String title, String description, Date startsAt, Date deadline, String roommateId){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -57,7 +56,7 @@ public class TaskDTO {
         this.switchRoommate = false;
     }
 
-    public TaskDTO(String id, String title, String description, Calendar startsAt, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {
+    public TaskDTO(String id, String title, String description, Date startsAt, Date doneAt, int timeInterval, boolean switchRoommate, String roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -68,7 +67,7 @@ public class TaskDTO {
         this.roommate = roommate;
     }
 
-    public TaskDTO(String id, String title, String description, Calendar startsAt, Calendar deadline, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {
+    public TaskDTO(String id, String title, String description, Date startsAt, Date deadline, Date doneAt, int timeInterval, boolean switchRoommate, String roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -104,35 +103,35 @@ public class TaskDTO {
         this.description = description;
     }
 
-    public Calendar getStartsAt() {
+    public Date getStartsAt() {
         return startsAt;
     }
 
-    public void setStartsAt(Calendar startsAt) {
+    public void setStartsAt(Date startsAt) {
         this.startsAt = startsAt;
     }
 
-    public Calendar getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Calendar deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
-    public Calendar getDoneAt() {
+    public Date getDoneAt() {
         return doneAt;
     }
 
-    public void setDoneAt(Calendar doneAt) {
+    public void setDoneAt(Date doneAt) {
         this.doneAt = doneAt;
     }
 
-    public Calendar getTimeInterval() {
+    public int getTimeInterval() {
         return timeInterval;
     }
 
-    public void setTimeInterval(Calendar timeInterval) {
+    public void setTimeInterval(int timeInterval) {
         this.timeInterval = timeInterval;
     }
 

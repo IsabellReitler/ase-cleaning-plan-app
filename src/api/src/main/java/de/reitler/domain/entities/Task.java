@@ -21,16 +21,16 @@ public class Task {
     private String description;
 
     @Column(name="starts_at")
-    private Calendar startsAt;
+    private Date startsAt;
 
     @Column(name="deadline")
-    private Calendar deadline;
+    private Date deadline;
 
     @Column(name="done_at")
-    private Calendar doneAt;
+    private Date doneAt;
 
     @Column(name="time_intervall")
-    private Calendar timeIntervall; //null or 0 if task isn't repetitve
+    private int timeIntervall;
 
     @Column(name= "switch_roommate")
     private boolean switchRoommate; //null or 0 if task isn't repetitve
@@ -50,7 +50,7 @@ public class Task {
 
     }
 
-    public Task(UUID id, String title, String description, Calendar startsAt, Calendar deadline, Calendar doneAt, Calendar timeIntervall, boolean switchRoommate, Roommate roommate) {
+    public Task(UUID id, String title, String description, Date startsAt, Date deadline, Date doneAt, int timeIntervall, boolean switchRoommate, Roommate roommate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -69,14 +69,13 @@ public class Task {
      * @param timeIntervall
      * @param switchRoommate
      */
-    public Task(String title, String description, Calendar timeIntervall, boolean switchRoommate, Roommate roommate){
+    public Task(String title, String description, int timeIntervall, boolean switchRoommate, Roommate roommate){
         this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
         this.switchRoommate = switchRoommate;
         this.doneAt = null;
-        this.startsAt = Calendar.getInstance();
-        this.startsAt.setTime(new Date());
+        this.startsAt = Calendar.getInstance().getTime();
         this.timeIntervall = timeIntervall;
         this.deadline = DateCalculator.add(startsAt, this.timeIntervall);
         this.roommate = roommate;
@@ -88,16 +87,15 @@ public class Task {
      * @param description
      * @param deadline
      */
-    public Task(String title, String description, Calendar deadline, Roommate roommate){
+    public Task(String title, String description, Date deadline, Roommate roommate){
         this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
-        this.startsAt = Calendar.getInstance();
-        this.startsAt.setTime(new Date());
+        this.startsAt = Calendar.getInstance().getTime();
         this.deadline = deadline;
         this.doneAt = null;
         this.switchRoommate = false;
-        this.timeIntervall = null;
+        this.timeIntervall = 0;
         this.roommate =roommate;
     }
 
@@ -125,35 +123,35 @@ public class Task {
         this.description = description;
     }
 
-    public Calendar getStartsAt() {
+    public Date getStartsAt() {
         return startsAt;
     }
 
-    public void setStartsAt(Calendar startsAt) {
+    public void setStartsAt(Date startsAt) {
         this.startsAt = startsAt;
     }
 
-    public Calendar getDeadline() {
+    public Date getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Calendar deadline) {
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 
-    public Calendar getDoneAt() {
+    public Date getDoneAt() {
         return doneAt;
     }
 
-    public void setDoneAt(Calendar doneAt) {
+    public void setDoneAt(Date doneAt) {
         this.doneAt = doneAt;
     }
 
-    public Calendar getTimeIntervall() {
+    public int getTimeIntervall() {
         return timeIntervall;
     }
 
-    public void setTimeIntervall(Calendar timeIntervall) {
+    public void setTimeIntervall(int timeIntervall) {
         this.timeIntervall = timeIntervall;
     }
 

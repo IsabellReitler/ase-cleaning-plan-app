@@ -13,7 +13,7 @@ import java.util.Calendar;
 import de.reitler.app.MainActivity;
 import de.reitler.app.repositories.RoommateRepository;
 
-public class DatePicker extends DialogFragment {
+public class MyDatePickerDialog extends DialogFragment {
 
     private RoommateRepository roommateRepository = new RoommateRepository();
     private MainActivity activity ;

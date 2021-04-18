@@ -130,7 +130,7 @@ public class RoommateRepository {
     }
 
     public void getDailyTasksFromRoommate(String id){
-        roommateService.getAllTasksFromRoommate(id)
+        roommateService.getAllDailyTasksFromRoommate(id)
                 .enqueue(new Callback<List<Task>>() {
                     @Override
                     public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
@@ -147,7 +147,7 @@ public class RoommateRepository {
     }
 
     public void getWeeklyTasksFromRoommate(String id){
-        roommateService.getAllTasksFromRoommate(id)
+        roommateService.getAllWeeklyTasksFromRoommate(id)
                 .enqueue(new Callback<List<Task>>() {
                     @Override
                     public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {

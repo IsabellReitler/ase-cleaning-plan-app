@@ -1,5 +1,6 @@
 package de.reitler.application.household;
 
+import de.reitler.application.household.HouseholdDTO;
 import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.services.HouseholdService;
