@@ -43,11 +43,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         application = getApplication();
-        viewModel = MainActivityViewModel.getInstance(application);
+        viewModel = new MainActivityViewModel(application);
         Intent intent = getIntent();
         userId = intent.getStringExtra("USER_ID");
         householdId = intent.getStringExtra("HOUSEHOLD_ID");
-        viewModel.init();
         viewModel.getRoommate().observe(this, new Observer<Roommate>() {
             @Override
             public void onChanged(Roommate roommate) {
@@ -78,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         View hView =  navigationView.getHeaderView(0);
         navHeaderTitle = hView.findViewById(R.id.nav_header_title);
         navHeaderEmail = hView.findViewById(R.id.nav_header_email);
+        viewModel.updateRoommate(userId);
     }
 
 

@@ -1,6 +1,6 @@
 package de.reitler.application.handlers;
 
-import de.reitler.application.tasks.TaskDTO;
+import de.reitler.application.dtos.TaskDTO;
 import de.reitler.domain.entities.Task;
 import de.reitler.domain.services.RoommateService;
 import de.reitler.domain.services.TaskService;

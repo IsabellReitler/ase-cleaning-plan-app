@@ -1,7 +1,6 @@
 package de.reitler.application.handlers;
 
-import de.reitler.application.household.HouseholdDTO;
-import de.reitler.application.roommate.RoommateDTO;
+import de.reitler.application.dtos.*;
 import de.reitler.domain.entities.Household;
 import de.reitler.domain.services.HouseholdService;
 
@@ -9,10 +8,8 @@ import de.reitler.domain.services.RoommateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 

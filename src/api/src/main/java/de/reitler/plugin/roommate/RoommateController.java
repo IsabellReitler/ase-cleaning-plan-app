@@ -1,8 +1,7 @@
 package de.reitler.plugin.roommate;
 
-import de.reitler.application.roommate.RoommateDTO;
-import de.reitler.application.roommate.RoommateHandler;
-import de.reitler.application.tasks.TaskDTO;
+import de.reitler.application.dtos.*;
+import de.reitler.application.handlers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

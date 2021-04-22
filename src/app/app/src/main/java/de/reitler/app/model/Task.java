@@ -50,6 +50,8 @@ public class Task {
     @Expose
     private String roommate;
 
+    private boolean showMenu = false;
+
     public Task(){
 
     }
@@ -157,6 +159,14 @@ public class Task {
 
     public void setRoommateId(String roommate) {
         this.roommate = roommate;
+    }
+
+    public boolean isShowMenu(){
+        return showMenu;
+    }
+
+    public void setShowMenu(boolean showMenu){
+        this.showMenu = showMenu;
     }
 
 }

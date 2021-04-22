@@ -8,20 +8,18 @@ import java.util.Date;
 
 public class DateCalculatorTest {
 
-    private static Calendar startDate;
-    private static Calendar timeIntervall;
+    private static Date startDate;
+    private static int timeIntervall;
 
     @BeforeAll
     public static void initializeDates(){
-        startDate = Calendar.getInstance();
-        timeIntervall = Calendar.getInstance();
-        startDate.setTime( new Date(2020, Calendar.JANUARY,01,01,01,00));
-        timeIntervall.setTime(new Date(0,0,01,0,0,0));
+        timeIntervall = 1;
+        startDate = new Date(2020, Calendar.JANUARY,01,01,01,00);
     }
 
     @Test
     public void addDatesTest(){
-        Assertions.assertEquals(new Date(2020,Calendar.JANUARY,02,01,01,00), DateCalculator.add(startDate, timeIntervall).getTime());
+        Assertions.assertEquals(new Date(2020,Calendar.JANUARY,02,01,01,00), DateCalculator.add(startDate, timeIntervall));
     }
 
     @Test

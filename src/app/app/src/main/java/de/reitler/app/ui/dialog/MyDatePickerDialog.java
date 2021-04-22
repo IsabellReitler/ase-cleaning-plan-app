@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import de.reitler.app.MainActivity;
 import de.reitler.app.repositories.RoommateRepository;
@@ -41,4 +42,5 @@ public class MyDatePickerDialog extends DialogFragment {
         int dayOfMonth = mCalender.get(Calendar.DAY_OF_MONTH);
         return new DatePickerDialog(getActivity(),listener, year, month, dayOfMonth);
     }
+
 }

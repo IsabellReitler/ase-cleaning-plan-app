@@ -1,13 +1,11 @@
 package de.reitler.plugin.household;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import de.reitler.application.household.HouseholdDTO;
-import de.reitler.application.household.HouseholdHandler;
-import de.reitler.application.roommate.RoommateHandler;
-import de.reitler.application.roommate.RoommateDTO;
-import de.reitler.application.tasks.TaskDTO;
-import de.reitler.plugin.roommate.RoommateController;
+
+import de.reitler.application.dtos.*;
+import de.reitler.application.dtos.TaskDTO;
+import de.reitler.application.handlers.HouseholdHandler;
+import de.reitler.application.handlers.RoommateHandler;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/household")
@@ -31,7 +30,7 @@ public class HouseholdController {
 
     @PostMapping
     public HttpEntity createHousehold(@RequestBody HouseholdDTO household){
-            HouseholdDTO dto = (HouseholdDTO) handler.createHousehold(household);
+            HouseholdDTO dto = handler.createHousehold(household);
             if(dto != null) {
                 return new ResponseEntity<HouseholdDTO>(dto, HttpStatus.OK);
             } else {

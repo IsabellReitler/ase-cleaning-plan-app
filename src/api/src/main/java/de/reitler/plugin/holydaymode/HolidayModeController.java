@@ -1,11 +1,8 @@
 package de.reitler.plugin.holydaymode;
 
 import de.reitler.application.exceptions.HolidayModeException;
-import de.reitler.application.holidaymode.HolidayModeDTO;
-import de.reitler.application.holidaymode.HolidayModeHandler;
-import de.reitler.application.household.HouseholdHandler;
-import de.reitler.application.roommate.RoommateDTO;
-import de.reitler.application.roommate.RoommateHandler;
+import de.reitler.application.handlers.*;
+import de.reitler.application.dtos.*;
 import de.reitler.plugin.roommate.RoommateController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;

@@ -1,7 +1,7 @@
 package de.reitler.plugin.tasks;
 
-import de.reitler.application.tasks.TaskDTO;
-import de.reitler.application.tasks.TaskHandler;
+import de.reitler.application.dtos.*;
+import de.reitler.application.handlers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

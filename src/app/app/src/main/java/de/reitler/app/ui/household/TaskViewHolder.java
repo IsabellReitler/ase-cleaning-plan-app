@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+import de.reitler.app.R;
+
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
 
@@ -15,6 +16,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
     private TextView title;
     private TextView description;
     private TextView roommate;
+    private CardView container;
 
     public TaskViewHolder(CheckBox checked, TextView title, TextView description, TextView roommate, View view) {
         super(view);
@@ -22,6 +24,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
         this.title= title;
         this.description = description;
         this.roommate = roommate;
+        this.container = view.findViewById(R.id.task_container);
     }
 
     public CheckBox getChecked() {
@@ -38,5 +41,9 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getRoommate() {
         return roommate;
+    }
+
+    public CardView getContainer() {
+        return container;
     }
 }

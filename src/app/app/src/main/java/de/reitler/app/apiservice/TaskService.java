@@ -24,6 +24,6 @@ public interface TaskService {
     Call<Task> updateTask(@Path("id") String id, @Body Task task);
 
     @DELETE("/task/{id}")
-    Call deleteTask(@Path("id") String id);
+    Call<Void> deleteTask(@Path("id") String id);
 
 }

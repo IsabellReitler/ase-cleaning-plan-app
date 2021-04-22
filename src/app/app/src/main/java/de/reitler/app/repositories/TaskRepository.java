@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+
 import de.reitler.app.apiservice.HouseholdService;
 import de.reitler.app.apiservice.RepetitiveTaskCreateBody;
 import de.reitler.app.apiservice.SimpleTaskCreateBody;
@@ -20,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TaskRepository {
 
-    private static final String BASE_URL="http://192.168.120.3:8080/task/";
+    private static final String BASE_URL="http://192.168.120.3:8080/";
 
     TaskService taskService;
     MutableLiveData<Task> taskMutableLiveData;
@@ -112,7 +114,18 @@ public class TaskRepository {
                 });
     }
 
-    public void deleteTask(String id){
-        taskService.deleteTask(id);
+    public void deleteTask(String id) throws IOException {
+        taskService.deleteTask(id).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                taskMutableLiveData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+
     }
 }

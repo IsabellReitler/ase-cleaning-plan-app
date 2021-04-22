@@ -18,22 +18,13 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     RoommateRepository roommateRepository;
 
-    private MainActivityViewModel(@NonNull Application application) {
+    public MainActivityViewModel(@NonNull Application application) {
         super(application);
-    }
-
-
-    public void init(){
         roommateRepository = new RoommateRepository();
         roommate = roommateRepository.getRoommateMutableLiveData();
     }
 
-    public static MainActivityViewModel getInstance(Application application){
-        if(viewModel == null){
-            viewModel = new MainActivityViewModel(application);
-        }
-        return viewModel;
-    }
+
 
     public void updateRoommate(String roommate){
         roommateRepository.getRoommate(roommate);

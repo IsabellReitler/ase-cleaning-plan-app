@@ -1,9 +1,8 @@
 package de.reitler.application.handlers;
 
 
+import de.reitler.application.dtos.RoommateDTO;
 import de.reitler.application.exceptions.HolidayModeException;
-import de.reitler.application.household.HouseholdDTO;
-import de.reitler.application.roommate.RoommateDTO;
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.services.HouseholdService;
 import de.reitler.domain.services.RoommateService;
