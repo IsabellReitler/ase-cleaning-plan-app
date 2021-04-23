@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content">
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,17 +11,29 @@
     <CheckBox
         android:id="@+id/item_checkbox"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/textview_margin">
     </CheckBox>
-    
+
     <TextView
         android:id="@+id/item_text"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="left|center_vertical"
+        android:textAlignment="gravity"
+        android:textSize="@dimen/normale_text"/>
 
     <TextView
         android:id="@+id/item_deadline"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:textAlignment="gravity"
+        android:gravity="center_vertical|right"
+        android:layout_marginRight="@dimen/textview_margin"
+        android:textSize="@dimen/normale_text"/>
 
 </LinearLayout>
+</androidx.cardview.widget.CardView>

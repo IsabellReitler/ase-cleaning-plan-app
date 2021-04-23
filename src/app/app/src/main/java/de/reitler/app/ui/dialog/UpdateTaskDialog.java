@@ -65,7 +65,9 @@ public class UpdateTaskDialog extends DialogFragment {
         if(task.getTimeInterval()== 0) {
             this.title.setText(task.getTitle());
             this.description.setText(task.getDescription());
-            this.datePicker.init(task.getDeadline().getYear(), task.getDeadline().getMonth(), task.getDeadline().getDay(),dateChangedListener);
+            Calendar deadline = Calendar.getInstance();
+            deadline.setTime(task.getDeadline());
+            this.datePicker.init(deadline.get(Calendar.YEAR),  deadline.get(Calendar.MONTH), deadline.get(Calendar.DAY_OF_MONTH),dateChangedListener);
             ((ViewGroup) view.findViewById(R.id.update_task_time_interval_layout)).removeView(timeInterval);
             ((ViewGroup) view.findViewById(R.id.update_task_switch_roommate_layout)).removeView(switchRoommate);
             ((ViewGroup) view.findViewById(R.id.update_task_time_interval_layout)).removeView(timeIntervalLabel);
@@ -83,7 +85,7 @@ public class UpdateTaskDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         task.setTitle(title.getText().toString());
                         task.setDescription(description.getText().toString());
-                        if(timeInterval != null){
+                        if(!timeInterval.getText().toString().contentEquals("")){
                             task.setTimeInterval( Integer.parseInt(timeInterval.getText().toString()));
                         }
                         if(switchRoommate != null){

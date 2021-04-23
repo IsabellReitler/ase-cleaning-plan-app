@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    hardwareAccelerated = "true"
     android:id="@+id/task_container">
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        style="@style/Theme.Cleaningplanandroidclient">
 
     <CheckBox
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|left"
+        android:layout_margin="@dimen/textview_margin"
         android:id="@+id/task_done"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/task_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/subtitle_size"
+        android:textColor="?attr/colorPrimary"
+        android:layout_margin="@dimen/textview_margin"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/task_description"/>
+        android:id="@+id/task_description"
+        android:textSize="@dimen/normale_text"
+        android:layout_margin="@dimen/textview_margin"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/task_roommate"/>
+        android:id="@+id/task_roommate"
+        android:layout_margin="@dimen/textview_margin"/>
+    </LinearLayout>
 </LinearLayout>
 </androidx.cardview.widget.CardView>
