@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="android:button" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:checkable" tools:targetApt="l">?attr/colorSecondary</item>
+        <item name="android:datePickerDialogTheme">?attr/colorSecondary</item>
     </style>
 </resources>
