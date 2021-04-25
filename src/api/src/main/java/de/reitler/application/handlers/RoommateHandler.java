@@ -13,9 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -63,6 +61,9 @@ public class RoommateHandler {
     }
 
     public List<TaskDTO> getAllDailyTasks(String id) {
+        if(roommateService.getById(id).getHolidayMode()==null||!HolidayModeHandler.isHolidayModeExpired(roommateService.getById(id).getHolidayMode())) {
+            return new ArrayList<TaskDTO>();
+        }
         List<Task> dailyTasks = roommateService.getAllTasks(id);
         Calendar endOfDay = Calendar.getInstance();
         Calendar startOfDay = Calendar.getInstance();
@@ -84,6 +85,9 @@ public class RoommateHandler {
     }
 
     public List<TaskDTO> getAllWeeklyTasks(String id) {
+        if(roommateService.getById(id).getHolidayMode()==null||!HolidayModeHandler.isHolidayModeExpired(roommateService.getById(id).getHolidayMode())) {
+            return new ArrayList<TaskDTO>();
+        }
         List<Task> weeklyTasks = roommateService.getAllTasks(id);
         Calendar startOfToday = Calendar.getInstance();
         Calendar endOfWeek = Calendar.getInstance();

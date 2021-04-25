@@ -3,7 +3,7 @@ package de.reitler.plugin.holydaymode;
 import de.reitler.application.exceptions.HolidayModeException;
 import de.reitler.application.handlers.*;
 import de.reitler.application.dtos.*;
-import de.reitler.plugin.roommate.RoommateController;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/holidaymode")

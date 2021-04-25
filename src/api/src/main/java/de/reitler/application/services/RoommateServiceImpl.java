@@ -4,6 +4,7 @@ import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.entities.Task;
 import de.reitler.domain.repositories.RoommateRepository;
 import de.reitler.domain.services.RoommateService;
+import de.reitler.domain.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ import java.util.List;
 public class RoommateServiceImpl implements RoommateService {
     @Autowired
     RoommateRepository repository;
+
+    @Autowired
+    TaskService taskService;
 
     public RoommateServiceImpl(){}
 
@@ -43,6 +47,9 @@ public class RoommateServiceImpl implements RoommateService {
 
     @Override
     public List<Task> getAllTasks(String id) {
+        List<Task> tasks = taskService.getAllTasksDoneYesterday(repository.getOne(id).getTasks());
+        taskService.deleteSimpleTasks(tasks);
+        taskService.handleRepetitiveTasks(tasks);
         return repository.getOne(id).getTasks();
     }
 }
