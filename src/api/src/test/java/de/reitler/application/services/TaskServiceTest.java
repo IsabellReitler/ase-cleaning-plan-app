@@ -16,10 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,24 +36,26 @@ public class TaskServiceTest {
     List<Task> tasks;
 
     DateCalculator calculator = new DateCalculator();
-
     TaskServiceImpl service = new TaskServiceImpl();
-
-
     TaskRepository taskRepository;
     @Before
     public void init() {
+        taskRepository = Mockito.mock(TaskRepository.class);
+        service.repo = taskRepository;
         MockitoAnnotations.initMocks(this);
         when(service.create(task1)).thenReturn(task1);
         when(service.create(task2)).thenReturn(task2);
         when(service.create(task3)).thenReturn(task3);
-
+        when(service.update(task1)).thenReturn(task1);
+        when(service.update(task2)).thenReturn(task2);
+        when(service.update(task3)).thenReturn(task3);
+        when(taskRepository.findById(task1.getId())).thenReturn(Optional.of(task1));
+        when(taskRepository.findById(task2.getId())).thenReturn(Optional.of(task2));
+        when(taskRepository.findById(task3.getId())).thenReturn(Optional.of(task3));
     }
 
     @BeforeEach
     void before(){
-        taskRepository = Mockito.mock(TaskRepository.class);
-        service.repo = taskRepository;
         household = new Household("Household");
         household.setId("asdf");
         roommate1 = new Roommate("abcde", "roommate 1", "roommate@roommate.com", "roommate.png" );
@@ -102,11 +101,8 @@ public class TaskServiceTest {
         assertEquals(list, service.getAllTasksDoneYesterday(tasks));
     }
 
-   // @Test
+    //@Test
     public void handleRepetitiveTasksTest1(){
-        taskRepository.save(task1);
-        taskRepository.save(task2);
-        taskRepository.save(task3);
         service.handleRepetitiveTasks(tasks);
         Task t = taskRepository.findById(task1.getId()).get();
         assertEquals(roommate2, t.getRoommate());

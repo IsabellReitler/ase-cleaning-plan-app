@@ -67,7 +67,33 @@ public class TaskServiceImpl implements TaskService{
     public void sendTaskToNextRoommate(Task task){
         if(task.isSwitchRoommate()) {
             List<Roommate> roommateList = task.getRoommate().getHousehold().getRoommates();
+            //beginne bei dem aktuellen Roommate
+            //der erste roommate, der nicht im ferienmodus ist erhält den Task
+            //prüfe für jeden Roommate hinter dem aktuellen, ob er im Ferienmodus ist
+            //wenn keiner der Roommates, die hinter dem aktuellen in der Liste sind in frage kommt beginne die Liste von vorne
+            // wenn wieder beim aktuellen angekommen beende die prüfung und ändere nichts
+            int index = roommateList.indexOf(task.getRoommate());
+            if(index+1<roommateList.size()){
+                for(int i=index+1; i<roommateList.size(); i++){
+                    if (roommateList.get(i).getHolidayMode() == null || holidayModeHandler.isHolidayModeExpired(roommateList.get(i).getHolidayMode())) {
+                        task.setRoommate(roommateList.get(i));
+                        task.setDoneAt(null);
+                        update(task);
+                        return;
+                    }
+                }
+            }
+            for(int i=0; i<index; i++){
+                if (roommateList.get(i).getHolidayMode() == null || holidayModeHandler.isHolidayModeExpired(roommateList.get(i).getHolidayMode())) {
+                    task.setRoommate(roommateList.get(i));
+                    update(task);
+                    return;
+                }
+            }
+
             for (Roommate r : roommateList) {
+                //Logik verbessern
+                //aktuellen Roommate aus der Liste herausnehmen
                 if (r.getHolidayMode() == null || holidayModeHandler.isHolidayModeExpired(r.getHolidayMode())) {
                     task.setRoommate(r);
                     update(task);
