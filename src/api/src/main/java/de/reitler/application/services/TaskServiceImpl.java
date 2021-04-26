@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService{
 
     @Autowired
-    TaskRepository repo;
+    public TaskRepository repo;
 
     @Autowired
-    RoommateRepository roommateRepository;
+    public RoommateRepository roommateRepository;
 
     @Autowired
     private static HolidayModeHandler holidayModeHandler;
@@ -98,12 +98,13 @@ public class TaskServiceImpl implements TaskService{
 
     protected void setNewDeadline(Task task){
         DateCalculator calculator = new DateCalculator();
-        task.setDeadline(calculator.add(task.getDoneAt(), task.getTimeIntervall()));
+        if(task.getDoneAt() != null){
+            task.setDeadline(calculator.add(task.getDoneAt(), task.getTimeIntervall()));
+        }
     }
 
     public List<Task> getAllTasksDoneYesterday(List<Task> tasks){
-        tasks.stream().filter(task -> isTaskDoneYesterday(task)==true).collect(Collectors.toList());
-        return tasks;
+        return tasks.stream().filter(task -> isTaskDoneYesterday(task)).collect(Collectors.toList());
     }
 
     public void deleteSimpleTasks(List<Task> tasks){
@@ -116,6 +117,6 @@ public class TaskServiceImpl implements TaskService{
     }
 
     public void handleRepetitiveTasks(List<Task> tasks){
-        tasks.stream().filter(task -> task.getTimeIntervall()!= 0).forEach((t)->{sendTaskToNextRoommate(t); setNewDeadline(t);update(t);});
+       tasks.stream().filter(task -> task.getTimeIntervall()!= 0).forEach((t)->{sendTaskToNextRoommate(t); setNewDeadline(t);repo.save(t);});
     }
 }
