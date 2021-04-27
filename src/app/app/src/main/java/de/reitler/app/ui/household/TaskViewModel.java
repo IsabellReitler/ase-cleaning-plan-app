@@ -20,7 +20,7 @@ public class TaskViewModel extends AndroidViewModel {
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
-        householdRepository = new HouseholdRepository();
+        householdRepository = HouseholdRepository.getInstance();
         allTasksFromHousehold = householdRepository.getAllTasksFromHousehold();
     }
 

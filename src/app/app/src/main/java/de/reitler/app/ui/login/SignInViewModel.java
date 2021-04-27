@@ -19,7 +19,7 @@ public class SignInViewModel extends AndroidViewModel {
     }
 
     public void init(){
-        roommateRepository = new RoommateRepository();
+        roommateRepository = RoommateRepository.getInstance();
         roommate = roommateRepository.getRoommateMutableLiveData();
     }
 

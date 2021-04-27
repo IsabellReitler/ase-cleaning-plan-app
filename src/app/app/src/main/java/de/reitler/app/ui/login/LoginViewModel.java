@@ -21,7 +21,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void init(){
-        householdRepository = new HouseholdRepository();
+        householdRepository = HouseholdRepository.getInstance();
         household = householdRepository.getHouseholdMutableLiveData();
     }
 

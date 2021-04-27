@@ -18,7 +18,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
-        roommateRepository = new RoommateRepository();
+        roommateRepository = RoommateRepository.getInstance();
         roommate = roommateRepository.getRoommateMutableLiveData();
     }
 

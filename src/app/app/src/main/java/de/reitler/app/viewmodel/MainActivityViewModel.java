@@ -20,7 +20,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
-        roommateRepository = new RoommateRepository();
+        roommateRepository = RoommateRepository.getInstance();
         roommate = roommateRepository.getRoommateMutableLiveData();
     }
 

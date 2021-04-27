@@ -27,6 +27,15 @@ public class TaskRepository {
     TaskService taskService;
     MutableLiveData<Task> taskMutableLiveData;
 
+    private static TaskRepository instance;
+
+    public static TaskRepository getInstance(){
+        if(instance==null){
+            instance = new TaskRepository();
+        }
+        return instance;
+    }
+
     public TaskRepository(){
         taskMutableLiveData = new MutableLiveData<>();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

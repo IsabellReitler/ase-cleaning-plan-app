@@ -16,7 +16,7 @@ public class HouseholdFragmentViewModel extends AndroidViewModel {
 
     public HouseholdFragmentViewModel(@NonNull Application application) {
         super(application);
-        householdRepository = new HouseholdRepository();
+        householdRepository = HouseholdRepository.getInstance();
         household = householdRepository.getHouseholdMutableLiveData();
     }
 

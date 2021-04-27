@@ -18,7 +18,7 @@ public class RoommatesViewModel extends AndroidViewModel {
 
     public RoommatesViewModel(@NonNull Application application) {
         super(application);
-        repo = new HouseholdRepository();
+        repo = HouseholdRepository.getInstance();
         roommates = repo.getRoommatesMutableLiveData();
     }
 

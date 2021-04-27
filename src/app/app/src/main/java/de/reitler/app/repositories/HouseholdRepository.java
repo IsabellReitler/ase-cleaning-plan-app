@@ -37,7 +37,16 @@ public class HouseholdRepository {
     MutableLiveData<List<Roommate>> roommatesMutableLiveData;
     MutableLiveData<List<Task>> allTasksFromHousehold;
 
-    public HouseholdRepository(){
+    private static HouseholdRepository instance;
+
+    public static HouseholdRepository getInstance(){
+        if(instance == null){
+            instance = new HouseholdRepository();
+        }
+        return instance;
+    }
+
+    private HouseholdRepository(){
         householdMutableLiveData = new MutableLiveData<>();
         roommatesMutableLiveData = new MutableLiveData<>();
         allTasksFromHousehold = new MutableLiveData<>();

@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 import de.reitler.app.repositories.RoommateRepository;
 
@@ -18,7 +19,7 @@ public class WeeklyToDoListViewModel extends AndroidViewModel {
 
     public WeeklyToDoListViewModel(@NonNull Application application) {
         super(application);
-        repo = new RoommateRepository();
+        repo = RoommateRepository.getInstance();
         weeklyTasks = repo.getWeeklyTasksMutableLiveData();
     }
 

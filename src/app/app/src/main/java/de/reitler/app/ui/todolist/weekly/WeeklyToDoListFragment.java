@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ public class WeeklyToDoListFragment extends Fragment {
     private WeeklyToDoListAdapter adapter;
     private View view;
     MainActivity activity;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public static WeeklyToDoListFragment newInstance() {
         return new WeeklyToDoListFragment();
@@ -40,7 +42,7 @@ public class WeeklyToDoListFragment extends Fragment {
         adapter = new WeeklyToDoListAdapter();
         activity = (MainActivity) getActivity();
         weeklyToDoListViewModel = new WeeklyToDoListViewModel(activity.getApplication());
-
+        swipeRefreshLayout = view.findViewById(R.id.refreshLayout);
     }
 
     @Override
@@ -49,6 +51,12 @@ public class WeeklyToDoListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_weekly_todolist, container, false);
         RecyclerView tasksView = view.findViewById(R.id.weekly_recyclerview);
         tasksView.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                weeklyToDoListViewModel.updateWeeklyTasks(activity.userId);
+            }
+        });
         weeklyToDoListViewModel.getWeeklyTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {

@@ -16,7 +16,7 @@ import de.reitler.app.repositories.RoommateRepository;
 
 public class MyDatePickerDialog extends DialogFragment {
 
-    private RoommateRepository roommateRepository = new RoommateRepository();
+    private RoommateRepository roommateRepository = RoommateRepository.getInstance();
     private MainActivity activity ;
 
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {

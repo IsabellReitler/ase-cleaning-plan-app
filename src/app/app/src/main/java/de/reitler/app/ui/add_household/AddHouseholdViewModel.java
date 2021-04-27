@@ -26,7 +26,7 @@ public class AddHouseholdViewModel extends AndroidViewModel {
     }
 
     public void init(){
-        householdRepository = new HouseholdRepository();
+        householdRepository = HouseholdRepository.getInstance();
         householdLiveData = householdRepository.getHouseholdMutableLiveData();
         roommates = householdRepository.getRoommatesMutableLiveData();
     }

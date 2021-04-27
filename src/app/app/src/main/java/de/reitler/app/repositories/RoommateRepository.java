@@ -23,6 +23,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Singelton Pattern
+ */
 public class RoommateRepository {
 
     private static final String BASE_URL="http://192.168.120.3:8080/";
@@ -34,7 +37,16 @@ public class RoommateRepository {
     MutableLiveData<List<Task>> weeklyTasksMutableLiveData;
     MutableLiveData<List<Task>> allTasksMutableLiveData;
 
-    public RoommateRepository(){
+    private static RoommateRepository instance;
+
+    public static RoommateRepository getInstance(){
+        if(instance == null){
+            instance = new RoommateRepository();
+        }
+        return instance;
+    }
+
+    private RoommateRepository(){
         roommateMutableLiveData = new MutableLiveData<>();
         allTasksMutableLiveData = new MutableLiveData<>();
         dailyTasksMutableLiveData = new MutableLiveData<>();

@@ -18,7 +18,7 @@ public class DailyToDoListViewModel extends AndroidViewModel {
 
     public DailyToDoListViewModel(@NonNull Application application) {
         super(application);
-        repo = new RoommateRepository();
+        repo = RoommateRepository.getInstance();
         dailyTasks = repo.getDailyTasksMutableLiveData();
     }
 
