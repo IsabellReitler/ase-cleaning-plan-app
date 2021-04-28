@@ -21,6 +21,7 @@ import java.util.List;
 
 import de.reitler.app.R;
 import de.reitler.app.model.Task;
+import de.reitler.app.repositories.RoommateRepository;
 import de.reitler.app.repositories.TaskRepository;
 import de.reitler.app.ui.todolist.RecyclerViewHolder;
 
@@ -28,6 +29,7 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
 
     List<Task> tasks = new ArrayList<>();
     private TaskRepository taskRepo;
+    private RoommateRepository roommateRepository=RoommateRepository.getInstance();
     public static final String TIMESTAMP_PATTERN
             = "dd.MM. HH:mm";
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_PATTERN);
@@ -39,6 +41,7 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
 
     public DailyToDoListAdapter(){
     }
+
 
     @NonNull
     @Override
@@ -55,10 +58,11 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         boolean done = tasks.get(position).getDoneAt()==null?false:true;
-        holder.getChecked().setChecked(done);
-        holder.getTitle().setText(tasks.get(position).getTitle());
+        holder.getChecked().setOnCheckedChangeListener(null);
         if (tasks.get(position).getDeadline() != null)
             holder.getDeadline().setText(dateFormat.format(tasks.get(position).getDeadline()));
+        holder.getChecked().setChecked(done);
+        holder.getTitle().setText(tasks.get(position).getTitle());
        holder.getChecked().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            @Override
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -69,11 +73,12 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
                    t.setDoneAt(null);
                }
                taskRepo.updateTask(t);
-
            }
        });
 
     }
+
+
 
     @Override
     public int getItemCount() {

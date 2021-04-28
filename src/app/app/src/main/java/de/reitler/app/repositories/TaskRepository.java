@@ -11,6 +11,7 @@ import de.reitler.app.apiservice.HouseholdService;
 import de.reitler.app.apiservice.RepetitiveTaskCreateBody;
 import de.reitler.app.apiservice.SimpleTaskCreateBody;
 import de.reitler.app.apiservice.TaskService;
+import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,6 +27,8 @@ public class TaskRepository {
 
     TaskService taskService;
     MutableLiveData<Task> taskMutableLiveData;
+HouseholdRepository householdRepository = HouseholdRepository.getInstance();
+    RoommateRepository roommateRepository = RoommateRepository.getInstance();
 
     private static TaskRepository instance;
 
@@ -62,6 +65,10 @@ public class TaskRepository {
                     public void onResponse(Call<Task> call, Response<Task> response) {
                         if(response.body() != null){
                             taskMutableLiveData.postValue(response.body());
+                            householdRepository.getAllTasksFromHousehold(householdRepository.householdMutableLiveData.getValue().getId());
+
+                            householdRepository.getAllTasksFromHousehold(householdRepository.householdMutableLiveData.getValue().getId());
+
                         }
                     }
 
@@ -79,6 +86,8 @@ public class TaskRepository {
                     public void onResponse(Call<Task> call, Response<Task> response) {
                         if(response.body() != null){
                             taskMutableLiveData.postValue(response.body());
+                            householdRepository.getAllTasksFromHousehold(householdRepository.householdMutableLiveData.getValue().getId());
+
                         }
                     }
 
@@ -96,6 +105,10 @@ public class TaskRepository {
                     public void onResponse(Call<Task> call, Response<Task> response) {
                         if(response.body() != null){
                             taskMutableLiveData.postValue(response.body());
+                            roommateRepository.getDailyTasksFromRoommate(response.body().getRoommateID());
+                            roommateRepository.getWeeklyTasksFromRoommate(response.body().getRoommateID());
+                            householdRepository.getAllTasksFromHousehold(householdRepository.householdMutableLiveData.getValue().getId());
+
                         }
                     }
 

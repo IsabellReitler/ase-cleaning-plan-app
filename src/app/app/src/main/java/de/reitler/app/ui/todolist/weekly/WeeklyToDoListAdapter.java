@@ -17,6 +17,7 @@ import java.util.List;
 
 import de.reitler.app.R;
 import de.reitler.app.model.Task;
+import de.reitler.app.repositories.RoommateRepository;
 import de.reitler.app.repositories.TaskRepository;
 import de.reitler.app.ui.todolist.RecyclerViewHolder;
 
@@ -24,9 +25,19 @@ public class WeeklyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHold
 
     List<Task> tasks = new ArrayList<>();
     private TaskRepository taskRepo;
+    private RoommateRepository roommateRepository=RoommateRepository.getInstance();
     public static final String TIMESTAMP_PATTERN
             = "dd.MM. HH:mm";
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_PATTERN);
+
+    public void setTasks(List<Task> tasks){
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
+
+    public WeeklyToDoListAdapter(){
+    }
+
 
     @NonNull
     @Override
@@ -43,6 +54,7 @@ public class WeeklyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         boolean done = tasks.get(position).getDoneAt()==null?false:true;
+        holder.getChecked().setOnCheckedChangeListener(null);
         holder.getChecked().setChecked(done);
         holder.getTitle().setText(tasks.get(position).getTitle());
         if (tasks.get(position).getDeadline() != null)
@@ -57,18 +69,14 @@ public class WeeklyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHold
                     t.setDoneAt(null);
                 }
                 taskRepo.updateTask(t);
-
+                roommateRepository.getDailyTasksFromRoommate(t.getId());
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
         return this.tasks.size();
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-        notifyDataSetChanged();
     }
 }

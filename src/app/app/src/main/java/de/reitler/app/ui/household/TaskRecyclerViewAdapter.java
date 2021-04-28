@@ -24,6 +24,7 @@ import java.util.UUID;
 import de.reitler.app.R;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
+import de.reitler.app.repositories.HouseholdRepository;
 import de.reitler.app.repositories.TaskRepository;
 import de.reitler.app.ui.dialog.CreateTaskDialog;
 import de.reitler.app.ui.dialog.UpdateTaskDialog;
@@ -76,6 +77,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         Task task = tasks.get(position);
         if (holder instanceof TaskViewHolder) {
             //... same as above
+            ((TaskViewHolder) holder).getChecked().setOnCheckedChangeListener(null);
             boolean done = task.getDoneAt() == null ? false : true;
             ((TaskViewHolder) holder).getChecked().setChecked(done);
             ((TaskViewHolder) holder).getTitle().setText(task.getTitle());
@@ -91,7 +93,6 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                         t.setDoneAt(null);
                     }
                     taskRepo.updateTask(t);
-
                 }
             });
             ((TaskViewHolder) holder).getContainer().setOnLongClickListener(new View.OnLongClickListener() {
@@ -118,6 +119,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                         taskRepo.deleteTask(tasks.get(position).getId());
                         tasks.remove(tasks.get(position));
                         setTasks(tasks);
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

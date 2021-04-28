@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,14 @@ import de.reitler.app.R;
 import de.reitler.app.model.Task;
 import de.reitler.app.viewmodel.MainActivityViewModel;
 
-public class DailyToDoListFragment extends Fragment {
+public class DailyToDoListFragment extends Fragment{
 
     private DailyToDoListViewModel dailyToDoListViewModel;
     private DailyToDoListAdapter adapter;
     private View view;
     MainActivity activity;
+    SwipeRefreshLayout refreshLayout;
+    RecyclerView tasksView;
 
     public static DailyToDoListFragment newInstance() {
         return new DailyToDoListFragment();
@@ -45,7 +48,15 @@ public class DailyToDoListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_daily_todolist, container, false);
-        RecyclerView tasksView = view.findViewById(R.id.daily_recyclerview);
+        tasksView = view.findViewById(R.id.daily_recyclerview);
+        refreshLayout = view.findViewById(R.id.daily_todolist_refreshlayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dailyToDoListViewModel.updateDailyTasks(activity.userId);
+                refreshLayout.setRefreshing(false);
+            }
+        });
         tasksView.setLayoutManager(new LinearLayoutManager(getContext()));
         dailyToDoListViewModel.getDailyTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
@@ -57,10 +68,19 @@ public class DailyToDoListFragment extends Fragment {
         return view;
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        tasksView.setAdapter(adapter);
         dailyToDoListViewModel.updateDailyTasks(activity.userId);
     }
+
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        dailyToDoListViewModel.updateDailyTasks(activity.userId);
+//    }
+//
+
 }

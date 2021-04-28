@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
@@ -33,8 +34,9 @@ public class HouseholdFragment extends Fragment implements CreateTaskDialog.Crea
     private RoommateRecyclerViewAdapter roommateAdapter;
     private TaskRecyclerViewAdapter taskAdapter;
 
-    private MainActivity activity;
+    public MainActivity activity;
     private View view;
+    private SwipeRefreshLayout refreshLayout;
 
     private HouseholdFragmentViewModel householdFragmentViewModel;
     private RoommatesViewModel roommatesViewModel;
@@ -62,7 +64,15 @@ public class HouseholdFragment extends Fragment implements CreateTaskDialog.Crea
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_household, container, false);
-
+        refreshLayout = view.findViewById(R.id.household_refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                roommatesViewModel.updateRoommates(activity.householdId);
+                taskViewModel.updateAllTasksFromHousehold(activity.householdId);
+                refreshLayout.setRefreshing(false);
+            }
+        });
         addRoommateButton = view.findViewById(R.id.add_roommate_button);
         addRoommateButton.setOnClickListener(new View.OnClickListener() {
             @Override

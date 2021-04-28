@@ -1,7 +1,6 @@
 package de.reitler.app.ui.todolist.weekly;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -21,8 +20,6 @@ import java.util.List;
 import de.reitler.app.MainActivity;
 import de.reitler.app.R;
 import de.reitler.app.model.Task;
-import de.reitler.app.ui.todolist.daily.DailyToDoListAdapter;
-import de.reitler.app.viewmodel.MainActivityViewModel;
 
 public class WeeklyToDoListFragment extends Fragment {
 
@@ -42,7 +39,6 @@ public class WeeklyToDoListFragment extends Fragment {
         adapter = new WeeklyToDoListAdapter();
         activity = (MainActivity) getActivity();
         weeklyToDoListViewModel = new WeeklyToDoListViewModel(activity.getApplication());
-        swipeRefreshLayout = view.findViewById(R.id.refreshLayout);
     }
 
     @Override
@@ -51,17 +47,19 @@ public class WeeklyToDoListFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_weekly_todolist, container, false);
         RecyclerView tasksView = view.findViewById(R.id.weekly_recyclerview);
         tasksView.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeRefreshLayout = view.findViewById(R.id.weekly_todolist_refreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 weeklyToDoListViewModel.updateWeeklyTasks(activity.userId);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
         weeklyToDoListViewModel.getWeeklyTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
                 adapter.setTasks(tasks);
-                System.out.println("Tasks "+tasks);
+
             }
         });
         tasksView.setAdapter(adapter);
@@ -69,9 +67,15 @@ public class WeeklyToDoListFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         weeklyToDoListViewModel.updateWeeklyTasks(activity.userId);
     }
+
+    //    @Override
+//    public void onResume() {
+//        super.onResume();
+//        weeklyToDoListViewModel.updateWeeklyTasks(activity.userId);
+//    }
 
 }

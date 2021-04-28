@@ -38,6 +38,8 @@ public class RoommateRepository {
     MutableLiveData<List<Task>> allTasksMutableLiveData;
 
     private static RoommateRepository instance;
+    HouseholdRepository householdRepository = HouseholdRepository.getInstance();
+
 
     public static RoommateRepository getInstance(){
         if(instance == null){
@@ -131,6 +133,7 @@ public class RoommateRepository {
                     public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
                         if (response.body() != null){
                             allTasksMutableLiveData.postValue(response.body());
+
                         }
                     }
 
@@ -165,6 +168,7 @@ public class RoommateRepository {
                     public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
                         if (response.body() != null){
                             weeklyTasksMutableLiveData.postValue(response.body());
+
                         }
                     }
 

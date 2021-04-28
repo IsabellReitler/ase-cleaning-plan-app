@@ -6,7 +6,7 @@
     tools:context=".ui.todolist.weekly.WeeklyToDoListFragment">
     <!--Swipe Refresh Layout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
+        android:id="@+id/weekly_todolist_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
