@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cleaning-plan-android-client</string>
+    <string name="app_name">Haushaltsplaner</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -35,4 +35,5 @@
     <string name="switch_roommate">Mitbewohner durchwechseln</string>
     <string name="time_interval_days">Zeitintervall in Tagen</string>
     <string name="dunkles_design">Dunkles Design</string>
+    <string name="leave_household">Haushalt verlassen</string>
 </resources>

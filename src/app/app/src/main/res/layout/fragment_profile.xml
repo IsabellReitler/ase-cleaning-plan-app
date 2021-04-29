@@ -45,22 +45,35 @@
         app:layout_constraintTop_toBottomOf="@id/profile_cardview"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/textview_margin">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dunkles_design"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textSize="@dimen/subtitle_size"
+                android:layout_margin="@dimen/textview_margin"/>
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dark_mode"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:layout_margin="@dimen/textview_margin"/>
         </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/leave_household"
+            android:text="@string/leave_household"
+            android:layout_margin="@dimen/button_margin"
+            android:textSize="@dimen/title_size"
+            android:textColor="?attr/colorOnPrimary"
+            style="@style/Theme.Cleaningplanandroidclient"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

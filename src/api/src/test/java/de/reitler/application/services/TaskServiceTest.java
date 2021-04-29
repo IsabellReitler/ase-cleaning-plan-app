@@ -96,7 +96,7 @@ public class TaskServiceTest {
     public void setNewDeadlineTest1(){
         task1.setDoneAt(calculator.add(Calendar.getInstance().getTime(), -1));
         service.setNewDeadline(task1);
-        assertTrue(calculator.add(Calendar.getInstance().getTime(), 2).equals(task1.getDeadline()));
+        assertEquals(calculator.add(Calendar.getInstance().getTime(), 2),task1.getDeadline());
     }
 
     @Test

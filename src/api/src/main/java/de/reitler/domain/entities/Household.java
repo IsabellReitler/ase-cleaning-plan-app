@@ -71,7 +71,8 @@ public class Household {
     }
 
     public void removeRoommate(Roommate roommate){
-        roommates.remove(roommate);
+        roommates.remove(roommate.getId());
+        //roommates.remove(roommate);
     }
 
 }

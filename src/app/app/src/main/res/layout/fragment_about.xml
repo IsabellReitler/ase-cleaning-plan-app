@@ -6,8 +6,11 @@
     tools:context=".ui.about.AboutFragment">
 
     <TextView
+        android:id="@+id/info_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:textSize="@dimen/normale_text"
+        android:layout_margin="@dimen/textview_margin"
+         />
 
 </FrameLayout>

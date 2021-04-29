@@ -23,9 +23,12 @@ public class DateCalculatorTest {
     }
 
     @Test
-    public void testNewDate(){
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        Assertions.assertEquals(c.get(Calendar.YEAR), 2021);
+    public void addDatesLeapYearTest(){
+        Assertions.assertEquals(new Date(2020, Calendar.FEBRUARY, 29,00,00,00),DateCalculator.add(new Date(2020,Calendar.FEBRUARY, 28,00,00,00),timeIntervall ));
+    }
+
+    @Test
+    void addDateMonthChange(){
+        Assertions.assertEquals(new Date(2021,Calendar.APRIL, 01,00,00,00),DateCalculator.add(new Date(2021, Calendar.MARCH, 31,00,00,00),timeIntervall ));
     }
 }
