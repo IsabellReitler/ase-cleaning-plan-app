@@ -34,4 +34,5 @@
     <string name="is_tasks_repetitive">Wiederkehrende Aufgabe</string>
     <string name="switch_roommate">Mitbewohner durchwechseln</string>
     <string name="time_interval_days">Zeitintervall in Tagen</string>
+    <string name="dunkles_design">Dunkles Design</string>
 </resources>

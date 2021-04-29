@@ -3,6 +3,7 @@ package de.reitler.app.ui.profile;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +15,7 @@ import de.reitler.app.repositories.RoommateRepository;
 public class ProfileViewModel extends AndroidViewModel {
 
     private LiveData<Roommate> roommate;
+
     private RoommateRepository roommateRepository;
 
     public ProfileViewModel(@NonNull Application application) {
@@ -29,4 +31,6 @@ public class ProfileViewModel extends AndroidViewModel {
     public LiveData<Roommate> getRoommate() {
         return roommate;
     }
+
+
 }

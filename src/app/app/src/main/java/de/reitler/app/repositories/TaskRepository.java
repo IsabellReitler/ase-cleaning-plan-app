@@ -111,7 +111,6 @@ HouseholdRepository householdRepository = HouseholdRepository.getInstance();
 
                         }
                     }
-
                     @Override
                     public void onFailure(Call<Task> call, Throwable t) {
                         taskMutableLiveData.postValue(null);

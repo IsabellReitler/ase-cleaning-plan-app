@@ -133,7 +133,7 @@ public class TaskServiceImpl implements TaskService{
 
     protected void setNewDeadline(Task task){
         DateCalculator calculator = new DateCalculator();
-        if(task.getDoneAt() != null){
+        if(isTaskDoneYesterday(task)){
             task.setDeadline(calculator.add(task.getDoneAt(), task.getTimeIntervall()));
         }
     }
@@ -148,10 +148,9 @@ public class TaskServiceImpl implements TaskService{
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     public void handleRepetitiveTasks(List<Task> tasks){
-       tasks.stream().filter(task -> task.getTimeIntervall()!= 0).forEach((t)->{sendTaskToNextRoommate(t); setNewDeadline(t);repo.save(t);});
+       tasks.stream().filter(task -> task.getTimeIntervall()!= 0).forEach((t)->{sendTaskToNextRoommate(t); setNewDeadline(t); t.setDoneAt(null);repo.save(t);});
     }
 }

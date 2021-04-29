@@ -18,8 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,7 +30,6 @@ public class TaskServiceTest {
     Task task1;
     Task task2;
     Task task3;
-    Calendar deadline;
 
     List<Task> tasks;
 
@@ -69,10 +67,6 @@ public class TaskServiceTest {
         task1 = new Task("title", "description", 3, true, roommate1);
         task2 = new Task("title", "description", 0, false, roommate1);
         task3 = new Task("title", "description", Calendar.getInstance().getTime(),  roommate1);
-        deadline =Calendar.getInstance();
-        deadline.set(Calendar.YEAR, 2020);
-        deadline.set(Calendar.MONTH, 3);
-        deadline.set(Calendar.DATE, 29);
         tasks = new ArrayList<>();
         tasks.add(task1);
         tasks.add(task2);
@@ -86,10 +80,23 @@ public class TaskServiceTest {
     }
 
     @Test
+    void isTaskDoneYesterdayTest2(){
+        task1.setDoneAt(Calendar.getInstance().getTime());
+        assertFalse(service.isTaskDoneYesterday(task1));
+    }
+
+    @Test
+    void isTaskDoneYesterdayTest3(){
+        task1.setDoneAt(calculator.add(Calendar.getInstance().getTime(), -2));
+        assertFalse(service.isTaskDoneYesterday(task1));
+    }
+
+
+    @Test
     public void setNewDeadlineTest1(){
-        task1.setDoneAt(deadline.getTime());
+        task1.setDoneAt(calculator.add(Calendar.getInstance().getTime(), -1));
         service.setNewDeadline(task1);
-        assertEquals(calculator.add(deadline.getTime(), 3), task1.getDeadline());
+        assertTrue(calculator.add(Calendar.getInstance().getTime(), 2).equals(task1.getDeadline()));
     }
 
     @Test
