@@ -9,6 +9,8 @@
     <dimen name="subtitle_size">17dp</dimen>
     <dimen name="button_margin">5dp</dimen>
     <dimen name="textview_margin">10dp</dimen>
+    <dimen name="cardview_margin">5dp</dimen>
+    <dimen name="minimal_margin">1dp</dimen>
     <dimen name="normale_text">14dp</dimen>
     <dimen name="title_size">20dp</dimen>
 </resources>

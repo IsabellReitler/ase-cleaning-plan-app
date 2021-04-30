@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,6 +40,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final int SHOW_MENU = 1;
     private final int HIDE_MENU = 2;
     View view;
+    public static final String TIMESTAMP_PATTERN
+            = "dd.MM.";
+    public static final SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_PATTERN);
 
     @NonNull
     @Override
@@ -53,9 +57,10 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             taskRepo = new TaskRepository();
             CheckBox checkbox = view.findViewById(R.id.task_done);
             TextView title = view.findViewById(R.id.task_title);
+            TextView deadline = view.findViewById(R.id.task_deadline);
             TextView description = view.findViewById(R.id.task_description);
             TextView roommate = view.findViewById(R.id.task_roommate);
-            return new TaskViewHolder(checkbox, title, description, roommate, view);
+            return new TaskViewHolder(checkbox, title,deadline, description, roommate, view);
         }
     }
 
@@ -110,6 +115,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                     return true;
                 }
             });
+            ((TaskViewHolder) holder).getDeadline().setText(dateFormat.format(task.getDeadline()));
         }
 
         if (holder instanceof TaskMenuViewHolder) {
