@@ -99,22 +99,22 @@ public class HouseholdFragment extends Fragment implements CreateTaskDialog.Crea
 
         RecyclerView roommateView = view.findViewById(R.id.roommates_list);
         roommateView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView taskView = view.findViewById(R.id.household_task_list);
+        taskView.setLayoutManager(new LinearLayoutManager(getContext()));
         roommatesViewModel.getRoommates().observe(getViewLifecycleOwner(), new Observer<List<Roommate>>() {
             @Override
             public void onChanged(List<Roommate> roommates) {
                 roommateAdapter.setRoommates(roommates);
+                taskAdapter.setRoommates(roommates);
             }
         });
 
-        RecyclerView taskView = view.findViewById(R.id.household_task_list);
-        taskView.setLayoutManager(new LinearLayoutManager(getContext()));
         taskViewModel.getAllTasksFromHousehold().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
                 taskAdapter.setTasks(tasks);
             }
         });
-
         householdFragmentViewModel.getHousehold().observe(getViewLifecycleOwner(), new Observer<Household>() {
             @Override
             public void onChanged(Household household) {

@@ -25,6 +25,7 @@ import de.reitler.app.R;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 import de.reitler.app.repositories.HouseholdRepository;
+import de.reitler.app.repositories.RoommateRepository;
 import de.reitler.app.repositories.TaskRepository;
 import de.reitler.app.ui.dialog.CreateTaskDialog;
 import de.reitler.app.ui.dialog.UpdateTaskDialog;
@@ -33,6 +34,7 @@ import de.reitler.app.ui.todolist.RecyclerViewHolder;
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements UpdateTaskDialog.UpdateTaskDialogListener {
 
     private List<Task> tasks = new ArrayList<>();
+    private List<Roommate> roommates = new ArrayList<>();
     private TaskRepository taskRepo;
     private final int SHOW_MENU = 1;
     private final int HIDE_MENU = 2;
@@ -82,7 +84,13 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             ((TaskViewHolder) holder).getChecked().setChecked(done);
             ((TaskViewHolder) holder).getTitle().setText(task.getTitle());
             ((TaskViewHolder) holder).getDescription().setText(task.getDescription());
-            ((TaskViewHolder) holder).getRoommate().setText(task.getRoommateID());
+            for(Roommate roommate: roommates){
+                if(roommate.getId().equals(task.getRoommateID())){
+                    ((TaskViewHolder) holder).getRoommate().setText(roommate.getName());
+                    break;
+                }
+            }
+
             ((TaskViewHolder) holder).getChecked().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -176,5 +184,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onDialogPositiveClick(Task body) {
         taskRepo.updateTask(body);
         notifyDataSetChanged();
+    }
+
+    public void setRoommates(List<Roommate> roommates){
+        this.roommates = roommates;
     }
 }
