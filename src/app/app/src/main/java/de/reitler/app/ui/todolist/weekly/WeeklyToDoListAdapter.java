@@ -29,6 +29,7 @@ public class WeeklyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHold
     public static final String TIMESTAMP_PATTERN
             = "dd.MM.";
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_PATTERN);
+    View itemView;
 
     public void setTasks(List<Task> tasks){
         this.tasks = tasks;
@@ -42,7 +43,7 @@ public class WeeklyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHold
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
+        itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item_todolist, parent, false);
         taskRepo = new TaskRepository();
         CheckBox checkBox = itemView.findViewById(R.id.item_checkbox);
@@ -55,26 +56,28 @@ public class WeeklyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         boolean done = tasks.get(position).getDoneAt()==null?false:true;
-        holder.getChecked().setOnCheckedChangeListener(null);
+       // holder.getChecked().setOnCheckedChangeListener(null);
         holder.getChecked().setChecked(done);
+        holder.getChecked().setClickable(false);
         holder.getTitle().setText(tasks.get(position).getTitle());
         holder.getDescription().setText(tasks.get(position).getDescription());
-        if (tasks.get(position).getDeadline() != null)
-            holder.getDeadline().setText(dateFormat.format(tasks.get(position).getDeadline()));
-        holder.getChecked().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public boolean onLongClick(View v) {
                 Task t = tasks.get(position);
                 if(holder.getChecked().isChecked() == true){
-                    t.setDoneAt(new Date());
-                } else{
                     t.setDoneAt(null);
+                } else{
+                    t.setDoneAt(new Date());
                 }
                 taskRepo.updateTask(t);
                 roommateRepository.getDailyTasksFromRoommate(t.getId());
+                return true;
             }
-        });
 
+        });
+        if (tasks.get(position).getDeadline() != null)
+            holder.getDeadline().setText(dateFormat.format(tasks.get(position).getDeadline()));
     }
 
     @Override
