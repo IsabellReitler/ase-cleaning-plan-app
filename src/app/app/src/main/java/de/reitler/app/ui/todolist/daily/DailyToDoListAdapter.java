@@ -31,7 +31,7 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
     private TaskRepository taskRepo;
     private RoommateRepository roommateRepository=RoommateRepository.getInstance();
     public static final String TIMESTAMP_PATTERN
-            = "dd.MM. HH:mm";
+            = "dd.MM.";
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_PATTERN);
 
     public void setTasks(List<Task> tasks){
@@ -52,7 +52,8 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
         CheckBox checkBox = itemView.findViewById(R.id.item_checkbox);
         TextView text = itemView.findViewById(R.id.item_text);
         TextView deadline = itemView.findViewById(R.id.item_deadline);
-        return new RecyclerViewHolder(checkBox, text, deadline, itemView);
+        TextView description = itemView.findViewById(R.id.item_description);
+        return new RecyclerViewHolder(checkBox, text, deadline, description, itemView);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class DailyToDoListAdapter extends RecyclerView.Adapter<RecyclerViewHolde
             holder.getDeadline().setText(dateFormat.format(tasks.get(position).getDeadline()));
         holder.getChecked().setChecked(done);
         holder.getTitle().setText(tasks.get(position).getTitle());
+        holder.getDescription().setText(tasks.get(position).getDescription());
        holder.getChecked().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
            @Override
            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

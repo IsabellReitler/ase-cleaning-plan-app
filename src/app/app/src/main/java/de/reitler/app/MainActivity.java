@@ -1,10 +1,12 @@
 package de.reitler.app;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -13,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     TextView navHeaderEmail;
     TextView navHeaderTitle;
     
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         NavigationView navigationView = findViewById(R.id.nav_view);
-
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_todolist, R.id.nav_household, R.id.nav_profile, R.id.nav_settings, R.id.nav_about)
-                .setDrawerLayout(findViewById(R.id.drawer_layout))
+                R.id.nav_todolist, R.id.nav_household, R.id.nav_profile, R.id.nav_about)
+                .setDrawerLayout(drawerLayout)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         navHeaderTitle = hView.findViewById(R.id.nav_header_title);
         navHeaderEmail = hView.findViewById(R.id.nav_header_email);
         viewModel.updateRoommate(userId);
+
     }
 
 

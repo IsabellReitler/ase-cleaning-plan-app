@@ -18,7 +18,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:titleTextColor="?attr/colorOnPrimary"
-            app:popupTheme="@style/Theme.Cleaningplanandroidclient.NoActionBar" />
+            app:popupTheme="@style/Theme.Cleaningplanandroidclient.NoActionBar">
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
