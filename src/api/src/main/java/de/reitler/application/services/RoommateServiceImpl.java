@@ -12,13 +12,14 @@ import java.util.List;
 
 @Service
 public class RoommateServiceImpl implements RoommateService {
-    @Autowired
     RoommateRepository repository;
-
-    @Autowired
     TaskService taskService;
 
-    public RoommateServiceImpl(){}
+    @Autowired
+    public RoommateServiceImpl(RoommateRepository repository, TaskService taskService){
+        this.repository = repository;
+        this.taskService = taskService;
+    }
 
     public Roommate create(Roommate roommate){
         return repository.save(roommate);

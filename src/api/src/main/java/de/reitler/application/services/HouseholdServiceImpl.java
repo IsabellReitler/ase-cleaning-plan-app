@@ -14,13 +14,15 @@ import java.util.Optional;
 @Service
 public class HouseholdServiceImpl implements HouseholdService {
 
-    @Autowired
+
     private HouseholdRepository householdRepository;
 
-    @Autowired
     private RoommateRepository roommateRepository;
 
-    public HouseholdServiceImpl(){
+    @Autowired
+    public HouseholdServiceImpl(HouseholdRepository householdRepository, RoommateRepository roommateRepository){
+        this.householdRepository = householdRepository;
+        this.roommateRepository = roommateRepository;
     }
 
     @Override

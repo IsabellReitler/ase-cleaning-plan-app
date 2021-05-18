@@ -12,6 +12,7 @@ import java.util.UUID;
 public class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "title")
@@ -47,7 +48,7 @@ public class Task {
     private Roommate roommate;
 
     public Task(){
-
+        this.id = UUID.randomUUID();
     }
 
     public Task(UUID id, String title, String description, Date startsAt, Date deadline, Date doneAt, int timeIntervall, boolean switchRoommate, Roommate roommate) {

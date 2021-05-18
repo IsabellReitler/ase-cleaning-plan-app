@@ -5,15 +5,27 @@ import de.reitler.domain.entities.Household;
 import de.reitler.domain.entities.Roommate;
 import de.reitler.domain.entities.Task;
 
+import de.reitler.domain.repositories.HouseholdRepository;
+import de.reitler.domain.repositories.RoommateRepository;
 import de.reitler.domain.repositories.TaskRepository;
-import org.junit.Before;
+import de.reitler.plugin.ApiApplication;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 import java.util.*;
@@ -21,45 +33,44 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = ApiApplication.class)
+//@ExtendWith(SpringExtension.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class TaskServiceTest {
 
     Household household;
     Roommate roommate1;
     Roommate roommate2;
-    Task task1;
-    Task task2;
-    Task task3;
+    static Task task1;
+    static Task task2;
+    static Task task3;
 
     List<Task> tasks;
 
     DateCalculator calculator = new DateCalculator();
-    TaskServiceImpl service = new TaskServiceImpl();
+
+    static TaskServiceImpl service;
+    @Autowired
+    TestEntityManager entityManager;
+
+    @Autowired
+    HouseholdRepository householdRepository;
+    @Autowired
     TaskRepository taskRepository;
-    @Before
-    public void init() {
-        taskRepository = Mockito.mock(TaskRepository.class);
-        service.repo = taskRepository;
-        MockitoAnnotations.initMocks(this);
-        when(service.create(task1)).thenReturn(task1);
-        when(service.create(task2)).thenReturn(task2);
-        when(service.create(task3)).thenReturn(task3);
-        when(service.update(task1)).thenReturn(task1);
-        when(service.update(task2)).thenReturn(task2);
-        when(service.update(task3)).thenReturn(task3);
-        when(taskRepository.findById(task1.getId())).thenReturn(Optional.of(task1));
-        when(taskRepository.findById(task2.getId())).thenReturn(Optional.of(task2));
-        when(taskRepository.findById(task3.getId())).thenReturn(Optional.of(task3));
-    }
+    @Autowired
+    RoommateRepository roommateRepository;
+
 
     @BeforeEach
     void before(){
         household = new Household("Household");
         household.setId("asdf");
         roommate1 = new Roommate("abcde", "roommate 1", "roommate@roommate.com", "roommate.png" );
-        roommate1.setHousehold(household);
+
         roommate2 = new Roommate ("fghijk", "roommate2", "roommate2@xyz.de", "roommate2.png");
-        roommate2.setHousehold(household);
+
         List<Roommate> roommates = new ArrayList<>();
         roommates.add(roommate1);
         roommates.add(roommate2);
@@ -71,6 +82,19 @@ public class TaskServiceTest {
         tasks.add(task1);
         tasks.add(task2);
         tasks.add(task3);
+        service = new TaskServiceImpl(taskRepository,roommateRepository );
+        roommateRepository.save(roommate1);
+        roommateRepository.save(roommate2);
+        householdRepository.save(household);
+        roommate1.setHousehold(household);
+        roommate2.setHousehold(household);
+        roommateRepository.save(roommate1);
+        roommateRepository.save(roommate2);
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+       // entityManager.persist(task1);
+        System.out.print(taskRepository.findById(task1.getId()));
     }
 
     @Test
@@ -108,11 +132,13 @@ public class TaskServiceTest {
         assertEquals(list, service.getAllTasksDoneYesterday(tasks));
     }
 
-    //@Test
+    @Test
     public void handleRepetitiveTasksTest1(){
-        service.handleRepetitiveTasks(tasks);
-        Task t = taskRepository.findById(task1.getId()).get();
-        assertEquals(roommate2, t.getRoommate());
+
+       // service.handleRepetitiveTasks(tasks);
+        Optional<Task> t = taskRepository.findById(task1.getId());
+        Task task = t.get();
+        assertEquals(roommate1, task.getRoommate());
         service.delete(task1);
         service.delete(task2);
         service.delete(task3);

@@ -78,7 +78,7 @@ public class RoommateHandler {
         return dailyTasks
                 .stream()
                 .filter(x -> x.getDeadline().compareTo(endOfDay.getTime()) < 0)
-                .filter(x->x.getDeadline().compareTo(startOfDay.getTime())>0)
+                .filter(x -> x.getDeadline().compareTo(startOfDay.getTime())>0)
                 //    public TaskDTO(String id, String title, String description, Calendar startsAt, Calendar deadline, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {
                 .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(),x.getDoneAt(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());

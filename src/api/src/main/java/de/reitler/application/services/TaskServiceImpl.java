@@ -16,17 +16,24 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ *
+ */
+
 @Service
 public class TaskServiceImpl implements TaskService{
 
-    @Autowired
     public TaskRepository repo;
-
-    @Autowired
     public RoommateRepository roommateRepository;
 
     @Autowired
     private static HolidayModeHandler holidayModeHandler;
+
+    @Autowired
+    public TaskServiceImpl(TaskRepository taskRepository, RoommateRepository roommateRepository){
+        this.repo = taskRepository;
+        this.roommateRepository = roommateRepository;
+    }
 
     //@Override
     public Task create(Task task) {
