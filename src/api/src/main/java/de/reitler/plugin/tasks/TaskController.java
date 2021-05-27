@@ -37,10 +37,10 @@ public class TaskController {
     @PutMapping("/{id}")
     public HttpEntity updateTask(@PathVariable("id") String taskId , @RequestBody TaskDTO task ) {
         TaskDTO dto = handler.update(task);
-        //if(dto != null){
+        if(dto != null){
             return new ResponseEntity<TaskDTO>(dto, HttpStatus.OK);
-        //}
-        //return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")

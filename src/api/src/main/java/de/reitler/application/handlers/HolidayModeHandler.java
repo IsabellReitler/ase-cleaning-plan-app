@@ -37,7 +37,6 @@ public class HolidayModeHandler {
         }
         Roommate roommate = roommateService.getById(id);
         roommate.setHolidayMode(endDate);
-        //sendRepetitiveTasksToNextRoommate(roommate);
         roommateService.update(roommate);
         return new RoommateDTO(roommate.getId(), roommate.getDisplayname(), roommate.getEmail(), new URI(roommate.getPicture()), roommate.getHolidayMode());
 

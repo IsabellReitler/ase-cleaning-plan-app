@@ -98,10 +98,10 @@ public class RoommateHandler {
         startOfDay.set(Calendar.MILLISECOND, 0);
         DateCalculator calculator = new DateCalculator();
         endOfWeek.setTime(calculator.add(startOfToday.getTime(), 7));
-        endOfWeek.set(Calendar.HOUR_OF_DAY, 0);
-        endOfWeek.set(Calendar.MINUTE, 0);
-        endOfWeek.set(Calendar.SECOND, 0);
-        endOfWeek.set(Calendar.MILLISECOND, 0);
+        endOfWeek.set(Calendar.HOUR_OF_DAY, 23);
+        endOfWeek.set(Calendar.MINUTE, 59);
+        endOfWeek.set(Calendar.SECOND, 59);
+        endOfWeek.set(Calendar.MILLISECOND, 999);
         return weeklyTasks
                 .stream()
                 .filter(x -> x.getDeadline().compareTo(endOfWeek.getTime()) < 0)
