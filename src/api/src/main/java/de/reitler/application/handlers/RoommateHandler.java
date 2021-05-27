@@ -65,21 +65,10 @@ public class RoommateHandler {
             return new ArrayList<TaskDTO>();
         }
         List<Task> dailyTasks = roommateService.getAllTasks(id);
-        Calendar endOfDay = Calendar.getInstance();
-        Calendar startOfDay = Calendar.getInstance();
-        startOfDay.set(Calendar.HOUR_OF_DAY, 0);
-        startOfDay.set(Calendar.MINUTE, 0);
-        startOfDay.set(Calendar.SECOND, 0);
-        startOfDay.set(Calendar.MILLISECOND, 0);
-        endOfDay.set(Calendar.HOUR_OF_DAY, 23);
-        endOfDay.set(Calendar.MINUTE, 59);
-        endOfDay.set(Calendar.SECOND, 59);
-        endOfDay.set(Calendar.MILLISECOND, 999);
         return dailyTasks
                 .stream()
-                .filter(x -> x.getDeadline().compareTo(endOfDay.getTime()) < 0)
-                .filter(x -> x.getDeadline().compareTo(startOfDay.getTime())>0)
-                //    public TaskDTO(String id, String title, String description, Calendar startsAt, Calendar deadline, Calendar doneAt, Calendar timeInterval, boolean switchRoommate, String roommate) {
+                .filter(x -> x.getDeadline().compareTo(getEndOIfDay()) < 0)
+                .filter(x -> x.getDeadline().compareTo(getStartOfDay())>0)
                 .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(),x.getDoneAt(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
                 .collect(Collectors.toList());
     }
@@ -89,24 +78,33 @@ public class RoommateHandler {
             return new ArrayList<TaskDTO>();
         }
         List<Task> weeklyTasks = roommateService.getAllTasks(id);
-        Calendar startOfToday = Calendar.getInstance();
+
+        DateCalculator calculator = new DateCalculator();
+        Date endOfWeek =  calculator.add(getEndOIfDay(), 7);
+
+        return weeklyTasks
+                .stream()
+                .filter(x -> x.getDeadline().compareTo(endOfWeek) < 0)
+                .filter(x->x.getDeadline().compareTo(getStartOfDay())>0)
+                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(),x.getDoneAt(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
+                .collect(Collectors.toList());
+    }
+
+    private Date getEndOIfDay() {
         Calendar endOfWeek = Calendar.getInstance();
+        endOfWeek.set(Calendar.HOUR_OF_DAY, 23);
+        endOfWeek.set(Calendar.MINUTE, 59);
+        endOfWeek.set(Calendar.SECOND, 59);
+        endOfWeek.set(Calendar.MILLISECOND, 999);
+        return endOfWeek.getTime();
+    }
+
+    private Date getStartOfDay() {
         Calendar startOfDay = Calendar.getInstance();
         startOfDay.set(Calendar.HOUR_OF_DAY, 0);
         startOfDay.set(Calendar.MINUTE, 0);
         startOfDay.set(Calendar.SECOND, 0);
         startOfDay.set(Calendar.MILLISECOND, 0);
-        DateCalculator calculator = new DateCalculator();
-        endOfWeek.setTime(calculator.add(startOfToday.getTime(), 7));
-        endOfWeek.set(Calendar.HOUR_OF_DAY, 23);
-        endOfWeek.set(Calendar.MINUTE, 59);
-        endOfWeek.set(Calendar.SECOND, 59);
-        endOfWeek.set(Calendar.MILLISECOND, 999);
-        return weeklyTasks
-                .stream()
-                .filter(x -> x.getDeadline().compareTo(endOfWeek.getTime()) < 0)
-                .filter(x->x.getDeadline().compareTo(startOfDay.getTime())>0)
-                .map(x -> new TaskDTO(x.getId().toString(), x.getTitle(), x.getDescription(), x.getStartsAt(), x.getDeadline(),x.getDoneAt(), x.getTimeIntervall(), x.isSwitchRoommate(), x.getRoommate().getId()))
-                .collect(Collectors.toList());
+        return startOfDay.getTime();
     }
 }
