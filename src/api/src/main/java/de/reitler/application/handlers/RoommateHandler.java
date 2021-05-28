@@ -24,6 +24,18 @@ public class RoommateHandler {
 
     private RoommateDTO input;
 
+    private final int WEEK_DAYS_COUNT = 7;
+
+    private final int FIRST_HOUR_OF_DAY = 0;
+    private final int FIRST_MINUTE_OF_DAY = 0;
+    private final int FIRST_SECOND_OF_DAY = 0;
+    private final int FIRST_MILLISECOND_OF_DAY = 0;
+
+    private final int LAST_HOUR_OF_DAY = 23;
+    private final int LAST_MINUTE_OF_DAY = 59;
+    private final int LAST_SECOND_OF_DAY = 59;
+    private final int LAST_MILLISECOND_OF_DAY = 999;
+
     public RoommateHandler() {
     }
 
@@ -80,8 +92,7 @@ public class RoommateHandler {
         List<Task> weeklyTasks = roommateService.getAllTasks(id);
 
         DateCalculator calculator = new DateCalculator();
-        Date endOfWeek =  calculator.add(getEndOIfDay(), 7);
-
+        Date endOfWeek =  calculator.add(getEndOIfDay(), WEEK_DAYS_COUNT);
         return weeklyTasks
                 .stream()
                 .filter(x -> x.getDeadline().compareTo(endOfWeek) < 0)
@@ -92,19 +103,19 @@ public class RoommateHandler {
 
     private Date getEndOIfDay() {
         Calendar endOfWeek = Calendar.getInstance();
-        endOfWeek.set(Calendar.HOUR_OF_DAY, 23);
-        endOfWeek.set(Calendar.MINUTE, 59);
-        endOfWeek.set(Calendar.SECOND, 59);
-        endOfWeek.set(Calendar.MILLISECOND, 999);
+        endOfWeek.set(Calendar.HOUR_OF_DAY, LAST_HOUR_OF_DAY);
+        endOfWeek.set(Calendar.MINUTE, LAST_MINUTE_OF_DAY);
+        endOfWeek.set(Calendar.SECOND, LAST_SECOND_OF_DAY);
+        endOfWeek.set(Calendar.MILLISECOND, LAST_MILLISECOND_OF_DAY);
         return endOfWeek.getTime();
     }
 
     private Date getStartOfDay() {
         Calendar startOfDay = Calendar.getInstance();
-        startOfDay.set(Calendar.HOUR_OF_DAY, 0);
-        startOfDay.set(Calendar.MINUTE, 0);
-        startOfDay.set(Calendar.SECOND, 0);
-        startOfDay.set(Calendar.MILLISECOND, 0);
+        startOfDay.set(Calendar.HOUR_OF_DAY, FIRST_HOUR_OF_DAY);
+        startOfDay.set(Calendar.MINUTE, FIRST_MINUTE_OF_DAY);
+        startOfDay.set(Calendar.SECOND, FIRST_SECOND_OF_DAY);
+        startOfDay.set(Calendar.MILLISECOND, FIRST_MILLISECOND_OF_DAY);
         return startOfDay.getTime();
     }
 }
