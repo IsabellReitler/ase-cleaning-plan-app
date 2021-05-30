@@ -16,11 +16,13 @@ public class HouseholdServiceImpl implements HouseholdService {
 
 
     private HouseholdRepository householdRepository;
-    
+
+    private RoommateRepository roommateRepository;
 
     @Autowired
     public HouseholdServiceImpl(HouseholdRepository householdRepository, RoommateRepository roommateRepository){
         this.householdRepository = householdRepository;
+        this.roommateRepository = roommateRepository;
     }
 
     @Override
