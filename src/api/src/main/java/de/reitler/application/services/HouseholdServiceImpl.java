@@ -16,13 +16,11 @@ public class HouseholdServiceImpl implements HouseholdService {
 
 
     private HouseholdRepository householdRepository;
-
-    private RoommateRepository roommateRepository;
+    
 
     @Autowired
     public HouseholdServiceImpl(HouseholdRepository householdRepository, RoommateRepository roommateRepository){
         this.householdRepository = householdRepository;
-        this.roommateRepository = roommateRepository;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class HouseholdServiceImpl implements HouseholdService {
     public Household update(Household household){
         Household old = householdRepository.findById(household.getId()).get();
         old.setName(household.getName());
-        //old.setRoommates(household.getRoommates());
+
         householdRepository.save(old);
         return old;
     }
