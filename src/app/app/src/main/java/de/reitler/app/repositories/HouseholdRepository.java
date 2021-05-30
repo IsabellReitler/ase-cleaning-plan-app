@@ -1,5 +1,8 @@
 package de.reitler.app.repositories;
 
+import android.content.Context;
+import android.content.res.Resources;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
@@ -8,11 +11,13 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.reitler.app.R;
 import de.reitler.app.apiservice.HolidayService;
 import de.reitler.app.apiservice.HouseholdRequestBody;
 import de.reitler.app.apiservice.HouseholdService;
 import de.reitler.app.apiservice.RoommateIDJSON;
 import de.reitler.app.apiservice.RoommateService;
+import de.reitler.app.config.Configuration;
 import de.reitler.app.model.HolidayMode;
 import de.reitler.app.model.Household;
 import de.reitler.app.model.Roommate;
@@ -27,7 +32,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HouseholdRepository {
 
-    private static final String BASE_URL="http://192.168.120.3:8080/";
+    Resources resources;
+
+    private static final String BASE_URL = Configuration.BASE_URL;
 
     HouseholdService householdService;
     HolidayService holidayService;

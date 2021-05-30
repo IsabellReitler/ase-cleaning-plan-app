@@ -12,6 +12,7 @@ import java.util.List;
 import de.reitler.app.apiservice.HolidayService;
 import de.reitler.app.apiservice.RoommateRequestBody;
 import de.reitler.app.apiservice.RoommateService;
+import de.reitler.app.config.Configuration;
 import de.reitler.app.model.HolidayMode;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RoommateRepository {
 
-    private static final String BASE_URL="http://192.168.120.3:8080/";
+    private static final String BASE_URL= Configuration.BASE_URL;
 
     HolidayService holidayService;
     RoommateService roommateService;

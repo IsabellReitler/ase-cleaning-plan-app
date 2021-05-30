@@ -11,6 +11,7 @@ import de.reitler.app.apiservice.HouseholdService;
 import de.reitler.app.apiservice.RepetitiveTaskCreateBody;
 import de.reitler.app.apiservice.SimpleTaskCreateBody;
 import de.reitler.app.apiservice.TaskService;
+import de.reitler.app.config.Configuration;
 import de.reitler.app.model.Roommate;
 import de.reitler.app.model.Task;
 import okhttp3.OkHttpClient;
@@ -23,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TaskRepository {
 
-    private static final String BASE_URL="http://192.168.120.3:8080/";
+    private static final String BASE_URL= Configuration.BASE_URL;
 
     TaskService taskService;
     MutableLiveData<Task> taskMutableLiveData;
