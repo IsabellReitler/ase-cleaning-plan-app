@@ -133,11 +133,13 @@ public class TaskServiceImpl implements TaskService{
         return false;
     }
 
-    protected void setNewDeadline(Task task){
+    protected boolean setNewDeadline(Task task){
         DateCalculator calculator = new DateCalculator();
         if(isTaskDoneYesterday(task)){
             task.setDeadline(calculator.add(task.getDoneAt(), task.getTimeIntervall()));
+            return true;
         }
+        return false;
     }
 
     public List<Task> getAllTasksDoneYesterday(List<Task> tasks){
