@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Haushaltsplaner</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_todolist">To Do Liste</string>
+    <string name="menu_household">Haushalt</string>
+    <string name="menu_profile">Profil</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_about">Über die App</string>
+
+    <string name="tab_daily_todolist">Heute</string>
+    <string name="tab_weekly_todolist">Diese Woche </string>
+
+    <string name="holiday_mode">Ferienmodus</string>
+    <string name="add_or_create_household">Haushalt beitreten oder erstellen</string>
+    <string name="household_id_hint">123e4567-e89b-12d3-a456-556642440000</string>
+    <string name="add_household">Einem Haushalt beitreten</string>
+    <string name="join_household">Haushalt beitreten</string>
+    <string name="create_household">Haushalt erstellen</string>
+    <string name="insert_household_name">"Bitte geben Sie einen Namen für ihren Haushalt ein: "</string>
+    <string name="household_nme_hint">Mein Haushalt</string>
+    <string name="OK">ok</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="roommates">Mitbewohner</string>
+    <string name="tasks">Aufgaben</string>
+    <string name="task_title_hint">Titel</string>
+    <string name="task_description_hint">Fügen Sie eine Beschreibung hinzu ...</string>
+    <string name="is_tasks_repetitive">Wiederkehrende Aufgabe</string>
+    <string name="switch_roommate">Mitbewohner durchwechseln</string>
+    <string name="time_interval_days">Zeitintervall in Tagen</string>
+    <string name="dunkles_design">Dunkles Design</string>
+    <string name="leave_household">Haushalt verlassen</string>
+</resources>

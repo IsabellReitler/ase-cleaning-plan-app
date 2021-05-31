@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "852266638483",
+    "project_id": "ase-cleaning-plan",
+    "storage_bucket": "ase-cleaning-plan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852266638483:android:6122298b4a8bb936b68166",
+        "android_client_info": {
+          "package_name": "de.reitler.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852266638483-p18v2lg60ip76anr8614ifsaovfku1bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.reitler.app",
+            "certificate_hash": "23f9469e9e346736a932023448873ffb4750cf5d"
+          }
+        },
+        {
+          "client_id": "852266638483-6cv7osvpfo2fpf700fsv9m97kb1oim40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJL7Dz0hiZG3iY1HY11P63X527ttc3xiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852266638483-6cv7osvpfo2fpf700fsv9m97kb1oim40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
